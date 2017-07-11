@@ -1,0 +1,242 @@
+
+[INFO][171.4.234.102][2017/04/28 10:26:06] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:06] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:06] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:06] load_page fired!
+[INFO][171.4.234.102][2017/04/28 10:26:06] getAgentSite: checking if we have cached site...
+[INFO][171.4.234.102][2017/04/28 10:26:06] no
+[INFO][171.4.234.102][2017/04/28 10:26:06] getAgentSite: getting siteData
+[INFO][171.4.234.102][2017/04/28 10:26:06] getAgentSite: it took 0:0:0 to get siteData.
+[INFO][171.4.234.102][2017/04/28 10:26:06] getAgentSite: siteData: {"site":{"site_num":30001,"company_name":"AgentQuote","address1_text":"501 S. Idaho St., Suite 210","address2_text":null,"city_text":"La Habra","state_text":"CACalifornia","zip_text":"90631","phone_text":"(888) 223-4773","fax_text":"(888) 612-2120","email_text":"support@agentquote.com","contact_fname":"Tony","contact_lname":"Sarlese, CLU, ChFC","AgentName":"Tony Sarlese, CLU, ChFC","aq_site_url":"http:\/\/ffff.com","aq_layout":null,"aq_style":null,"aq_site_loginId":"aq2elogin","aq_site_pwrd":"67e0de227da93080ca7ce9507e3f24be","aq_admin_pwrd":null,"aq_is_ga_yn":"N","aq_ga_site_num":30000,"subdomain":"aq2edemo","GAgentName":"Tony Sarlese","GACompany_name":"AgentQuote","m_subdomain":"tsarlese","logo":"https:\/\/tsarlese.aq2emarketing.com\/website_logos\/30001\/logo.png","profileImage":"https:\/\/tsarlese.aq2emarketing.com\/website_logos\/30001\/profile-image.jpg","info":"Agentquote.com, Inc. has been in business since 1999.","links":{"fblink":"https:\/\/www.facebook.com\/AgentQuote-145011342245759\/a","twitterlink":"https:\/\/twitter.com\/agentquote","gpluslink":"https:\/\/plus.google.com\/109173391919563990704","linkedinlink":"https:\/\/www.linkedin.com\/company\/agentquote-com-inc-"},"license_details":{"banner_num":5197,"site_num":30001,"SubscriberPK":3,"banner_type":5,"banner_app_type":5,"banner_version":5,"banner_dimensions":"960\/444","banner_index":1,"banner_bg_color":"#d8d8d8","banner_border_color":"#676767","banner_text_color":"#ffffff","banner_header_button_color":"#049de8","banner_button_color":null,"banner_counter":null,"p1":"myso7","p2":"6ohl2","p3":"ih7dl","p4":"bx6lj","p5":null,"banner_count_max":null,"banner_app_max":null,"banner_status_code":10,"banner_domain":"bobsmith.com","license":"61979-11434-5a4bd-e6663","banner_restrict":0,"banner_createdOn":"2017-03-08 12:16:54.927","microsite":"1","version":"6"},"about_us_text":"Agentquote.com, Inc. has been in business since 1999."},"successful":true,"message":"Data was retrieved successfully."}
+[INFO][171.4.234.102][2017/04/28 10:26:06] template loaded: D:\aq2e\domains\aq2emarketing.com\htdocs\wp-content\plugins\fd3-dynamic-pages/microsite_templates/page-home.php
+[INFO][171.4.234.102][2017/04/28 10:26:06] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:06] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:06] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:07] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:07] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:07] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:07] page redirected
+[INFO][171.4.234.102][2017/04/28 10:26:07] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:07] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:07] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:07] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:07] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:07] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:07] page redirected
+[INFO][171.4.234.102][2017/04/28 10:26:07] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:07] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:07] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:34] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:34] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:34] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:34] load_page fired!
+[INFO][171.4.234.102][2017/04/28 10:26:34] getAgentSite: checking if we have cached site...
+[INFO][171.4.234.102][2017/04/28 10:26:34] yes
+[INFO][171.4.234.102][2017/04/28 10:26:34] template loaded: D:\aq2e\domains\aq2emarketing.com\htdocs\wp-content\plugins\fd3-dynamic-pages/microsite_templates/page-process.php
+[INFO][171.4.234.102][2017/04/28 10:26:34] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:34] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:34] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:36] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:36] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:36] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:36] page redirected
+[INFO][171.4.234.102][2017/04/28 10:26:36] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:36] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:36] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:37] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:37] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:37] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:37] load_page fired!
+[INFO][171.4.234.102][2017/04/28 10:26:37] getAgentSite: checking if we have cached site...
+[INFO][171.4.234.102][2017/04/28 10:26:37] yes
+[INFO][171.4.234.102][2017/04/28 10:26:37] template loaded: D:\aq2e\domains\aq2emarketing.com\htdocs\wp-content\plugins\fd3-dynamic-pages/microsite_templates/page-life.php
+[INFO][171.4.234.102][2017/04/28 10:26:37] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:37] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:37] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:37] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:37] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:38] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:38] page redirected
+[INFO][171.4.234.102][2017/04/28 10:26:38] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:38] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:38] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:38] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:38] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:38] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:38] load_page fired!
+[INFO][171.4.234.102][2017/04/28 10:26:38] getAgentSite: checking if we have cached site...
+[INFO][171.4.234.102][2017/04/28 10:26:38] yes
+[INFO][171.4.234.102][2017/04/28 10:26:38] template loaded: D:\aq2e\domains\aq2emarketing.com\htdocs\wp-content\plugins\fd3-dynamic-pages/microsite_templates/page-calculator.php
+[INFO][171.4.234.102][2017/04/28 10:26:38] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:38] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:38] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:39] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:39] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:39] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:39] page redirected
+[INFO][171.4.234.102][2017/04/28 10:26:39] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:39] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:39] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:39] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:39] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:40] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:40] load_page fired!
+[INFO][171.4.234.102][2017/04/28 10:26:40] getAgentSite: checking if we have cached site...
+[INFO][171.4.234.102][2017/04/28 10:26:40] yes
+[INFO][171.4.234.102][2017/04/28 10:26:40] template loaded: D:\aq2e\domains\aq2emarketing.com\htdocs\wp-content\plugins\fd3-dynamic-pages/microsite_templates/page-glossary.php
+[INFO][171.4.234.102][2017/04/28 10:26:40] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:40] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:40] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:41] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:41] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:41] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:41] page redirected
+[INFO][171.4.234.102][2017/04/28 10:26:41] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:41] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:41] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:42] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:42] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:42] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:42] load_page fired!
+[INFO][171.4.234.102][2017/04/28 10:26:42] getAgentSite: checking if we have cached site...
+[INFO][171.4.234.102][2017/04/28 10:26:42] yes
+[INFO][171.4.234.102][2017/04/28 10:26:42] template loaded: D:\aq2e\domains\aq2emarketing.com\htdocs\wp-content\plugins\fd3-dynamic-pages/microsite_templates/page-calculator.php
+[INFO][171.4.234.102][2017/04/28 10:26:42] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:42] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:42] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:43] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:43] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:43] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:43] page redirected
+[INFO][171.4.234.102][2017/04/28 10:26:43] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:43] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:43] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:44] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:44] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:45] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:45] load_page fired!
+[INFO][171.4.234.102][2017/04/28 10:26:45] getAgentSite: checking if we have cached site...
+[INFO][171.4.234.102][2017/04/28 10:26:45] yes
+[INFO][171.4.234.102][2017/04/28 10:26:45] template loaded: D:\aq2e\domains\aq2emarketing.com\htdocs\wp-content\plugins\fd3-dynamic-pages/microsite_templates/page-about.php
+[INFO][171.4.234.102][2017/04/28 10:26:45] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:45] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:45] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:46] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:46] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:47] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:47] page redirected
+[INFO][171.4.234.102][2017/04/28 10:26:47] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:47] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:47] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:47] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:47] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:47] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:47] load_page fired!
+[INFO][171.4.234.102][2017/04/28 10:26:47] getAgentSite: checking if we have cached site...
+[INFO][171.4.234.102][2017/04/28 10:26:47] yes
+[INFO][171.4.234.102][2017/04/28 10:26:47] template loaded: D:\aq2e\domains\aq2emarketing.com\htdocs\wp-content\plugins\fd3-dynamic-pages/microsite_templates/page-home.php
+[INFO][171.4.234.102][2017/04/28 10:26:47] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:47] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:47] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:48] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:48] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:48] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:48] page redirected
+[INFO][171.4.234.102][2017/04/28 10:26:48] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:48] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:48] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:26:48] Log Started
+[INFO][171.4.234.102][2017/04/28 10:26:48] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:26:48] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:26:48] page redirected
+[INFO][171.4.234.102][2017/04/28 10:26:48] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:26:48] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:26:48] Log Ended
+
+[INFO][49.230.233.25][2017/04/28 10:27:36] Log Started
+[INFO][49.230.233.25][2017/04/28 10:27:36] fd3-dynamic-page starting...
+[INFO][49.230.233.25][2017/04/28 10:27:36] template_redirect fired!
+[INFO][49.230.233.25][2017/04/28 10:27:36] load_page fired!
+[INFO][49.230.233.25][2017/04/28 10:27:36] getAgentSite: checking if we have cached site...
+[INFO][49.230.233.25][2017/04/28 10:27:36] no
+[INFO][49.230.233.25][2017/04/28 10:27:36] getAgentSite: getting siteData
+[INFO][49.230.233.25][2017/04/28 10:27:36] getAgentSite: it took 0:0:0 to get siteData.
+[INFO][49.230.233.25][2017/04/28 10:27:36] getAgentSite: siteData: {"site":{"site_num":30001,"company_name":"AgentQuote","address1_text":"501 S. Idaho St., Suite 210","address2_text":null,"city_text":"La Habra","state_text":"CACalifornia","zip_text":"90631","phone_text":"(888) 223-4773","fax_text":"(888) 612-2120","email_text":"support@agentquote.com","contact_fname":"Tony","contact_lname":"Sarlese, CLU, ChFC","AgentName":"Tony Sarlese, CLU, ChFC","aq_site_url":"http:\/\/ffff.com","aq_layout":null,"aq_style":null,"aq_site_loginId":"aq2elogin","aq_site_pwrd":"67e0de227da93080ca7ce9507e3f24be","aq_admin_pwrd":null,"aq_is_ga_yn":"N","aq_ga_site_num":30000,"subdomain":"aq2edemo","GAgentName":"Tony Sarlese","GACompany_name":"AgentQuote","m_subdomain":"tsarlese","logo":"https:\/\/tsarlese.aq2emarketing.com\/website_logos\/30001\/logo.png","profileImage":"https:\/\/tsarlese.aq2emarketing.com\/website_logos\/30001\/profile-image.jpg","info":"Agentquote.com, Inc. has been in business since 1999.","links":{"fblink":"https:\/\/www.facebook.com\/AgentQuote-145011342245759\/a","twitterlink":"https:\/\/twitter.com\/agentquote","gpluslink":"https:\/\/plus.google.com\/109173391919563990704","linkedinlink":"https:\/\/www.linkedin.com\/company\/agentquote-com-inc-"},"license_details":{"banner_num":5197,"site_num":30001,"SubscriberPK":3,"banner_type":5,"banner_app_type":5,"banner_version":5,"banner_dimensions":"960\/444","banner_index":1,"banner_bg_color":"#d8d8d8","banner_border_color":"#676767","banner_text_color":"#ffffff","banner_header_button_color":"#049de8","banner_button_color":null,"banner_counter":null,"p1":"myso7","p2":"6ohl2","p3":"ih7dl","p4":"bx6lj","p5":null,"banner_count_max":null,"banner_app_max":null,"banner_status_code":10,"banner_domain":"bobsmith.com","license":"61979-11434-5a4bd-e6663","banner_restrict":0,"banner_createdOn":"2017-03-08 12:16:54.927","microsite":"1","version":"6"},"about_us_text":"Agentquote.com, Inc. has been in business since 1999."},"successful":true,"message":"Data was retrieved successfully."}
+[INFO][49.230.233.25][2017/04/28 10:27:36] template loaded: D:\aq2e\domains\aq2emarketing.com\htdocs\wp-content\plugins\fd3-dynamic-pages/microsite_templates/page-home.php
+[INFO][49.230.233.25][2017/04/28 10:27:36] <!-- Load time: 0:0:0 -->
+[INFO][49.230.233.25][2017/04/28 10:27:36] aq2emm_exit: fd3-dynamic-page ended
+[INFO][49.230.233.25][2017/04/28 10:27:36] Log Ended
+
+[INFO][49.230.233.25][2017/04/28 10:27:41] Log Started
+[INFO][49.230.233.25][2017/04/28 10:27:41] fd3-dynamic-page starting...
+[INFO][49.230.233.25][2017/04/28 10:27:42] template_redirect fired!
+[INFO][49.230.233.25][2017/04/28 10:27:42] page redirected
+[INFO][49.230.233.25][2017/04/28 10:27:42] <!-- Load time: 0:0:0 -->
+[INFO][49.230.233.25][2017/04/28 10:27:42] aq2emm_exit: fd3-dynamic-page ended
+[INFO][49.230.233.25][2017/04/28 10:27:42] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:28:01] Log Started
+[INFO][171.4.234.102][2017/04/28 10:28:01] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:28:02] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:28:02] load_page fired!
+[INFO][171.4.234.102][2017/04/28 10:28:02] getAgentSite: checking if we have cached site...
+[INFO][171.4.234.102][2017/04/28 10:28:02] yes
+[INFO][171.4.234.102][2017/04/28 10:28:02] template loaded: D:\aq2e\domains\aq2emarketing.com\htdocs\wp-content\plugins\fd3-dynamic-pages/microsite_templates/page-home.php
+[INFO][171.4.234.102][2017/04/28 10:28:02] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:28:02] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:28:02] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:28:03] Log Started
+[INFO][171.4.234.102][2017/04/28 10:28:03] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:28:03] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:28:03] page redirected
+[INFO][171.4.234.102][2017/04/28 10:28:03] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:28:03] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:28:03] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:28:26] Log Started
+[INFO][171.4.234.102][2017/04/28 10:28:26] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:28:26] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:28:26] load_page fired!
+[INFO][171.4.234.102][2017/04/28 10:28:26] getAgentSite: checking if we have cached site...
+[INFO][171.4.234.102][2017/04/28 10:28:26] no
+[INFO][171.4.234.102][2017/04/28 10:28:26] getAgentSite: getting siteData
+[INFO][171.4.234.102][2017/04/28 10:28:27] getAgentSite: it took 0:0:0 to get siteData.
+[INFO][171.4.234.102][2017/04/28 10:28:27] getAgentSite: siteData: {"site":{"site_num":30001,"company_name":"AgentQuote","address1_text":"501 S. Idaho St., Suite 210","address2_text":null,"city_text":"La Habra","state_text":"CACalifornia","zip_text":"90631","phone_text":"(888) 223-4773","fax_text":"(888) 612-2120","email_text":"support@agentquote.com","contact_fname":"Tony","contact_lname":"Sarlese, CLU, ChFC","AgentName":"Tony Sarlese, CLU, ChFC","aq_site_url":"http:\/\/ffff.com","aq_layout":null,"aq_style":null,"aq_site_loginId":"aq2elogin","aq_site_pwrd":"67e0de227da93080ca7ce9507e3f24be","aq_admin_pwrd":null,"aq_is_ga_yn":"N","aq_ga_site_num":30000,"subdomain":"aq2edemo","GAgentName":"Tony Sarlese","GACompany_name":"AgentQuote","m_subdomain":"tsarlese","logo":"https:\/\/tsarlese.aq2emarketing.com\/website_logos\/30001\/logo.png","profileImage":"https:\/\/tsarlese.aq2emarketing.com\/website_logos\/30001\/profile-image.jpg","info":"Agentquote.com, Inc. has been in business since 1999.","links":{"fblink":"https:\/\/www.facebook.com\/AgentQuote-145011342245759\/a","twitterlink":"https:\/\/twitter.com\/agentquote","gpluslink":"https:\/\/plus.google.com\/109173391919563990704","linkedinlink":"https:\/\/www.linkedin.com\/company\/agentquote-com-inc-"},"license_details":{"banner_num":5197,"site_num":30001,"SubscriberPK":3,"banner_type":5,"banner_app_type":5,"banner_version":5,"banner_dimensions":"960\/444","banner_index":1,"banner_bg_color":"#d8d8d8","banner_border_color":"#676767","banner_text_color":"#ffffff","banner_header_button_color":"#049de8","banner_button_color":null,"banner_counter":null,"p1":"myso7","p2":"6ohl2","p3":"ih7dl","p4":"bx6lj","p5":null,"banner_count_max":null,"banner_app_max":null,"banner_status_code":10,"banner_domain":"bobsmith.com","license":"61979-11434-5a4bd-e6663","banner_restrict":0,"banner_createdOn":"2017-03-08 12:16:54.927","microsite":"1","version":"6"},"about_us_text":"Agentquote.com, Inc. has been in business since 1999."},"successful":true,"message":"Data was retrieved successfully."}
+[INFO][171.4.234.102][2017/04/28 10:28:27] template loaded: D:\aq2e\domains\aq2emarketing.com\htdocs\wp-content\plugins\fd3-dynamic-pages/microsite_templates/page-home.php
+[INFO][171.4.234.102][2017/04/28 10:28:27] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:28:27] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:28:27] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:28:28] Log Started
+[INFO][171.4.234.102][2017/04/28 10:28:28] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:28:28] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:28:28] page redirected
+[INFO][171.4.234.102][2017/04/28 10:28:28] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:28:28] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:28:28] Log Ended
+
+[INFO][171.4.234.102][2017/04/28 10:28:28] Log Started
+[INFO][171.4.234.102][2017/04/28 10:28:28] fd3-dynamic-page starting...
+[INFO][171.4.234.102][2017/04/28 10:28:28] template_redirect fired!
+[INFO][171.4.234.102][2017/04/28 10:28:28] page redirected
+[INFO][171.4.234.102][2017/04/28 10:28:28] <!-- Load time: 0:0:0 -->
+[INFO][171.4.234.102][2017/04/28 10:28:28] aq2emm_exit: fd3-dynamic-page ended
+[INFO][171.4.234.102][2017/04/28 10:28:28] Log Ended

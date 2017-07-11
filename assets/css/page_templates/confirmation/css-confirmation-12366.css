@@ -1,0 +1,335 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #eee !important;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+}
+
+.fd3-background::before {
+    margin: 0;
+    padding: 0;
+    content: "";
+    background: rgba(255, 255, 255, 0.72);
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.fd3-background {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center center !important;
+    background-attachment: fixed !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+.fd3-capture-container {
+    background: none;
+    box-sizing: border-box;
+    /* background: url(http://wallpapercave.com/wp/8Cje0K1.jpg); */
+    padding: 0px 10px 10px 10px;
+    height: auto;
+    width: 100vw;
+    margin: 247px auto !important;
+}
+
+.fd3-title-container {
+    padding: 20px 0 25px;
+    background: none;
+    color: #fff;
+}
+h2.fd3-form-title {
+    text-align: center;
+    font-size: 27px;
+    font-weight: 500;
+    line-height: 50px;
+    max-width: 1000px;
+    margin: 0 auto;
+    color: #699e00;
+}
+
+.fd3-title-container h2.title {
+    text-align: center;
+    font-size: 48px;
+    font-weight: 300;
+    line-height: 50px;
+    max-width: 1000px;
+    margin: 0 auto 22px;
+    color: #666;
+}
+
+.fd3-title-container h2.title span {
+    color: #D85100;
+}
+
+.fd3-title-container h3.sub-title {
+    font-family: "Open Sans", Helvetica, sans-serif;
+    text-align: center;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 300;
+    max-width: 1000px;
+    margin: 26px auto;
+    color: #699e00;
+}
+
+.fd3-title-container h3.sub-sub-title {
+    font-family: "Open Sans", Helvetica, sans-serif;
+    text-align: center;
+    font-size: 34px;
+    font-style: normal;
+    font-weight: 300;
+    max-width: 1000px;
+    margin: 26px auto;
+    color: #699e00;
+}
+
+.fd3-panel {
+    position: relative;
+    margin: 0px auto;
+    padding: 50px 33px 12px;
+    width: 100%;
+    height: auto;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 3px 5px rgba(0,0,0,.2);
+    box-sizing: border-box;
+}
+
+.fd3-capture-panel {
+    margin: 8px 0 0;
+    padding: 10px;
+    background: rgba(246, 246, 246, 0.52);
+    border: 1px solid #e8e8e8;
+    box-sizing: border-box;
+}
+.fd3-capture-panel p {
+    color: #333;
+}
+
+.fd3-header {
+    color: #333;
+    text-align: center;
+    font-weight: 600;
+    font-size: 40px;
+    letter-spacing: -0.03em;
+    line-height: 1;
+}
+
+.fd3-panel-top-small-text {
+    margin: 67px 0 20px;
+    padding: 0 0 20px;
+    border-bottom: 1px solid #e8e8e8;
+    color: #666;
+    text-align: center;
+    font-family: Georgia, Times, serif;
+    font-weight: normal;
+    font-size: 16px;
+    font-style: italic;
+    text-align: left;
+    line-height: 1;
+}
+
+.fd3-panel-extra-text {
+    color: #666;
+    text-align: center;
+    font-weight: normal;
+    font-size: 13px;
+    margin: 10px 0;
+    text-align: left;
+    letter-spacing: -0.03em;
+    line-height: 1;
+}
+
+.fd3-sub-header {
+    color: #333;
+    text-align: center;
+}
+
+.form-group label {
+    font-size: 12px;
+    margin: 0;
+}
+
+.fd3-capture-input-container {
+    box-sizing: border-box;
+    padding: 22px;
+    /*
+    border-left: 1px solid #e8e8e8;
+    */
+}
+
+h3.contents-header {
+    margin: 30px 0;
+    color: #4B5050;
+    text-align: center;
+}
+
+p.contents-text {
+    color: #699e00;
+    font-size: 39px;
+    text-align: center;
+}
+
+.fd3-panel-header {
+    text-align: center;
+    font-size: 19px;
+    margin: 10px 0;
+    color: #699e00;
+}
+
+.fd3-subscribe-btn {
+    color: #fff !important;
+}
+
+.fd3-capture-panel .left-side {
+    padding: 10px 10px 10px;
+}
+.fd3-capture-panel .left-side img {
+    float: left;
+    margin: 0px 5px 0px;
+    line-height: 1;
+}
+.fd3-capture-panel .left-side p {
+    font-size: 13px;
+    letter-spacing: 0.06em;
+}
+
+.footer {
+    text-align: center;
+    margin: 8px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+}
+.footer .fd3-copyright a.fd3-powered-by {
+    -webkit-transition: all 150ms ease-out;
+    transition: all 150ms ease-out;
+}
+
+h3.popout-header {
+    background: #FCFDE7;
+    color: #4B5050;
+    box-shadow: 0 3px 5px rgba(0,0,0,.2);
+    display: block;
+    margin: -26px -59px 0;
+    padding: 30px;
+    left: 0;
+    top: 0;
+    height: auto;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+h3.popout-header span {
+    color: #EE8300;
+}
+
+label {
+    color: #002c3a;
+    display: block;
+    text-align: left;
+    font-weight: 700;
+    margin-bottom: 0px !important;
+    font-size: 15px !important;
+}
+
+.btn-primary {
+    background-image: linear-gradient(to bottom,#9ACF33 0%,#769f25 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9ACF33', endColorstr='#9ACF33', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    border-color: #9ACF33;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 15px auto;
+    cursor: pointer;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #9ACF33;
+    border-color: #9ACF33;
+}
+
+.center-field {
+    text-align: center !important;
+}
+
+/*
+
+Extra small
+<576px	Small
+≥576px	Medium
+≥768px	Large
+≥992px	Extra large
+≥1200px
+
+ */
+
+
+/* Responsive styles */
+
+@media all and (max-width: 1020px) {
+    
+    .fd3-capture-container {
+        width: auto !important;
+        padding: 10px 10px 10px 10px !important;
+        margin: 0 auto !important;
+    }
+    
+    .fd3-capture-container .fd3-panel {
+        width: auto !important;
+        padding: 5% !important;
+    }
+    
+    .fd3-capture-container .foreground_image {
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 764px) {
+    .fd3-capture-container .fd3-panel {
+        margin-top: 70px !important;
+        
+    }
+    
+    h3.popout-header {
+        margin: -27px -25px 0 !important;
+    }
+    
+}
+
+@media all and (max-width: 380px) {
+    
+    .fd3-capture-container  {
+        padding: 5% !important;
+        width: auto !important;
+        margin:0 5px;
+    }
+    
+}

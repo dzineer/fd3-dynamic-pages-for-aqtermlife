@@ -1,0 +1,99 @@
+{
+  "IcoMoonType": "selection",
+  "icons": [
+    {
+      "icon": {
+        "paths": [
+          "M566.374 351.542c-17.755-5.326-35.509-2.663-52.82 7.99-17.311 10.209-27.52 24.857-31.071 43.499-3.107 17.755 0.444 35.509 10.653 52.82s24.413 28.851 42.167 34.622c18.642 6.214 35.953 3.995 53.264-6.214 17.755-10.653 28.407-25.3 31.515-43.943 3.107-17.755-0.888-35.953-11.097-53.708-10.653-18.199-24.857-29.739-42.611-35.065z",
+          "M302.717 510.003c-17.755-5.326-35.509-2.663-52.82 7.99-17.311 10.209-27.52 24.857-31.071 43.499-3.107 17.755 0.444 35.509 10.653 52.82s24.413 28.851 42.167 34.622c18.642 6.214 35.953 3.995 53.264-6.214 17.755-10.653 28.407-25.3 31.515-43.943 3.107-17.755-0.888-35.953-11.097-53.708-11.097-18.199-24.857-29.739-42.611-35.065z",
+          "M442.979 64.361l-387.495 224.596 0.888 447.861 387.939 223.265 387.495-224.596-0.888-447.861-387.939-223.265zM406.582 652.928l-13.316-22.193c-8.433 30.183-24.413 52.82-48.381 67.024-29.295 17.755-60.366 20.862-93.656 9.765-31.515-10.653-56.371-30.627-74.126-60.366-18.199-30.627-24.857-61.697-19.974-93.656 5.326-34.178 22.637-59.922 52.82-78.121 25.744-15.535 53.708-19.086 84.335-11.097l-14.204-23.525 53.264-31.958 127.39 212.168-54.152 31.958zM716.844 572.144l-59.922-99.87c-8.433 30.183-24.413 52.82-48.381 67.024-29.295 17.755-60.366 20.862-93.656 9.765-31.515-10.653-56.371-30.627-74.126-60.366-18.199-30.627-24.857-61.697-19.974-93.656 5.326-34.178 22.637-59.922 52.82-78.121 25.744-15.535 53.708-19.086 84.335-11.097l-14.204-23.525 53.264-31.958 173.996 289.845-54.152 31.958z"
+        ],
+        "attrs": [
+          {},
+          {},
+          {}
+        ],
+        "width": 888,
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "grid": 16,
+        "tags": [
+          "FD3-aq2e"
+        ]
+      },
+      "attrs": [
+        {},
+        {},
+        {}
+      ],
+      "properties": {
+        "order": 7,
+        "id": 0,
+        "name": "AQ2EFont",
+        "prevSize": 32,
+        "code": 59648
+      },
+      "setIdx": 0,
+      "setId": 2,
+      "iconIdx": 0
+    }
+  ],
+  "height": 1024,
+  "metadata": {
+    "name": "AQ2EFont",
+    "url": "http://dzineer.com",
+    "designer": "Frank Decker III - Dzineer.com",
+    "designerURL": "http://dzineer.com",
+    "license": "Not Free",
+    "licenseURL": "http://dzineer.com/fonts/license"
+  },
+  "preferences": {
+    "showGlyphs": true,
+    "showQuickUse": true,
+    "showQuickUse2": true,
+    "showSVGs": true,
+    "fontPref": {
+      "prefix": "icon-",
+      "metadata": {
+        "fontFamily": "AQ2EFont",
+        "majorVersion": 1,
+        "minorVersion": 0,
+        "fontURL": "http://dzineer.com",
+        "description": "FD3 Font Set",
+        "copyright": "Frank Decker III",
+        "designer": "Frank Decker III - Dzineer.com",
+        "designerURL": "http://dzineer.com",
+        "licenseURL": "http://dzineer.com/fonts/license",
+        "license": "Not Free"
+      },
+      "metrics": {
+        "emSize": 1024,
+        "baseline": 6.25,
+        "whitespace": 50
+      },
+      "embed": false,
+      "ie7": true,
+      "noie8": false,
+      "includeMetadata": true,
+      "cssVars": true,
+      "cssVarsFormat": "scss",
+      "showSelector": true,
+      "selector": "class",
+      "showMetadata": true,
+      "showVersion": true,
+      "classSelector": ".aqfont",
+      "showMetrics": true
+    },
+    "imagePref": {
+      "prefix": "icon-",
+      "png": true,
+      "useClassSelector": true,
+      "color": 0,
+      "bgColor": 16777215,
+      "classSelector": ".icon"
+    },
+    "historySize": 100,
+    "showCodes": true,
+    "gridSize": 16
+  }
+}
