@@ -1,0 +1,374 @@
+      {
+        "ContactInfoData": {
+
+            "data": {
+
+                "parent_container": ".amp-new-sign-up-container",
+                "container": "#new-sign-up-contact-info",
+                "title": "Contact Info",
+                "controller": "ContactInfoController",
+                "next_controller": "AccountInfoController",
+                "tab_link": "#new-sign-up-contact-info-tab",
+                "tab": "#new-sign-up-contact-info",
+                "next_tab": "#new-sign-up-account-info",
+
+                "items": [
+
+                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "label", "contents":"Company", "props": { "class": "", "id": "fd3_form_company_label", "for": "fd3_form_company" }, "has_children": false },
+                        { "element": "input", "type": "text",   "state": "contact-info",  "props": {   "type": "text", "name" : "fd3_form_company", "class": "fd3-form-control input-lg", "id": "fd3_form_company", "placeholder": "Company" }, "has_children": false  }
+                    ] },
+
+                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "label", "contents":"First Name", "props": { "class": "", "id": "fd3_form_fname_label", "for": "fd3_form_fname" }, "has_children": false },
+                        { "element": "input", "type": "text",  "state": "contact-info",      "props": {  "type": "text", "class": "fd3-form-control input-lg", "id": "fd3_form_fname", "name": "fd3_form_fname", "placeholder": "First Name (required)" }, "has_children": false }
+                    ] },
+
+                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "label", "contents":"Last Name", "props": { "class": "", "id": "fd3_form_lname_label", "for": "fd3_form_lname" }, "has_children": false },
+                        { "element": "input", "type": "text",              "state": "contact-info",      "props": {  "type": "text", "class": "fd3-form-control input-lg", "name" : "fd3_form_lname", "id": "fd3_form_lname", "placeholder": "Last Name (required)" }, "has_children": false }
+                    ] },
+
+                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "label", "contents":"Email", "props": { "class": "", "id": "fd3_form_email_label", "for": "fd3_form_email" }, "has_children": false },
+                        { "element": "input", "type": "text",             "state": "contact-info",      "props": {  "name" : "fd3_form_email", "type": "text", "class": "fd3-form-control input-lg", "id": "fd3_form_email", "placeholder": "Email (required)" }, "has_children": false }
+                    ] },
+
+                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "label", "contents":"Phone", "props": { "class": "", "id": "fd3_form_phone_label", "for": "fd3_form_phone" }, "has_children": false },
+                        { "element": "input", "type": "text",              "state": "contact-info",      "props": {  "name" : "fd3_form_phone","type": "text", "class": "fd3-form-control input-lg", "id": "fd3_form_phone", "placeholder": "Phone (required)" }, "has_children": false }
+                    ] },
+
+                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "a", "contents": "Next", "props": { "class": "btn btn-primary btn-block btn-lg form-control", "id": "sign-up-fd3-contact-btn" }, "has_children": false }
+                    ]}                    
+
+                ]
+            }
+
+        },
+
+        "AccountInfoData": {
+
+            "data": {
+
+                "parent_container": ".amp-new-sign-up-container",
+                "container": "#new-sign-up-account-info",
+                "title": "Account Info",
+                "controller": "AccountInfoController",
+                "next_controller": "PreferencesInfoController",
+                "tab_link": "#new-sign-up-account-info-tab",
+                "tab": "#new-sign-up-account-info",
+                "next_tab": "#new-sign-up-preferences-info",
+
+                "items": [
+
+                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "label", "contents":"Your Account Id", "props": { "class": "", "id": "fd3_form_account_id_label", "for": "fd3_form_account_id" }, "has_children": false },
+                        { "element": "input", "type": "text",            "state": "contact-info",  "props": { "name" : "fd3_form_account_id", "type": "text", "class": "fd3-form-control form-control-md", "id": "fd3_form_account_id", "placeholder": "Account Id", "readonly": "readonly" }, "has_children": false  }
+                    ] },
+
+                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+
+                        { "element": "label", "contents":"Your Microsite ID will be used for your Microsite.", "props": { "class": "", "id": "fd3_form_microsite_id_label", "for": "fd3_form_microsite_id" }, "data-original": "Your Microsite ID will be used for your Microsite.", "has_children": false },
+                        { "element": "input", "type": "text",           "state": "contact-info",  "props": { "name" : "fd3_form_microsite_id", "type": "text", "class": "fd3-form-control input-lg", "id": "fd3_form_microsite_id",  "form_group": "microsite_id", "placeholder": "Your MICROSITE ID" }, "has_children": false  },
+
+                        { "element": "button", "type": "button",  "name" : "fd3_form_validate_microsite_btn",          "state": "contact-info",      "data-validate" : null,    "props": { "type": "text", "class": "fd3-form-control input-lg btn btn-success", "id": "fd3_form_validate_microsite_btn",  "state":"account_info", "form_group": "microsite_id", "value": "Check Availability" }, "has_children": true, "children": [
+                            { "element": "i", "props": { "class": "fa fa-cog fa-btn-font", "aria-hidden": "true", "has_children": false } },
+                            { "element": "span", "contents": "Check Availability", "props": { "class": "btn-caption", "has_children": false } }
+                        ]  }
+
+                    ] },
+                    
+                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [                    
+                        { "element": "div", "state": "contact-info", "props": { "id": "passwd-complexity-container" }, "has_children": true, "children": [   
+                            { "element": "input", "type": "password",   "state": "contact-info",      "data-validate" : null,    "props": { "name" : "fd3_form_password", "type": "text", "class": "fd3-form-control input-lg", "id": "fd3_form_password", "placeholder": "Password (required)" }, "has_children": false  },
+                            { "element": "span", "contents": "Strength: ", "props": { "id": "password-strength-text" }, "has_children": true, "children": [
+                                { "element": "strong", "contents":"Weak", "props": {}, "has_children": false },
+                                { "element": "br", "props": {}, "has_children": false },
+                                { "element": "span", "contents": "Feedback:  Add another word or two. Uncommon words are better.", "props": { "class": "feedback", "has_children": false } }
+                            ]}
+                        ]}
+                    ] },
+
+                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "a", "contents": "Next", "props": { "class": "btn btn-primary btn-block btn-lg fd3-account-btn form-control", "id": "new-sign-up-fd3-account-btn" }, "has_children": false }
+                    ]}
+
+                ]
+            }
+
+        },        
+
+        "PreferencesInfoData":  {
+
+            "data": {
+
+              "parent_container": ".amp-new-sign-up-container",
+              "container": "#new-sign-up-preferences-info",
+              "title": "Preferences",
+              "controller": "PreferencesInfoController",
+              "next_controller": "AgreementsInfoController",
+              "tab_link": "#new-sign-up-preferences-info-tab",
+              "tab": "#new-sign-up-preferences-info",
+              "next_tab": "#new-sign-up-agreements-info",
+
+              "items": [
+        
+                      { "element": "p", "contents":"We intend each month to email your clients either a personal contact email, or a newsletter or both.", "props": { "style": "display:inline-block;margin-bottom: 10px;font-size: 15px;font-weight: 700;" }, "has_children": false },
+        
+                      { "element": "p", "contents":"The Personal Contact Email will go out on the tenth of each month, the Newsletter Email will go out on the 20th of each month. Please indicate your preference below.", "props": { "style": "display:inline-block;margin-bottom: 16px;font-size: 15px;font-weight: 700;" }, "has_children": false },
+                
+                      { "element": "div", "props": { "class": "form-group" }, "has_children": true, "children": [
+                              { "element": "div", "props": { "class": "form-check" }, "has_children": true, "children": [
+                                      { "element": "h5", "contents":" Personal Contact Emails", "props": {}, "has_children": false },
+                                      { "element": "a", "contents":"View Example", "props": { "href": "https://www.marketingmailbox.net/bankbroker/agentrep/pdf_files/Marketing%20Mailbox%20Terms%20of%20Service%20Agreement.pdf", "class": "btn btn-primary btn-sm view-agreement", "target": "_blank" }, "has_children": false },
+                                      { "element": "label", "props": { "class": "form-check-label" }, "has_children": true, "children": [
+                                              { "element": "input", "props": { "type": "radio", "class": "form-check-input-md form-check-input", "name": "fd3_personal_emails_permission_checkbox", "id": "fd3_personal_emails_permission_checkbox", "value": "1", "style": "margin-top:15px" }, "has_children": false },
+                                              { "element": "span", "contents": "Yes, I would like to have emails sent out automatically each month on my behalf.", "props": { "style": "display:inline-block;margin-top: 10px;" }, "has_children": false }
+                                      ]},
+
+                                      { "element": "label", "props": { "class": "form-check-label" }, "has_children": true, "children": [
+                                              { "element": "input", "props": { "type": "radio", "class": "form-check-input-md form-check-input", "name": "fd3_personal_emails_permission_checkbox", "id": "fd3_personal_emails_permission_checkbox", "value": "0", "style": "margin-top:15px" }, "has_children": false },
+                                              { "element": "span", "contents": "No, I do not want emails sent out.", "props": { "style": "display:inline-block;margin-top: 10px;" }, "has_children": false }
+                                      ]}
+                    
+                              ]}
+                      ] },
+        
+                      { "element": "div", "props": { "class": "form-group" }, "has_children": true, "children": [
+                              { "element": "div", "props": { "class": "form-check" }, "has_children": true, "children": [
+                                      { "element": "h5", "contents":"Newsletter Emails", "props": {}, "has_children": false },
+                                      { "element": "a", "contents":"View Example", "props": { "href": "https://www.marketingmailbox.net/bankbroker/agentrep/pdf_files/Marketing%20Mailbox%20CAN-SPAM.pdf", "class": "btn btn-primary btn-sm view-agreement", "target": "_blank" }, "has_children": false },
+                                      { "element": "label", "props": { "class": "form-check-label" }, "has_children": true, "children": [
+                                              { "element": "input", "props": { "type": "radio", "class": "form-check-input-md form-check-input", "name": "fd3_newsletter_emails_permission_checkbox", "id": "fd3_newsletter_emails_permission_checkbox", "value": "1", "style": "margin-top:15px" }, "has_children": false },
+                                              { "element": "span", "contents": "Yes, I would like to have emails sent out automatically each month on my behalf.", "props": { "style": "display:inline-block;margin-top: 10px;" }, "has_children": false }
+                                      ]}
+                              ]},
+                
+                              { "element": "label", "props": { "class": "form-check-label" }, "has_children": true, "children": [
+                                      { "element": "input", "props": { "type": "radio", "class": "form-check-input-md form-check-input", "name": "fd3_newsletter_emails_permission_checkbox", "id": "fd3_personal_emails_permission_checkbox", "value": "0", "style": "margin-top:15px" }, "has_children": false },
+                                      { "element": "span", "contents": "No, I do not want emails sent out.", "props": { "style": "display:inline-block;margin-top: 10px;" }, "has_children": false }
+                              ]}
+                  
+                      ] },
+        
+                      { "element": "div", "props": { "class": "form-group" }, "has_children": true, "children": [
+                              { "element": "a", "contents":"Next", "props": { "href": "#", "class": "btn btn-primary btn-block btn-lg form-control", "id": "new-sign-up-fd3-preferences-btn" }, "has_children": false }
+                      ]}
+          
+              ]
+
+            }            
+        },
+
+        "AgreementsInfoData": {
+
+           "data": {
+
+                "parent_container": ".amp-new-sign-up-container",
+                "container": "#new-sign-up-agreements-info",
+                "title": "Agreements Info",
+                "controller": "AgreementsInfoController",
+                "next_controller": "BillingInfoController",
+                "tab_link": "#new-sign-up-agreements-info-tab",
+                "tab": "#new-sign-up-agreements-info",
+                "next_tab": "#new-sign-up-billing-info",
+
+                "items": [
+
+                    { "element": "div", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "div", "props": { "class": "form-check" }, "has_children": true, "children": [
+                            { "element": "h5", "contents":"User Agreement (required)", "props": {}, "has_children": false },
+                            { "element": "label", "props": { "class": "form-check-label" }, "has_children": true, "children": [
+                                { "element": "input", "props": { "type": "checkbox", "class": "form-check-input-md form-check-input", "name": "fd3_user_agreement_checkbox", "id": "fd3_user_agreement_checkbox", "value": "1" }, "has_children": false },
+                                { "element": "span", "contents": "I Agree | ", "has_children": false },
+                                { "element": "a", "contents":"View Agreement", "props": { "href": "https://www.marketingmailbox.net/bankbroker/agentrep/pdf_files/Marketing%20Mailbox%20Terms%20of%20Service%20Agreement.pdf", "class": "btn btn-primary btn-sm view-agreement", "target": "_blank" }, "has_children": false }
+                            ]}
+                        ]}
+                    ] },
+
+                    { "element": "div", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "div", "props": { "class": "form-check" }, "has_children": true, "children": [
+                            { "element": "h5", "contents":"CAN-SPAM Compliance Agreement (required)", "props": {}, "has_children": false },
+                            { "element": "label", "props": { "class": "form-check-label" }, "has_children": true, "children": [
+                                { "element": "input", "props": { "type": "checkbox", "class": "form-check-input-md form-check-input", "name": "fd3_spam_agreement_checkbox", "id": "fd3_spam_agreement_checkbox", "value": "1" }, "has_children": false },
+                                { "element": "span", "contents": "I Agree | ", "has_children": false },
+                                { "element": "a", "contents":"View Agreement", "props": { "href": "https://www.marketingmailbox.net/bankbroker/agentrep/pdf_files/Marketing%20Mailbox%20CAN-SPAM.pdf", "class": "btn btn-primary btn-sm view-agreement", "target": "_blank" }, "has_children": false }
+                            ]}
+                        ]}
+                    ] },
+
+                    { "element": "div", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "div", "props": { "class": "form-check" }, "has_children": true, "children": [
+                            { "element": "h5", "contents":"Cancellation Policy (required)", "props": {}, "has_children": false },
+                            { "element": "label", "props": { "class": "form-check-label" }, "has_children": true, "children": [
+                                { "element": "input", "props": { "type": "checkbox", "class": "form-check-input-md form-check-input", "name": "fd3_cancel_policy_agreement_checkbox", "id": "fd3_cancel_policy_agreement_checkbox", "value": "1" }, "has_children": false },
+                                { "element": "span", "contents": "I Agree | ", "has_children": false },
+                                { "element": "a", "contents":"View Agreement", "props": { "href": "https://www.agentadvisorconnect.com/bankbroker/agentrep/pdf_files/Marketing%20Mailbox%20Cancellation%20Policy.pdf", "class": "btn btn-primary btn-sm view-agreement", "target": "_blank" }, "has_children": false }
+                            ]}
+                        ]}
+                    ] },
+
+                    { "element": "div", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "a", "contents":"Next", "props": { "href": "#", "class": "btn btn-primary btn-block btn-lg form-control", "id": "new-sign-up-fd3-agreements-btn" }, "has_children": false }
+                    ]}
+
+                ]
+            }           
+        },
+
+        "BillingInfoData":  {
+
+            "data": {
+
+                "parent_container": ".amp-new-sign-up-container",
+                "container": "#new-sign-up-billing-info",
+                "title": "Billing Info",
+                "controller": "BillingInfoController",
+                "tab_link": "#new-sign-up-billing-info-tab",
+                "tab": "#new-sign-up-billing-info",
+
+                "items": [
+
+                    { "element": "div",  "state": "billing-info",  "props": { "id": "new-sign-up-invoice-container" }, "has_children": false },
+
+                    { "element": "h2",  "contents": "Billing Details", "state": "billing-info",  "props": { "class": "fd3-form-title" }, "has_children": false },
+
+                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "label", "contents":"BILLING ADDRESS", "props": { "class": "", "id": "fd3_form_address1_label", "for": "fd3_form_address1", "data-original": "BILLING ADDRESS" }, "has_children": false },
+                        { "element": "input", "type": "text",  "state": "billing-info",             "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_address1", "id": "fd3_form_address1", "state": "billing_info", "placeholder": "Address (required)" }, "has_children": false }
+                    ] },
+
+                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "input", "type": "text",  "state": "billing-info",             "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_address2", "id": "fd3_form_address2", "state": "billing_info", "placeholder": "Address 2 (optional)" }, "has_children": false }
+                    ] },
+
+                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "input", "type": "text",  "state": "billing-info",             "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_city", "id": "fd3_form_city", "state": "billing_info", "placeholder": "City (required)" }, "has_children": false }
+                    ] },
+
+                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "select", "state": "billing-info",  "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_state", "id": "fd3_form_state", "state": "billing_info", "placeholder": "State (required)" }, "has_children": true, "children": [
+                            { "element": "optgroup", "props": { "label": "United States" }, "has_children": true, "children": [
+                                { "element": "option", "contents":"Select State", "props": { "value": "0", "selected": "selected" }, "has_children": false },
+                                { "element": "option", "contents":"Alabama", "props": { "value": "ALAlabama" }, "has_children": false },
+                                { "element": "option", "contents":"Alaska", "props": { "value": "AKAlaska" }, "has_children": false },
+                                { "element": "option", "contents":"Arizona", "props": { "value": "AZArizona" }, "has_children": false },
+                                { "element": "option", "contents":"Arkansas", "props": { "value": "ARArkansas" }, "has_children": false },
+                                { "element": "option", "contents":"California", "props": { "value": "CACalifornia" }, "has_children": false },
+                                { "element": "option", "contents":"Colorado", "props": { "value": "COColorado" }, "has_children": false },
+                                { "element": "option", "contents":"Connecticut", "props": { "value": "CTConnecticut" }, "has_children": false },
+                                { "element": "option", "contents":"DC", "props": { "value": "DCDC" }, "has_children": false },
+                                { "element": "option", "contents":"Delaware", "props": { "value": "DEDelaware" }, "has_children": false },
+                                { "element": "option", "contents":"Florida", "props": { "value": "FLFlorida" }, "has_children": false },
+                                { "element": "option", "contents":"Georgia", "props": { "value": "GAGeorgia" }, "has_children": false },
+                                { "element": "option", "contents":"Hawaii", "props": { "value": "HIHawaii" }, "has_children": false },
+                                { "element": "option", "contents":"Idaho", "props": { "value": "IDIdaho" }, "has_children": false },
+                                { "element": "option", "contents":"Illinois", "props": { "value": "ILIllinois" }, "has_children": false },
+                                { "element": "option", "contents":"Iowa", "props": { "value": "IAIowa" }, "has_children": false },
+                                { "element": "option", "contents":"Kansas", "props": { "value": "KSKansas" }, "has_children": false },
+                                { "element": "option", "contents":"Kentucky", "props": { "value": "KYKentucky" }, "has_children": false },
+                                { "element": "option", "contents":"Louisiana", "props": { "value": "LALouisiana" }, "has_children": false },
+                                { "element": "option", "contents":"Maryland", "props": { "value": "MDMaryland" }, "has_children": false },
+                                { "element": "option", "contents":"Massachusetts", "props": { "value": "MAMassachusetts" }, "has_children": false },
+                                { "element": "option", "contents":"Michigan", "props": { "value": "MIMichigan" }, "has_children": false },
+                                { "element": "option", "contents":"Minnesota", "props": { "value": "MNMinnesota" }, "has_children": false },
+                                { "element": "option", "contents":"Mississippi", "props": { "value": "MSMississippi" }, "has_children": false },
+                                { "element": "option", "contents":"Missouri", "props": { "value": "MOMissouri" }, "has_children": false },
+                                { "element": "option", "contents":"Montana", "props": { "value": "MTMontana" }, "has_children": false },
+                                { "element": "option", "contents":"Nebraska", "props": { "value": "NENebraska" }, "has_children": false },
+                                { "element": "option", "contents":"Nevada", "props": { "value": "NVNevada" }, "has_children": false },
+                                { "element": "option", "contents":"New Hampshire", "props": { "value": "NHNew Hampshire" }, "has_children": false },
+                                { "element": "option", "contents":"New Jersey", "props": { "value": "NJNew Jersey" }, "has_children": false },
+                                { "element": "option", "contents":"New Mexico", "props": { "value": "NMNew Mexico" }, "has_children": false },
+                                { "element": "option", "contents":"New York", "props": { "value": "NYNew York" }, "has_children": false },
+                                { "element": "option", "contents":"North Carolina", "props": { "value": "NCNorth Carolina" }, "has_children": false },
+                                { "element": "option", "contents":"North Dakota", "props": { "value": "NDNorth Dakota" }, "has_children": false },
+                                { "element": "option", "contents":"Ohio", "props": { "value": "OHOhio" }, "has_children": false },
+                                { "element": "option", "contents":"Oklahoma", "props": { "value": "OKOklahoma" }, "has_children": false },
+                                { "element": "option", "contents":"Oregon", "props": { "value": "OROregon" }, "has_children": false },
+                                { "element": "option", "contents":"Pennsylvania", "props": { "value": "PAPennsylvania" }, "has_children": false },
+                                { "element": "option", "contents":"Rhode Island", "props": { "value": "RIRhode Island" }, "has_children": false },
+                                { "element": "option", "contents":"South Carolina", "props": { "value": "SCSouth Carolina" }, "has_children": false },
+                                { "element": "option", "contents":"South Dakota", "props": { "value": "SDSouth Dakota" }, "has_children": false },
+                                { "element": "option", "contents":"Tennessee", "props": { "value": "TNTennessee" }, "has_children": false },
+                                { "element": "option", "contents":"Texas", "props": { "value": "TXTexas" }, "has_children": false },
+                                { "element": "option", "contents":"Utah", "props": { "value": "UTUtah" }, "has_children": false },
+                                { "element": "option", "contents":"Vermont", "props": { "value": "VTVermont" }, "has_children": false },
+                                { "element": "option", "contents":"Virginia", "props": { "value": "VAVirginia" }, "has_children": false },
+                                { "element": "option", "contents":"Washington", "props": { "value": "WAWashington" }, "has_children": false },
+                                { "element": "option", "contents":"West Virginia", "props": { "value": "WVWest Virginia" }, "has_children": false },
+                                { "element": "option", "contents":"Wisconsin", "props": { "value": "WIWisconsin" }, "has_children": false },
+                                { "element": "option", "contents":"Wyoming", "props": { "value": "WYWyoming" }, "has_children": false }
+
+                            ]}                            
+                        ]}
+                    ] },
+
+                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "input", "type": "text",  "state": "billing-info",             "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_zipcode", "id": "fd3_form_zipcode", "state": "billing_info", "placeholder": "Zip Code (required)" }, "has_children": false }
+                    ] },
+
+                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "label", "contents":"PAYMENT DETAILS", "props": { "class": "", "id": "fd3_form_cc_cardtype_label", "for": "fd3_form_cc_cardtype", "data-original": "PAYMENT DETAILS" }, "has_children": false },
+
+                        { "element": "select",        "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_cc_cardtype", "id": "fd3_form_cc_cardtype", "state": "billing_info" }, "has_children": true, "children": [
+
+                            { "element": "optgroup", "props": { "label": "Accepted Payments" }, "has_children": true, "children": [
+                                { "element": "option", "contents":"Visa", "props": { "value": "0", "selected": "selected" }, "has_children": false },
+                                { "element": "option", "contents":"MasterCard", "props": { "value": "1", "selected": "selected" }, "has_children": false },
+                                { "element": "option", "contents":"American Express", "props": { "value": "2", "selected": "selected" }, "has_children": false }
+                            ]}
+                            
+                        ]}
+                    ] },
+
+                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "input", "type": "text",  "state": "billing-info",             "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_cc_cardholdername", "id": "fd3_form_cc_cardholdername", "state": "billing_info", "placeholder": "Card Holder's name  (required)" }, "has_children": false }
+                    ] },
+
+                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "input", "type": "text",  "state": "billing-info",             "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_cc_cardno", "id": "fd3_form_cc_cardno", "state": "billing_info", "placeholder": "Card Number (required)" }, "has_children": false }
+                    ] },
+
+                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "input", "type": "text",  "state": "billing-info",             "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_cc_expdate", "id": "fd3_form_cc_expdate", "state": "billing_info", "data-validator": "FORMS.Validate.ExpirationDate", "placeholder": "mm/yyyy (required)" }, "has_children": false }
+                    ] },                    
+
+                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
+                        { "element": "input", "type": "text",  "state": "billing-info",             "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_cc_cvv2", "id": "fd3_form_cc_cvv2", "state": "billing_info", "data-validator": "FORMS.Validate.ExpirationDate", "placeholder": "Security Code (required)" }, "has_children": false }
+                    ] },
+
+                    { "element": "button", "type": "button", "props": { "type": "text", "class": "btn btn-secondary btn-block btn-lg form-control fd3-subscribe-btn", "id": "link-to-subscribe",  "state":"billing_info", "form_group": "microsite_id", "value": "Signup For The Marketing Platform" }, "has_children": true, "children": [
+                        { "element": "i", "props": { "class": "fa fa-cog fa-btn-font", "aria-hidden": "true", "has_children": false } },
+                        { "element": "span", "contents": "Signup For The Marketing Platform", "props": { "class": "btn-caption", "has_children": false } }
+                    ]  }
+
+
+                ]
+            }          
+        },
+
+        "InvoiceInfoData": {
+
+             "data": {
+
+                "parent_container": ".invoice-container",
+                "container": "#new-sign-up-invoice-container",
+                "title": "Billing Info",
+                "controller": "InvoiceInfoController"
+
+            }
+        },
+
+        "PromoInfoData": {
+
+             "data": {
+
+                "container": "#new-sign-up-invoice-container",
+                "controller": "PromoInfoController"
+
+            }
+        }
+  }
