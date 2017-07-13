@@ -170,7 +170,7 @@
                 "container": "#new-sign-up-agreements-info",
                 "title": "Agreements Info",
                 "controller": "AgreementsInfoController",
-                "next_controller": "BillingInfoController",
+                "next_controller": "AMPBillingInfoController",
                 "tab_link": "#new-sign-up-agreements-info-tab",
                 "tab": "#new-sign-up-agreements-info",
                 "next_tab": "#new-sign-up-billing-info",

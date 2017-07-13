@@ -55,7 +55,7 @@
                 "container": "#ap-new-sign-up-account-info",
                 "title": "Account Info",
                 "controller": "AccountInfoController",
-                "next_controller": "BillingInfoController",
+                "next_controller": "APBillingInfoController",
                 "tab_link": "#ap-new-sign-up-account-info-tab",
                 "tab": "#ap-new-sign-up-account-info",
                 "next_tab": "#ap-new-sign-up-billing-info",
@@ -105,7 +105,7 @@
                 "parent_container": ".ap-new-sign-up-container",
                 "container": "#ap-new-sign-up-billing-info",
                 "title": "Billing Details",
-                "controller": "BillingInfoController",
+                "controller": "APBillingInfoController",
                 "tab_link": "#ap-new-sign-up-billing-info-tab",
                 "tab": "#ap-new-sign-up-billing-info",
                 "items": [

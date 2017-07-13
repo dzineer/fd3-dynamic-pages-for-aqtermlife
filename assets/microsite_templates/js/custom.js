@@ -1408,8 +1408,6 @@ var fieldSuccesses = {};
             }
         });
 
-        setInstance( "PreferencesInfoModel", PreferencesInfoModel );
-
         // Model: AgreementsInfo
         var AgreementsInfoModel = FD3Model.extend({
 
@@ -1497,10 +1495,8 @@ var fieldSuccesses = {};
             }
         });
 
-        setInstance( "AgreementsInfoModel", AgreementsInfoModel );
-
-        // Model: BillingInfo
-        var BillingInfoModel = FD3Model.extend({
+        // Model: AMPBillingInfo - AQ2E Marketing Platform Billing Model
+        var AMPBillingInfoModel = FD3Model.extend({
 
             'data': {},
             'subtotal': 0.00,
@@ -1741,7 +1737,247 @@ var fieldSuccesses = {};
             }
         });
 
-        setInstance( "BillingInfoModel", BillingInfoModel );
+        // Model: APBillingInfo - AQ2E Platform Billing Model
+        var APBillingInfoModel = FD3Model.extend({
+
+            'data': {},
+            'subtotal': 0.00,
+            'total': 0.00,
+            'items': [],            
+
+            'appData': {}, 
+
+            'loadPage': function( appData ) {
+                this.appData = appData;
+                this.data.views.billingInfo.registerCallback( this, this.eventsFired );
+                this.data.views.billingInfo.view( this.appData.BillingInfoData.data );
+                this.data.parent_container = this.appData.BillingInfoData.data.parent_container;
+                this.data.container = this.appData.BillingInfoData.data.container;
+                this.data.container = this.data.container instanceof jq ? this.data.container : jq( this.data.container );
+                this.data.parent_container = this.data.parent_container instanceof jq ? this.data.parent_container : jq( this.data.parent_container );
+
+                jq( this.appData.BillingInfoData.data.tab_link ).addClass('active');
+
+                this.data.parent_container.addClass('show');
+            },
+            'eventsFired': function( e ) {
+                var currentTarget = e.currentTarget;
+                var id = currentTarget.id;
+                var billingInfo = new BillingInfoController();
+                var invoiceInfo = new InvoiceInfoController();
+                var tab = this.data.container;
+                var that = this;
+                var currentInstance = jq( currentTarget );
+
+                e.preventDefault();
+
+                console.log( "info", id + ' was clicked' );
+
+                if( id == 'link-to-subscribe' ) {
+                    console.log( "info", id + ' was clicked' );
+
+                    if(this.validateFields()) {
+                        console.log( 'info', 'all fields valid.' );
+                        
+                            event.preventDefault( this.appData );
+                                
+                            var data = jq( myAjax.formQuery ).serialize();
+                            var promoCode =  jq( "#fd3_form_promocode" ).data("promocode");
+                            data = data + '&fd3_form_promocode=' + promoCode;
+                            var dataObject = fd3_objectify( data );
+
+                            dataObject[ 'action' ] = myAjax.action;
+                            dataObject[ myAjax.formid ] = myAjax.formid;
+                            dataObject[ 'nonce' ] = myAjax.nonce;
+                        
+                            var hasErrors = false;
+                            
+                            var fields = [
+
+                                { "field_name" : "fd3_form_promocode",         "validate" : FORMS.Validate.Promocode,    "required": false,  "use_object": true,   "instance" : options.jq("#fd3_form_promocode")  },
+                                { "field_name" : "fd3_form_address1",          "validate" : FORMS.Validate.FullName,     "required": true,   "use_object": true,   "instance" : options.jq("#fd3_form_address1"), "message": "Invalid Address." },
+                                { "field_name" : "fd3_form_address2",          "validate" : FORMS.Validate.FullName,     "required": false,  "use_object": true,   "instance" : options.jq("#fd3_form_address2") },
+                                { "field_name" : "fd3_form_city",              "validate" : FORMS.Validate.FullName,     "required": true,   "use_object": true,   "instance" : options.jq("#fd3_form_city"), "message": "Invalid City is required." },
+                                { "field_name" : "fd3_form_state",             "validate" : FORMS.Validate.selectedIndex,     "required": true,   "use_object": true,   "instance" : options.jq("#fd3_form_state"), "message": "State is required." },
+                                { "field_name" : "fd3_form_zipcode",           "validate" : FORMS.Validate.Zipcode,      "required": true,   "use_object": true,   "instance" : options.jq("#fd3_form_zipcode"), "message": "Invalid Zipcode."  },
+                                { "field_name" : "fd3_form_cc_cardholdername", "validate" : FORMS.Validate.FullName,     "required": true,   "use_object": true,   "instance" : options.jq("#fd3_form_cc_cardholdername"), "message": "Invalid Card Holder Name." },
+                                { "field_name" : "fd3_form_cc_cardno",         "validate" : FORMS.Validate.CreditCard_V2,   "required": true,   "use_object": true,   "instance" : options.jq("#fd3_form_cc_cardno"), "message": "Invalid Card." },
+                                { "field_name" : "fd3_form_cc_expdate",        "validate" : FORMS.Validate.ExpirationDate, "required": true, "use_object": true,  "instance" : options.jq("#fd3_form_cc_expdate"), "message": "Invalid Expiration Date." },
+
+                            ];
+
+                            jq( '.alert' ).remove();
+
+                            fields.forEach(function(field) {
+
+                                var name = field['field_name'];
+                                var validate = field['validate'];
+                                var inst = field['instance'];
+                                var required = field['required'];
+                                var msg = field['message'];
+                                var useObject = field['use_object'];
+                        
+                                if( name == "fd3_form_cc_cardno" ) {
+                            
+                                    var cardNum = inst.val();
+                                    var ccv2 = { "field_name" : "fd3_form_cc_cvv2", "validate" : FORMS.Validate.CVV3_V2, "required": true,  "use_object": true, "instance" : options.jq("#fd3_form_cc_cvv2"), "message": "Invalid Security Code." };
+                                    var ccv2Num = ccv2.instance.val();
+                        
+                                    if( ! validate.call( this, cardNum ) ) {
+                                            options.jq( inst ).parent().prepend('<div class="alert alert-danger" role="alert">' + msg + '</div>');
+                                            hasErrors = true;
+                                    }
+                        
+                                    if( ! ccv2.validate.call( this, cardNum, ccv2Num ) ) {
+                                            options.jq( ccv2.instance ).parent().prepend('<div class="alert alert-danger" role="alert">' + ccv2.message + '</div>');
+                                            hasErrors = true;
+                                    }
+                            
+                                } else {
+                            
+                                    if ( useObject && required && !validate.call( this, inst ) ) {
+                                            options.jq( inst ).parent().prepend( '<div class="alert alert-danger" role="alert">' + msg + '</div>' );
+                                            hasErrors = true;
+                                    }
+                                    else if ( !useObject && required && !validate.call( this, inst.val() ) ) {
+                                            options.jq( inst ).parent().prepend( '<div class="alert alert-danger" role="alert">' + msg + '</div>' );
+                                            hasErrors = true;
+                                    }
+                            
+                                }
+                            
+                            }, this);
+                  
+                            if( hasErrors ) {
+                                return true;
+                            }
+
+                            setTimeout( function() {
+
+                                currentInstance.find('.btn-caption').html('Signing up...');
+                                currentInstance.find(".fa-btn-font").addClass('show').addClass('fa-spin');
+
+                                jq.ajax( {
+
+                                    url: myAjax.url,
+                                    type: myAjax.formType,
+                                    dataType : myAjax.dataType,
+                                    data: dataObject,
+                                    cache: myAjax.useCache,
+
+                                    error: function( response ) {
+                                        console.log( response );
+                                    },
+
+                                    success: function( response ) {
+
+                                        if(response.successful == true) {
+
+                                            jq( myAjax.formButtonQuery ).find(".fa-btn-font").removeClass('show').removeClass('fa-spin').find('.btn-caption').html("Sign Up");
+
+                                            jq( '.fd3-panel' ).find( '.title-text' ).remove();
+
+                                            jq('#register_form').remove();
+                                            jq('.thankyou-container').addClass('show');
+
+                                        } 
+                                        else if( response.successful == false ) { // we have a form error
+                                            jq('#signup-modal').modal('hide');                            
+                                        }
+
+                                    }
+
+                                });
+
+                            }, 1000);
+
+
+                            return false;
+
+
+                    } else {
+                        console.log( 'info', 'all fields not valid.' );
+                    }
+
+                }
+            },
+            'addItem': function( desc, qty, cost ) {
+                this.items.push( { "desc": desc, "qty": qty, "cost": cost, "total": qty * cost } );
+                this.calc();
+            },
+            'empty': function() {
+                this.items = [];
+            },
+            'removeItem': function( pos ) {
+                var index = this.items.indexOf( pos );
+                if( index > -1 ) {
+                    this.items.splice( index, 1 );
+                }
+                this.calc();
+            },                            
+            'getItems': function() {
+                return this.items;
+            },
+            'calc': function() {
+                this.subtotal = this.total = 0.00;
+                for( var i=0; i < this.items.length; i++ ) {
+                    this.subtotal = this.subtotal + this.items[ i ].total;
+                }
+                this.total = this.subtotal;
+            },
+            'getSubtotal': function() {
+
+                this.subtotal = this.subtotal.toFixed(2).replace(/./g, function(c, i, a) {
+                    return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+                });                             
+
+                return this.subtotal;
+            },
+            'getTotal': function() {
+                this.total = this.total.toFixed(2).replace(/./g, function(c, i, a) {
+                    return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+                });                             
+                return this.total;
+            },
+            'validateFields': function() {
+                var hasErrors = false;
+                var email;
+
+                var fields = [
+                    { "field_name" : "fd3_user_agreement_checkbox",      "validate" : FORMS.Validate.isChecked, "required": true,  "use_object": true, "instance" : options.jq("#fd3_user_agreement_checkbox"), "message": "You must check the User Agreement" },
+                    { "field_name" : "fd3_spam_agreement_checkbox",          "validate" : FORMS.Validate.isChecked, "required": true,  "use_object": true, "instance" : options.jq("#fd3_spam_agreement_checkbox"), "message": "You must check the CAN-SPAM Compliance Agreement" },
+                    { "field_name" : "fd3_cancel_policy_agreement_checkbox",          "validate" : FORMS.Validate.isChecked, "required": true,  "use_object": true, "instance" : options.jq("#fd3_cancel_policy_agreement_checkbox"), "message": "You must check the Cancellation Policy " }
+                ];  
+                
+                options.jq( '.alert' ).remove();
+
+                fields.forEach(function(field) {
+                    var name = field['field_name'];
+                    var validate = field['validate'];
+                    var inst = field['instance'];
+                    var required = field['required'];
+                    var msg = field['message'];
+                    var useObject = field['use_object'];
+
+                    if( useObject && required && ! validate.call( this, inst ) ) {
+                      options.jq( inst ).parent().prepend('<div class="alert alert-danger" role="alert">' + msg + '</div>');
+                      hasErrors = true;
+                    } else if( ! useObject && required && ! validate.call( this, inst.val() ) ) {
+                      options.jq( inst ).parent().prepend('<div class="alert alert-danger " role="alert">' + msg + '</div>');
+                      hasErrors = true;
+                    }
+
+                }, this);
+
+                if( hasErrors ) {
+                    return false;
+                }
+
+                console.log( 'info', 'email: ' + email );
+
+                return true;
+            }
+        });
 
         // Model: InvoiceInfo
         var InvoiceInfoModel = FD3Model.extend({
@@ -1902,13 +2138,13 @@ var fieldSuccesses = {};
 
         setInstance( "AgreementsInfoController", AgreementsInfoController ); 
 
-        // Controller: BillingInfo
-        var BillingInfoController = FD3Controller.extend({
+        // Controller: AMPBillingInfo
+        var AMPBillingInfoController = FD3Controller.extend({
             'index': function( data ) {
 
                 var invoiceInfoView = new InvoiceInfoView();
 
-                var billingInfo = new BillingInfoModel();
+                var billingInfo = new AMPBillingInfoModel();
                 billingInfo.init({
                     'contents': data.BillingInfoData,
                     'views': { 'billingInfo': new BillingInfoView() }
@@ -1940,7 +2176,43 @@ var fieldSuccesses = {};
             } 
         });
 
-        setInstance( "BillingInfoController", BillingInfoController ); 
+
+        // Controller: APBillingInfo
+        var APBillingInfoController = FD3Controller.extend({
+            'index': function( data ) {
+
+                var invoiceInfoView = new InvoiceInfoView();
+
+                var billingInfo = new APBillingInfoModel();
+                billingInfo.init({
+                    'contents': data.BillingInfoData,
+                    'views': { 'billingInfo': new BillingInfoView() }
+                });
+
+                var invoiceInfo = new InvoiceInfoModel();
+                invoiceInfo.init({
+                    'contents': data.InvoiceInfoData,
+                    'views': { 'invoiceInfo': invoiceInfoView },
+                    'billing': billingInfo,
+                    'billingData': data.BillingInfoData
+                });                
+
+                var promoInfo = new PromoInfoModel();
+                promoInfo.init({
+                    'contents': PromoInfoModel,
+                    'views': { 
+                        'promoInfo': new PromoInfoView(),
+                        'invoiceInfo': invoiceInfoView
+                    },
+                }); 
+
+                billingInfo.addItem( 'AQ2E Platform', 1, 70.00 );
+
+                billingInfo.loadPage( data );
+                invoiceInfo.loadPage( data );
+                promoInfo.loadPage( data );
+            } 
+        });
 
         // Controller: InvoiceInfo
         var InvoiceInfoController = FD3Controller.extend({
