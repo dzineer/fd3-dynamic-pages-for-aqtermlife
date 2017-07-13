@@ -208,28 +208,28 @@
 
                                                 <!-- *************************************************************************************** -->
 
-                                                <div class="amp-new-sign-up-container hide">
+                                                <div class="amp-new-sign-up-container">
 
 
-                                                        <ul class="nav nav-tabs" role="tablist" id="new-sign-up-tab">
+                                                        <ul class="nav nav-tabs" role="tablist" id="amp-new-sign-up-tab">
 
                                                             <li class="nav-item">
-                                                                <a href="#new-sign-up-contact-info" id="new-sign-up-contact-info-tab" class="nav-link active" data-toggle="tab" role="tab">Contact Info</a>
+                                                                <a href="#new-sign-up-contact-info" id="new-sign-up-contact-info-tab" class="nav-link" data-toggle="tab" role="tab">Contact Info</a>
                                                             </li>
 
                                                             <li class="nav-item disabled">
-                                                                <a href="#new-sign-up-account-info" id="new-sign-up-account-info-tab" class="nav-link" data-toggle="" role="tab">Account Info</a>
+                                                                <a href="#new-sign-up-account-info" id="new-sign-up-account-info-tab" class="nav-link" data-toggle="tag" role="tab">Account Info</a>
                                                             </li>
 																																																											
-																																																														<a href="#new-sign-up-preferences-info" id="new-sign-up-preferences-info-tab" class="nav-link" data-toggle="" role="tab">Preferences</a>
+																																																														<a href="#new-sign-up-preferences-info" id="new-sign-up-preferences-info-tab" class="nav-link" data-toggle="tag" role="tab">Preferences</a>
 																																																											 </li>
 																																																											
                                                             <li class="nav-item disabled">
-                                                                <a href="#new-sign-up-agreements-info" id="new-sign-up-agreements-info-tab" class="nav-link"  data-toggle="" disabled="disabled" role="tab">Agreements</a>
+                                                                <a href="#new-sign-up-agreements-info" id="new-sign-up-agreements-info-tab" class="nav-link"  data-toggle="tag" disabled="disabled" role="tab">Agreements</a>
                                                             </li>                                                            
 
                                                             <li class="nav-item disabled">
-                                                                <a href="#new-sign-up-billing-info" id="new-sign-up-billing-info-tab" class="nav-link" disabled="disabled" data-toggle="" role="tab">Billing Info</a>
+                                                                <a href="#new-sign-up-billing-info" id="new-sign-up-billing-info-tab" class="nav-link" disabled="disabled" data-toggle="tag" role="tab">Billing Info</a>
                                                             </li>
                                      
                                                         </ul>
@@ -237,30 +237,32 @@
                                                         <div class="tab-content"> <!-- tab-content -->
 
                                                                 <div id="new-sign-up-contact-info" class="tab-pane active" role="tabpanel">  <!-- contact info -->
-                                                                
                                                                 </div>  <!-- ./contact info -->
+                                                        </div>        
 
+                                                        <div class="tab-content"> <!-- tab-content -->
 
                                                                 <div id="new-sign-up-account-info" class="tab-pane" role="tabpanel"> <!-- account info -->
-                                                                
-                                                                
                                                                 </div> <!-- ./account info -->
+
+                                                        </div>        
 			
+                                                        <div class="tab-content"> <!-- tab-content -->
 			
 																																																														  <div id="new-sign-up-preferences-info" class="tab-pane" role="tabpanel"> <!-- account info -->
-						
-						
 																																																														  </div> <!-- ./preferences info -->
+                                                        </div>        
+
+                                                        <div class="tab-content"> <!-- tab-content -->
 
                                                                 <div id="new-sign-up-agreements-info" class="tab-pane" role="tabpanel"> <!-- account info -->
-                                                                
-                                                                
                                                                 </div> <!-- ./agreements info -->
 
+                                                        </div>        
+
+                                                        <div class="tab-content"> <!-- tab-content -->
 
                                                                 <div id="new-sign-up-billing-info" class="tab-pane" role="tabpanel"> <!-- billing info -->
-
-
                                                                 </div> <!-- ./billing info -->
 
                                                         </div> <!-- tab-content -->
@@ -268,112 +270,40 @@
                                                 </div> <!-- ./new-sign-up-container -->
 
 
+                                                <div id="ap-new-sign-up-container">
 
-
-                                                <div class="new-aq2e-platform-sign-up-container">
-
-
-                                                        <ul class="nav nav-tabs" role="tablist" id="new-sign-up-tab">
+                                                        <ul class="nav nav-tabs" role="tablist" id="ap-new-sign-up-tab">
 
                                                             <li class="nav-item">
-                                                                <a href="#new-sign-up-contact-info" id="new-sign-up-contact-info-tab" class="nav-link active" data-toggle="tab" role="tab">Contact Info</a>
+                                                                <a href="#ap-new-sign-up-contact-info" id="ap-new-sign-up-contact-info-tab" class="nav-link" data-toggle="tab" role="tab">Contact Info</a>
                                                             </li>
 
                                                             <li class="nav-item disabled">
-                                                                <a href="#new-sign-up-account-info" id="new-sign-up-account-info-tab" class="nav-link" data-toggle="" role="tab">Account Info</a>
-                                                            </li>
-                                                           
-                                                              <a href="#new-sign-up-preferences-info" id="new-sign-up-preferences-info-tab" class="nav-link" data-toggle="" role="tab">Preferences</a>
+                                                                <a href="#ap-new-sign-up-account-info" id="ap-new-sign-up-account-info-tab" class="nav-link" data-toggle="tab" role="tab">Account Info</a>
                                                             </li>
                                                            
                                                             <li class="nav-item disabled">
-                                                                <a href="#new-sign-up-agreements-info" id="new-sign-up-agreements-info-tab" class="nav-link"  data-toggle="" disabled="disabled" role="tab">Agreements</a>
-                                                            </li>                                                            
-
-                                                            <li class="nav-item disabled">
-                                                                <a href="#new-sign-up-billing-info" id="new-sign-up-billing-info-tab" class="nav-link" disabled="disabled" data-toggle="" role="tab">Billing Info</a>
+                                                                <a href="#ap-new-sign-up-billing-info" id="ap-new-sign-up-billing-info-tab" class="nav-link" data-toggle="tab" role="tab">Billing Info</a>
                                                             </li>
                                      
                                                         </ul>
 
                                                         <div class="tab-content"> <!-- tab-content -->
+                                                            <div id="ap-new-sign-up-contact-info" class="tab-pane active" role="tabpanel">  <!-- contact info -->
+                                                            </div>  <!-- ./contact info -->
+                                                        </div>
 
-                                                                <div id="new-sign-up-contact-info" class="tab-pane active" role="tabpanel">  <!-- contact info -->
-                                                                
-                                                                </div>  <!-- ./contact info -->
+                                                        <div class="tab-content"> <!-- tab-content -->
+                                                            <div id="ap-new-sign-up-account-info" class="tab-pane" role="tabpanel"> <!-- account info -->
+                                                            </div> <!-- ./account info -->
+                                                        </div>
 
-
-                                                                <div id="new-sign-up-account-info" class="tab-pane" role="tabpanel"> <!-- account info -->
-                                                                
-                                                                
-                                                                </div> <!-- ./account info -->
-   
-                                                                <div id="new-sign-up-billing-info" class="tab-pane" role="tabpanel"> <!-- billing info -->
-
-
-                                                                </div> <!-- ./billing info -->
-
+                                                        <div class="tab-content"> <!-- tab-content -->
+                                                            <div id="ap-new-sign-up-billing-info" class="tab-pane" role="tabpanel"> <!-- billing info -->
+                                                            </div> <!-- ./billing info -->
                                                         </div> <!-- tab-content -->
 
                                                 </div> <!-- ./new-aq2e-platform-sign-up-container -->
-
-                                                <div class="new-amp-signup-container">
-
-                                                        <ul class="nav nav-tabs" role="tablist" id="new-amp-signup-tab">
-
-                                                            <li class="nav-item">
-                                                                <a href="#new-amp-signup-contact-info" id="new-amp-signup-contact-info-tab" class="nav-link active" data-toggle="tab" role="tab">Contact Info</a>
-                                                            </li>
-
-                                                            <li class="nav-item disabled">
-                                                                <a href="#new-amp-signup-account-info" id="new-amp-signup-account-info-tab" class="nav-link" data-toggle="" role="tab">Account Info</a>
-                                                            </li>
-                                                           
-                                                              <a href="#new-amp-signup-preferences-info" id="new-amp-signup-preferences-info-tab" class="nav-link" data-toggle="" role="tab">Preferences</a>
-                                                            </li>
-                                                           
-                                                            <li class="nav-item disabled">
-                                                                <a href="#new-amp-signup-agreements-info" id="new-amp-signup-agreements-info-tab" class="nav-link"  data-toggle="" disabled="disabled" role="tab">Agreements</a>
-                                                            </li>                                                            
-
-                                                            <li class="nav-item disabled">
-                                                                <a href="#new-amp-signup-billing-info" id="new-amp-signup-billing-info-tab" class="nav-link" disabled="disabled" data-toggle="" role="tab">Billing Info</a>
-                                                            </li>
-                                     
-                                                        </ul>
-
-                                                        <div class="tab-content"> <!-- tab-content -->
-
-                                                                <div id="new-amp-signup-contact-info" class="tab-pane active" role="tabpanel">  <!-- contact info -->
-                                                                
-                                                                </div>  <!-- ./contact info -->
-
-
-                                                                <div id="new-amp-signup-account-info" class="tab-pane" role="tabpanel"> <!-- account info -->
-                                                                
-                                                                
-                                                                </div> <!-- ./account info -->
-   
-   
-                                                                <div id="new-amp-signup-preferences-info" class="tab-pane" role="tabpanel"> <!-- account info -->
-      
-      
-                                                                </div> <!-- ./preferences info -->
-
-                                                                <div id="new-amp-signup-agreements-info" class="tab-pane" role="tabpanel"> <!-- account info -->
-                                                                
-                                                                
-                                                                </div> <!-- ./agreements info -->
-
-
-                                                                <div id="new-amp-signup-billing-info" class="tab-pane" role="tabpanel"> <!-- billing info -->
-
-
-                                                                </div> <!-- ./billing info -->
-
-                                                        </div> <!-- tab-content -->
-
-                                                </div> <!-- ./new-aq2e-marketing-platform-sign-up-container -->
 
 
                                             </form>

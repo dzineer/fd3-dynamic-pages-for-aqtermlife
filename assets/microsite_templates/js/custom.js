@@ -219,6 +219,20 @@ var fieldSuccesses = {};
 
     options.jq(function() {
 
+        var object_instances = [];
+
+        function setInstance( key, value ) {
+            object_instances[ key ] = value;
+        }
+
+        function getInstance( key ) {
+            if( key in object_instances ) {
+                return object_instances[ key ];
+            } else {
+                return null;
+            }
+        }
+
         function fd3_objectify( s ) {
 
             var obj = { };
@@ -816,6 +830,7 @@ var fieldSuccesses = {};
             },
             'view': function( data ) {
                 this.data = data;
+                this.data.container = (this.data.container instanceof jq) ? this.data.container : jq( this.data.container );
                 return this.render();
             }
         });
@@ -832,6 +847,36 @@ var fieldSuccesses = {};
         var SignUpChoiceModel = FD3Model.extend({
 
             'data': {},
+
+            'loadData': function( tab, dataName, cbArray ) {
+
+                var that = this;
+
+                (function( url ) {
+
+                    jq.ajax({ 
+                      url: url, 
+                      type: 'get', 
+                      dataType: 'text', 
+                      success: function(data) { 
+
+                        console.log( 'info', data ); 
+                        that.initData( tab, cbArray, JSON.parse(data) );
+
+                      } 
+                    });
+
+                }( 
+                    myAjax.dataFilesPath + dataName + '.json'
+                ));
+
+            },
+
+            'initData': function( tab, cbArray, appData ) {
+                console.log( 'info', 'tab: ' + tab );
+                jq( tab ).addClass('show');
+                cbArray[1].call( cbArray[0], appData );
+            },
 
             'loadPage': function() {
                 var signUp = new SignUpChoiceView();
@@ -853,10 +898,7 @@ var fieldSuccesses = {};
                     jq('.product-two-hilite').html('');
                     jq('.product-one-hilite').html('AQ2E Platform Sign Up');
 
-                    // display tabs
-                    jq('#new-sign-up-tab').addClass('show');
-
-                    contactInfo.index();
+                    return this.loadData( '#ap-new-sign-up-tab', 'aq2e-platform-signup-data', [contactInfo, contactInfo.index] );
 
                 } else if( id == 'product-two-container' ) {
                     console.log( "info", id + ' was clicked' );
@@ -866,10 +908,8 @@ var fieldSuccesses = {};
                     jq('.product-one-hilite').html('');
                     jq('.product-two-hilite').html('AQ2E Marketing Platform Sign Up');
 
-                    // display tabs
-                    jq('#new-sign-up-tab').addClass('show');
+                    return this.loadData( '#amp-new-sign-up-tab', 'aq2e-marketing-platform-signup-data', [contactInfo, contactInfo.index] );
 
-                    contactInfo.index();
                 }
             }
         });
@@ -878,11 +918,13 @@ var fieldSuccesses = {};
         var PromoInfoModel = FD3Model.extend({
 
             'data': {},
+            'appData': {},
 
-            'loadPage': function() {
+            'loadPage': function( appData ) {
+                this.appData = appData;
                 this.data.views.promoInfo.registerCallback( this, this.eventsFired );
-                this.data.views.promoInfo.view( PromoInfoData.data );
-                this.data.container = PromoInfoData.data.container;
+                this.data.views.promoInfo.view( this.appData.PromoInfoData.data );
+                this.data.container = this.appData.PromoInfoData.data.container;
             },
             'eventsFired': function( e ) {
                 var currentTarget = e.currentTarget;
@@ -930,7 +972,7 @@ var fieldSuccesses = {};
                                         console.log( response.output );
 
                                         that.data.views.invoiceInfo.applyPromo( response.promo );
-                                        that.loadPage();
+                                        that.loadPage( this.appData );
 
                                         jq( "#fd3_form_promocode" ).val( promoCode );
                                         jq( "#fd3_form_promocode" ).attr( "data-promocode", promoCode );
@@ -970,6 +1012,7 @@ var fieldSuccesses = {};
                 options.jq( '.alert' ).remove();
 
                 fields.forEach(function(field) {
+
                     var name = field['field_name'];
                     var validate = field['validate'];
                     var inst = field['instance'];
@@ -1004,18 +1047,26 @@ var fieldSuccesses = {};
         var ContactInfoModel = FD3Model.extend({
 
             'data': {},
+            'appData': {},
 
-            'loadPage': function() {
+            'loadPage': function( appData ) {
+                this.appData = appData;
+                this.modelData = this.appData.ContactInfoData.data;
                 this.data.views.contactInfo.registerCallback( this, this.eventsFired );
-                this.data.views.contactInfo.view( ContactInfoData.data );
-                this.data.parent_container = ContactInfoData.data.parent_container;
-                this.data.container = ContactInfoData.data.container;
+                this.data.views.contactInfo.view( this.appData.ContactInfoData.data );
+                this.data.parent_container = this.appData.ContactInfoData.data.parent_container;
+                this.data.container = this.appData.ContactInfoData.data.container;
+                this.data.container = this.data.container instanceof jq ? this.data.container : jq( this.data.container );
+
+                jq( this.modelData.tab_link ).addClass('active');
+
+                this.data.parent_container = this.data.parent_container instanceof jq ? this.data.parent_container : jq( this.data.parent_container );
                 this.data.parent_container.addClass('show');
             },
             'eventsFired': function( e ) {
                 var currentTarget = e.currentTarget;
                 var id = currentTarget.id;
-                var accountInfo = new AccountInfoController();
+                var controller = new this.data.next_controller();
                 var tab = this.data.container;
 
                 e.preventDefault();
@@ -1028,11 +1079,18 @@ var fieldSuccesses = {};
                     if(this.validateFields()) {
                         console.log( 'info', 'all fields valid.' );
                         
-                        accountInfo.index();
+                        controller.index( this.appData );
 
                         email = tab.find('#fd3_form_email').val();
-                        options.jq('#new-sign-up-account-info-tab').tab('show');
-                        options.jq(".amp-new-sign-up-container").find('#fd3_form_account_id').val( email );
+
+                        // options.jq( this.appData.ContactInfoData.data.tab ).tab('hide');
+
+                        this.data.container.removeClass('show');
+                        this.data.container.removeClass('active');
+                        jq( this.modelData.tab_link ).removeClass('active');
+                        jq( this.modelData.next_tab ).tab('show');
+
+                        jq( this.modelData.parent_container ).find('#fd3_form_account_id').val( email );
                         
 
                     } else {
@@ -1086,21 +1144,33 @@ var fieldSuccesses = {};
             }
         });
 
+
+        setInstance( "ContactInfoModel", ContactInfoModel );
+
         // Model: AccountInfo
         var AccountInfoModel = FD3Model.extend({
 
             'data': {},
+            'appData': {},
+            'modelData': {},
 
-            'loadPage': function() {
+            'loadPage': function( appData ) {
+                this.appData = appData;
+                this.modelData = this.appData.AccountInfoData.data;
                 this.data.views.accountInfo.registerCallback( this, this.eventsFired );
-                this.data.views.accountInfo.view( AccountInfoData.data );
-                this.data.container = AccountInfoData.data.container;
+                this.data.views.accountInfo.view( this.appData.AccountInfoData.data );
+                this.data.container = this.appData.AccountInfoData.data.container;
+                this.data.container = this.data.container instanceof jq ? this.data.container : jq( this.data.container );
+
+                jq( this.modelData.tab_link ).addClass('active');
+
                 this.data.container.addClass('show');
             },
             'eventsFired': function( e ) {
                 var currentTarget = e.currentTarget;
                 var id = currentTarget.id;
-                var referencesInfo = new PreferencesInfoController();
+                var controller = new this.data.next_controller();
+
                 var that = currentTarget;
 
                 e.preventDefault();
@@ -1112,11 +1182,14 @@ var fieldSuccesses = {};
 
                     if(this.validateFields()) {
                         console.log( 'info', 'all fields valid.' );
+
+
+                        controller.index( this.appData );
+
                         this.data.container.removeClass('show');
-
-                        referencesInfo.index();
-
-                        options.jq('#new-sign-up-preferences-info-tab').tab('show');
+                        this.data.container.removeClass('active');
+                        jq( this.modelData.tab_link ).removeClass('active');
+                        jq( this.modelData.next_tab ).tab('show');
 
                     } else {
                         console.log( 'info', 'all fields not valid.' );
@@ -1243,34 +1316,33 @@ var fieldSuccesses = {};
                     return false;
                 }
 
-                // okay now we draw the next tab
-                // TODO: Instantiate Account Info Controller
-                //       Instantiate Account Info Model
-
                 return true;
-
-                // tab.find('#fd3_form_account_id').val( email );
-                // options.jq('#new-sign-up-account-info-tab').tab('show');                
-
             }
         });        
+
+        setInstance( "AccountInfoModel", AccountInfoModel );
 
         // Model: PreferencesInfo
         var PreferencesInfoModel = FD3Model.extend({
             
             'data': {},
+            'appData': {},            
 
-            'loadPage': function() {
+            'loadPage': function( appData ) {
+                this.appData = appData;
+                this.modelData = this.appData.PreferencesInfoData.data;
                 this.data.views.preferencesInfo.registerCallback( this, this.eventsFired );
-                this.data.views.preferencesInfo.view( PreferencesInfoData.data );
-                this.data.parent_container = PreferencesInfoData.data.parent_container;
-                this.data.container = PreferencesInfoData.data.container;
+                this.data.views.preferencesInfo.view( this.appData.PreferencesInfoData.data );
+                this.data.parent_container = this.appData.PreferencesInfoData.data.parent_container;
+                this.data.container = this.appData.PreferencesInfoData.data.container;
+                this.data.container = this.data.container instanceof jq ? this.data.container : jq( this.data.container );
+                this.data.parent_container = this.data.parent_container instanceof jq ? this.data.parent_container : jq( this.data.parent_container );
                 this.data.parent_container.addClass('show');
             },
             'eventsFired': function( e ) {
                 var currentTarget = e.currentTarget;
                 var id = currentTarget.id;
-                var agreementsInfo = new AgreementsInfoController();
+                var controller = new this.data.next_controller();
                 var tab = this.data.container;
 
                 e.preventDefault();
@@ -1283,9 +1355,12 @@ var fieldSuccesses = {};
                     if(this.validateFields()) {
                         console.log( 'info', 'all fields valid.' );
                         
-                        agreementsInfo.index();
+                        controller.index( this.appData );
 
-                        options.jq('#new-sign-up-agreements-info-tab').tab('show');
+                        this.data.container.removeClass('show');
+                        this.data.container.removeClass('active');
+                        jq( this.modelData.tab_link ).removeClass('active');
+                        jq( this.modelData.next_tab ).tab('show');
 
                     } else {
                         console.log( 'info', 'all fields not valid.' );
@@ -1330,29 +1405,32 @@ var fieldSuccesses = {};
                 console.log( 'info', 'email: ' + email );
 
                 return true;
-
-                // tab.find('#fd3_form_account_id').val( email );
-                // options.jq('#new-sign-up-account-info-tab').tab('show');                
-
             }
         });
+
+        setInstance( "PreferencesInfoModel", PreferencesInfoModel );
 
         // Model: AgreementsInfo
         var AgreementsInfoModel = FD3Model.extend({
 
             'data': {},
+            'appData': {},            
 
-            'loadPage': function() {
+            'loadPage': function( appData ) {
+                this.appData = appData;
+                this.modelData = this.appData.AgreementsInfoData.data;
                 this.data.views.agreementsInfo.registerCallback( this, this.eventsFired );
-                this.data.views.agreementsInfo.view( AgreementsInfoData.data );
-                this.data.parent_container = AgreementsInfoData.data.parent_container;
-                this.data.container = AgreementsInfoData.data.container;
+                this.data.views.agreementsInfo.view( this.appData.AgreementsInfoData.data );
+                this.data.parent_container = this.appData.AgreementsInfoData.data.parent_container;
+                this.data.container = this.appData.AgreementsInfoData.data.container;
+                this.data.container = this.data.container instanceof jq ? this.data.container : jq( this.data.container );
+                this.data.parent_container = this.data.parent_container instanceof jq ? this.data.parent_container : jq( this.data.parent_container );
                 this.data.parent_container.addClass('show');
             },
             'eventsFired': function( e ) {
                 var currentTarget = e.currentTarget;
                 var id = currentTarget.id;
-                var billingInfo = new BillingInfoController();
+                var controller = new this.data.next_controller();
                 var tab = this.data.container;
 
                 e.preventDefault();
@@ -1365,9 +1443,12 @@ var fieldSuccesses = {};
                     if(this.validateFields()) {
                         console.log( 'info', 'all fields valid.' );
                         
-                        billingInfo.index();
+                        controller.index( this.appData );
 
-                        options.jq('#new-sign-up-billing-info-tab').tab('show');
+                        this.data.container.removeClass('show');
+                        this.data.container.removeClass('active');
+                        jq( this.modelData.tab_link ).removeClass('active');
+                        jq( this.modelData.next_tab ).tab('show');
 
                     } else {
                         console.log( 'info', 'all fields not valid.' );
@@ -1413,12 +1494,10 @@ var fieldSuccesses = {};
                 console.log( 'info', 'email: ' + email );
 
                 return true;
-
-                // tab.find('#fd3_form_account_id').val( email );
-                // options.jq('#new-sign-up-account-info-tab').tab('show');                
-
             }
         });
+
+        setInstance( "AgreementsInfoModel", AgreementsInfoModel );
 
         // Model: BillingInfo
         var BillingInfoModel = FD3Model.extend({
@@ -1428,11 +1507,19 @@ var fieldSuccesses = {};
             'total': 0.00,
             'items': [],            
 
-            'loadPage': function() {
+            'appData': {}, 
+
+            'loadPage': function( appData ) {
+                this.appData = appData;
                 this.data.views.billingInfo.registerCallback( this, this.eventsFired );
-                this.data.views.billingInfo.view( BillingInfoData.data );
-                this.data.parent_container = BillingInfoData.data.parent_container;
-                this.data.container = BillingInfoData.data.container;
+                this.data.views.billingInfo.view( this.appData.BillingInfoData.data );
+                this.data.parent_container = this.appData.BillingInfoData.data.parent_container;
+                this.data.container = this.appData.BillingInfoData.data.container;
+                this.data.container = this.data.container instanceof jq ? this.data.container : jq( this.data.container );
+                this.data.parent_container = this.data.parent_container instanceof jq ? this.data.parent_container : jq( this.data.parent_container );
+
+                jq( this.appData.BillingInfoData.data.tab_link ).addClass('active');
+
                 this.data.parent_container.addClass('show');
             },
             'eventsFired': function( e ) {
@@ -1454,7 +1541,7 @@ var fieldSuccesses = {};
                     if(this.validateFields()) {
                         console.log( 'info', 'all fields valid.' );
                         
-                            event.preventDefault();
+                            event.preventDefault( this.appData );
                                 
                             var data = jq( myAjax.formQuery ).serialize();
                             var promoCode =  jq( "#fd3_form_promocode" ).data("promocode");
@@ -1469,16 +1556,6 @@ var fieldSuccesses = {};
                             
                             var fields = [
 
-                /*
-                              { "field_name" : "fd3_form_company",           "validate" : FORMS.Validate.CompanyName,  "required": false,  "instance" : options.jq("#fd3_form_company"), "message": "" },
-                              { "field_name" : "fd3_form_fname",             "validate" : FORMS.Validate.FullName,     "required": true,  "instance" : options.jq("#fd3_form_fname"), "message": "Invalid First Name" },
-                              { "field_name" : "fd3_form_lname",             "validate" : FORMS.Validate.FullName,     "required": true,  "instance" : options.jq("#fd3_form_lname"), "message": "Invalid Last Name" },
-                              { "field_name" : "fd3_form_email",             "validate" : FORMS.Validate.Email,        "required": true,  "instance" : options.jq("#fd3_form_email"), "message": "Invalid Email Address" },
-                              { "field_name" : "fd3_form_phone",             "validate" : FORMS.Validate.PhoneStr,        "required": true,  "instance" : options.jq("#fd3_form_phone"), "message": "Invalid Phone Number" }
-                              { "field_name" : "fd3_form_microsite_id",      "validate" : FORMS.Validate.MicrositeId, "required": true,   "instance" : options.jq("#fd3_form_microsite_id"), "message": "Invalid Microsite Id" },
-                              { "field_name" : "fd3_form_password",          "validate" : FORMS.Validate.Password,    "required": true,   "instance" : options.jq("#fd3_form_password"), "message": "Invalid Password" }
-                */
-                              
                                 { "field_name" : "fd3_form_promocode",         "validate" : FORMS.Validate.Promocode,    "required": false,  "use_object": true,   "instance" : options.jq("#fd3_form_promocode")  },
                                 { "field_name" : "fd3_form_address1",          "validate" : FORMS.Validate.FullName,     "required": true,   "use_object": true,   "instance" : options.jq("#fd3_form_address1"), "message": "Invalid Address." },
                                 { "field_name" : "fd3_form_address2",          "validate" : FORMS.Validate.FullName,     "required": false,  "use_object": true,   "instance" : options.jq("#fd3_form_address2") },
@@ -1488,20 +1565,13 @@ var fieldSuccesses = {};
                                 { "field_name" : "fd3_form_cc_cardholdername", "validate" : FORMS.Validate.FullName,     "required": true,   "use_object": true,   "instance" : options.jq("#fd3_form_cc_cardholdername"), "message": "Invalid Card Holder Name." },
                                 { "field_name" : "fd3_form_cc_cardno",         "validate" : FORMS.Validate.CreditCard_V2,   "required": true,   "use_object": true,   "instance" : options.jq("#fd3_form_cc_cardno"), "message": "Invalid Card." },
                                 { "field_name" : "fd3_form_cc_expdate",        "validate" : FORMS.Validate.ExpirationDate, "required": true, "use_object": true,  "instance" : options.jq("#fd3_form_cc_expdate"), "message": "Invalid Expiration Date." },
-                /*
-                                { "field_name" : "fd3_form_cc_cvv2",           "validate" : FORMS.Validate.CVV3,          "required": true,  "use_object": true, "instance" : options.jq("#fd3_form_cc_cvv2"), "message": "Invalid CVV2." }
-                */
-
-                /*
-                                { "field_name" : "fd3_form_permission_personal_emails",   "validate" : FORMS.Validate.isGroupChecked,   "required": true,  "use_object": true,   "instance" : options.jq("#fd3_personal_emails_permission_checkbox") },
-                                { "field_name" : "fd3_form_permission_newsletter_emails", "validate" : FORMS.Validate.isGroupChecked,   "required": true,  "use_object": true,   "instance" : options.jq("#fd3_newsletter_emails_permission_checkbox") }
-                */
 
                             ];
 
                             jq( '.alert' ).remove();
 
                             fields.forEach(function(field) {
+
                                 var name = field['field_name'];
                                 var validate = field['validate'];
                                 var inst = field['instance'];
@@ -1572,9 +1642,6 @@ var fieldSuccesses = {};
                                             jq('#register_form').remove();
                                             jq('.thankyou-container').addClass('show');
 
-                                            // options.jq( myAjax.formButtonQuery ).attr("disabled", "disabled");
-
-                                           //  options.jq('#marketing-platform-info-tab').tab('show'); // once we have success then show the next step
                                         } 
                                         else if( response.successful == false ) { // we have a form error
                                             jq('#signup-modal').modal('hide');                            
@@ -1671,33 +1738,34 @@ var fieldSuccesses = {};
                 console.log( 'info', 'email: ' + email );
 
                 return true;
-
-                // tab.find('#fd3_form_account_id').val( email );
-                // options.jq('#new-sign-up-account-info-tab').tab('show');                
-
             }
         });
+
+        setInstance( "BillingInfoModel", BillingInfoModel );
 
         // Model: InvoiceInfo
         var InvoiceInfoModel = FD3Model.extend({
 
             'data': {},
+            'appData': {}, 
 
-            'loadPage': function() {
+            'loadPage': function( appData ) {
+                this.appData = appData;
                 this.data.views.invoiceInfo.registerCallback( this, this.eventsFired );
-                var InvoiceDataAndBillingData = InvoiceInfoData;
+                var InvoiceDataAndBillingData = this.appData.InvoiceInfoData;
                 InvoiceDataAndBillingData.data.billingData = this.data.billingData;
                 InvoiceDataAndBillingData.data.billing = this.data.billing;
                 InvoiceDataAndBillingData.data.items = this.data.billing.getItems();
                 this.data.views.invoiceInfo.view( InvoiceDataAndBillingData.data );
-                this.data.parent_container = InvoiceInfoData.data.parent_container;
-                this.data.container = InvoiceInfoData.data.container;
+                this.data.parent_container = this.appData.InvoiceInfoData.data.parent_container;
+                this.data.container = this.appData.InvoiceInfoData.data.container;
+                this.data.container = this.data.container instanceof jq ? this.data.container : jq( this.data.container );
+                this.data.parent_container = this.data.parent_container instanceof jq ? this.data.parent_container : jq( this.data.parent_container );
                 this.data.parent_container.addClass('show');
             },
             'eventsFired': function( e ) {
                 var currentTarget = e.currentTarget;
                 var id = currentTarget.id;
-                // var billingInfo = new BillingInfoController();
                 var tab = this.data.container;
 
                 e.preventDefault();
@@ -1710,9 +1778,10 @@ var fieldSuccesses = {};
                     if(this.validateFields()) {
                         console.log( 'info', 'all fields valid.' );
                         
-                        billingInfo.index();
+                        billingInfo.index( this.appData );
 
-                        options.jq('#new-sign-up-billing-info-tab').tab('show');
+                        // options.jq( this.appData.ContactInfoData.data.tab ).tab('hide');
+                        options.jq( this.appData.ContactInfoData.data.next_tab ).tab('show');
 
                     } else {
                         console.log( 'info', 'all fields not valid.' );
@@ -1723,9 +1792,10 @@ var fieldSuccesses = {};
 
         });
 
+        setInstance( "InvoiceInfoModel", InvoiceInfoModel );    
+
         // Model: SignAQ2EMarketing
         var SignAQ2EMarketingModel = FD3Model.extend({
-            'data': ['contact'][ ContactInfoData ],
             'controllers': {},
             'views': {},
             'loadPage': function() {
@@ -1741,6 +1811,8 @@ var fieldSuccesses = {};
                 } 
             }
         });
+
+        setInstance( "SignAQ2EMarketingModel", SignAQ2EMarketingModel );
 
         // ---------------------- Controllers ----------------------
 
@@ -1760,80 +1832,94 @@ var fieldSuccesses = {};
             } 
         });
 
+        setInstance( "SignUpChoiceController", SignUpChoiceController );
+
         // Controller: ContactInfo
         var ContactInfoController = FD3Controller.extend({
-            'index': function() {
+            'index': function( data ) {
 
                 var contactInfo = new ContactInfoModel();
                 contactInfo.init({
-                    'contents': ContactInfoData,
-                    'views': { 'contactInfo': new ContactInfoView() }
+                    'contents': data.ContactInfoData,
+                    'views': { 'contactInfo': new ContactInfoView() },
+                    'next_controller': eval(data.ContactInfoData.data.next_controller)
                 });
 
-                contactInfo.loadPage();
+                contactInfo.loadPage( data );
             } 
         }); 
+
+        setInstance( "ContactInfoController", ContactInfoController );        
 
         // Controller: AccountInfo
         var AccountInfoController = FD3Controller.extend({
-            'index': function() {
+            'index': function( data ) {
 
                 var accountInfo = new AccountInfoModel();
                 accountInfo.init({
-                    'contents': AccountInfoData,
-                    'views': { 'accountInfo': new AccountInfoView() }
+                    'contents': data.AccountInfoData,
+                    'views': { 'accountInfo': new AccountInfoView() },
+                    'next_controller': eval(data.AccountInfoData.data.next_controller)
                 });
 
-                accountInfo.loadPage();
+                accountInfo.loadPage( data );
             } 
         });  
+
+        setInstance( "AccountInfoController", AccountInfoController );  
 
         // Controller: PreferencesInfo
         var PreferencesInfoController = FD3Controller.extend({
-            'index': function() {
+            'index': function( data ) {
 
                 var preferencesInfo = new PreferencesInfoModel();
                 preferencesInfo.init({
-                    'contents': PreferencesInfoData,
-                    'views': { 'preferencesInfo': new PreferencesInfoView() }
+                    'contents': data.PreferencesInfoData,
+                    'views': { 'preferencesInfo': new PreferencesInfoView() },
+                    'next_controller': eval(data.PreferencesInfoData.data.next_controller)
                 });
 
-                preferencesInfo.loadPage();
+                preferencesInfo.loadPage( data );
             } 
         }); 
 
+        setInstance( "PreferencesInfoController", PreferencesInfoController );  
+
         // Controller: AgreementsInfo
         var AgreementsInfoController = FD3Controller.extend({
-            'index': function() {
+            'index': function( data ) {
 
                 var agreementsInfo = new AgreementsInfoModel();
                 agreementsInfo.init({
-                    'contents': AgreementsInfoData,
-                    'views': { 'agreementsInfo': new AgreementsInfoView() }
+                    'contents': data.AgreementsInfoData,
+                    'views': { 'agreementsInfo': new AgreementsInfoView() },
+                    'next_controller': eval(data.AgreementsInfoData.data.next_controller)
                 });
 
-                agreementsInfo.loadPage();
+                agreementsInfo.loadPage( data );
             } 
         });  
 
+        setInstance( "AgreementsInfoController", AgreementsInfoController ); 
+
         // Controller: BillingInfo
         var BillingInfoController = FD3Controller.extend({
-            'index': function() {
+            'index': function( data ) {
 
                 var invoiceInfoView = new InvoiceInfoView();
 
                 var billingInfo = new BillingInfoModel();
                 billingInfo.init({
-                    'contents': BillingInfoData,
+                    'contents': data.BillingInfoData,
                     'views': { 'billingInfo': new BillingInfoView() }
                 });
 
                 var invoiceInfo = new InvoiceInfoModel();
                 invoiceInfo.init({
-                    'contents': InvoiceInfoData,
+                    'contents': data.InvoiceInfoData,
                     'views': { 'invoiceInfo': invoiceInfoView },
                     'billing': billingInfo,
-                    'billingData': BillingInfoData
+                    'billingData': data.BillingInfoData
                 });                
 
                 var promoInfo = new PromoInfoModel();
@@ -1848,42 +1934,29 @@ var fieldSuccesses = {};
                 billingInfo.addItem( 'AQ2E Marketing Platform', 1, 99.00 );
                 billingInfo.addItem( 'AQ2E Platform (Included)', 1, 0.00 );
 
-                billingInfo.loadPage();
-                invoiceInfo.loadPage();
-                promoInfo.loadPage();
+                billingInfo.loadPage( data );
+                invoiceInfo.loadPage( data );
+                promoInfo.loadPage( data );
             } 
         });
 
+        setInstance( "BillingInfoController", BillingInfoController ); 
+
         // Controller: InvoiceInfo
         var InvoiceInfoController = FD3Controller.extend({
-            'index': function() {
+            'index': function( data ) {
 
                 var invoiceInfo = new InvoiceInfoModel();
                 invoiceInfo.init({
-                    'contents': InvoiceInfoData,
+                    'contents': data.InvoiceInfoData,
                     'views': { 'invoiceInfo': new InvoiceInfoView() }
                 });
 
-                invoiceInfo.loadPage();
+                invoiceInfo.loadPage( data );
             } 
         });  
-/*
-        // Controller: PromoInfo
-        var PromoInfoController = FD3Controller.extend({
-            'index': function() {
 
-                var promoInfo = new PromoInfoModel();
-                promoInfo.init({
-                    'contents': PromoInfoData,
-                    'controller': this,
-                    'views': { 
-                        'promoInfo': new PromoInfoView()
-                    }
-                });
-
-                promoInfo.loadPage();
-            }            
-        });*/ 
+        setInstance( "InvoiceInfoController", InvoiceInfoController ); 
 
         // Controller: SignUpAQ2EMarketing
         var SignUpAQ2EMarketingController = FD3Controller.extend({
@@ -1940,349 +2013,6 @@ var fieldSuccesses = {};
             }
         };
 
-        var ContactInfoData = {
-
-            'data': {
-
-                'parent_container': jq('.amp-new-sign-up-container'),
-                'container': jq('#new-sign-up-contact-info'),
-                'title': 'Contact Info',
-                'items': [
-
-                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "label", "contents":"Company", "props": { "class": "", "id": "fd3_form_company_label", "for": "fd3_form_company" }, "has_children": false },
-                        { "element": "input", "type": "text",   "state": "contact-info",      "validate" : FORMS.Validate.CompanyName,    "props": { "type": "text", "name" : "fd3_form_company", "class": "fd3-form-control input-lg", "id": "fd3_form_company", "placeholder": "Company" }, "has_children": false  },
-                    ] },
-
-                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "label", "contents":"First Name", "props": { "class": "", "id": "fd3_form_fname_label", "for": "fd3_form_fname" }, "has_children": false },
-                        { "element": "input", "type": "text",  "state": "contact-info",      "validate" : FORMS.Validate.FullName,       "props": { "type": "text", "class": "fd3-form-control input-lg", "id": "fd3_form_fname", "name": "fd3_form_fname", "placeholder": "First Name (required)" }, "has_children": false },
-                    ] },
-
-                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "label", "contents":"Last Name", "props": { "class": "", "id": "fd3_form_lname_label", "for": "fd3_form_lname" }, "has_children": false },
-                        { "element": "input", "type": "text",              "state": "contact-info",      "validate" : FORMS.Validate.FullName,       "props": { "type": "text", "class": "fd3-form-control input-lg", "name" : "fd3_form_lname", "id": "fd3_form_lname", "placeholder": "Last Name (required)" }, "has_children": false },
-                    ] },
-
-                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "label", "contents":"Email", "props": { "class": "", "id": "fd3_form_email_label", "for": "fd3_form_email" }, "has_children": false },
-                        { "element": "input", "type": "text",             "state": "contact-info",      "validate" : FORMS.Validate.Email,          "props": { "name" : "fd3_form_email", "type": "text", "class": "fd3-form-control input-lg", "id": "fd3_form_email", "placeholder": "Email (required)" }, "has_children": false },
-                    ] },
-
-                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "label", "contents":"Phone", "props": { "class": "", "id": "fd3_form_phone_label", "for": "fd3_form_phone" }, "has_children": false },
-                        { "element": "input", "type": "text",              "state": "contact-info",      "validate" : FORMS.Validate.Phone,          "props": { "name" : "fd3_form_phone","type": "text", "class": "fd3-form-control input-lg", "id": "fd3_form_phone", "placeholder": "Phone (required)" }, "has_children": false }
-                    ] },
-
-                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "a", "contents": "Next", "props": { "class": "btn btn-primary btn-block btn-lg form-control", "id": "sign-up-fd3-contact-btn" }, "has_children": false }
-                    ]}                    
-
-                ]
-            }
-
-        };
-
-        var AccountInfoData = {
-
-            'data': {
-
-                'parent_container': jq('.amp-new-sign-up-container'),
-                'container': jq('#new-sign-up-account-info'),
-                'title': 'Account Info',
-                'items': [
-
-                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "label", "contents":"Your Account Id", "props": { "class": "", "id": "fd3_form_account_id_label", "for": "fd3_form_account_id" }, "has_children": false },
-                        { "element": "input", "type": "text",            "state": "contact-info",      "validate" : null,    "props": { "name" : "fd3_form_account_id", "type": "text", "class": "fd3-form-control form-control-md", "id": "fd3_form_account_id", "placeholder": "Account Id", "readonly": "readonly" }, "has_children": false  },
-                    ] },
-
-                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-
-                        { "element": "label", "contents":"Your Microsite ID will be used for your Microsite.", "props": { "class": "", "id": "fd3_form_microsite_id_label", "for": "fd3_form_microsite_id" }, "data-original": "Your Microsite ID will be used for your Microsite.", "has_children": false },
-                        { "element": "input", "type": "text",           "state": "contact-info",      "validate" : null,    "props": { "name" : "fd3_form_microsite_id", "type": "text", "class": "fd3-form-control input-lg", "id": "fd3_form_microsite_id",  "form_group": "microsite_id", "placeholder": "Your MICROSITE ID" }, "has_children": false  },
-
-                        { "element": "button", "type": "button",  "name" : "fd3_form_validate_microsite_btn",          "state": "contact-info",      "validate" : null,    "props": { "type": "text", "class": "fd3-form-control input-lg btn btn-success", "id": "fd3_form_validate_microsite_btn",  "state":"account_info", "form_group": "microsite_id", "value": "Check Availability" }, "has_children": true, "children": [
-                            { "element": "i", "props": { "class": "fa fa-cog fa-btn-font", "aria-hidden": "true", "has_children": false } },
-                            { "element": "span", "contents": "Check Availability", "props": { "class": "btn-caption", "has_children": false } },
-                        ]  }
-
-                    ] },
-                    
-                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [                    
-                        { "element": "div", "state": "contact-info", "props": { "id": "passwd-complexity-container" }, "has_children": true, "children": [   
-                            { "element": "input", "type": "password",   "state": "contact-info",      "validate" : null,    "props": { "name" : "fd3_form_password", "type": "text", "class": "fd3-form-control input-lg", "id": "fd3_form_password", "placeholder": "Password (required)" }, "has_children": false  },
-                            { "element": "span", "contents": "Strength: ", "props": { "id": "password-strength-text" }, "has_children": true, "children": [
-                                { "element": "strong", "contents":"Weak", "props": {}, "has_children": false },
-                                { "element": "br", "props": {}, "has_children": false },
-                                { "element": "span", "contents": "Feedback:  Add another word or two. Uncommon words are better.", "props": { "class": "feedback", "has_children": false } },
-                            ]}
-                        ]}
-                    ] },
-
-                    { "element": "div", "state": "contact-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "a", "contents": "Next", "props": { "class": "btn btn-primary btn-block btn-lg fd3-account-btn form-control", "id": "new-sign-up-fd3-account-btn" }, "has_children": false }
-                    ]}
-
-                ]
-            }
-
-        };        
-
-        var PreferencesInfoData =  {
-
-            'data': {
-
-              'parent_container': jq('.amp-new-sign-up-container'),                
-              'container': jq('#new-sign-up-preferences-info'),
-              'title': 'Preferences',
-              'items': [
-        
-                      { "element": "p", "contents":"We intend each month to email your clients either a personal contact email, or a newsletter or both.", "props": { "style": "display:inline-block;margin-bottom: 10px;font-size: 15px;font-weight: 700;" }, "has_children": false },
-        
-                      { "element": "p", "contents":"The Personal Contact Email will go out on the tenth of each month, the Newsletter Email will go out on the 20th of each month. Please indicate your preference below.", "props": { "style": "display:inline-block;margin-bottom: 16px;font-size: 15px;font-weight: 700;" }, "has_children": false },
-                
-                      { "element": "div", "props": { "class": "form-group" }, "has_children": true, "children": [
-                              { "element": "div", "props": { "class": "form-check" }, "has_children": true, "children": [
-                                      { "element": "h5", "contents":" Personal Contact Emails", "props": {}, "has_children": false },
-                                      { "element": "a", "contents":"View Example", "props": { "href": "https://www.marketingmailbox.net/bankbroker/agentrep/pdf_files/Marketing%20Mailbox%20Terms%20of%20Service%20Agreement.pdf", "class": "btn btn-primary btn-sm view-agreement", "target": "_blank" }, "has_children": false },
-                                      { "element": "label", "props": { "class": "form-check-label" }, "has_children": true, "children": [
-                                              { "element": "input", "props": { "type": "radio", "class": "form-check-input-md form-check-input", "name": "fd3_personal_emails_permission_checkbox", "id": "fd3_personal_emails_permission_checkbox", "value": "1", "style": "margin-top:15px" }, "has_children": false },
-                                              { "element": "span", "contents": "Yes, I would like to have emails sent out automatically each month on my behalf.", "props": { "style": "display:inline-block;margin-top: 10px;" }, "has_children": false }
-                                      ]},
-
-                                      { "element": "label", "props": { "class": "form-check-label" }, "has_children": true, "children": [
-                                              { "element": "input", "props": { "type": "radio", "class": "form-check-input-md form-check-input", "name": "fd3_personal_emails_permission_checkbox", "id": "fd3_personal_emails_permission_checkbox", "value": "0", "style": "margin-top:15px" }, "has_children": false },
-                                              { "element": "span", "contents": "No, I do not want emails sent out.", "props": { "style": "display:inline-block;margin-top: 10px;" }, "has_children": false }
-                                      ]}
-                    
-                              ]}
-                      ] },
-        
-                      { "element": "div", "props": { "class": "form-group" }, "has_children": true, "children": [
-                              { "element": "div", "props": { "class": "form-check" }, "has_children": true, "children": [
-                                      { "element": "h5", "contents":"Newsletter Emails", "props": {}, "has_children": false },
-                                      { "element": "a", "contents":"View Example", "props": { "href": "https://www.marketingmailbox.net/bankbroker/agentrep/pdf_files/Marketing%20Mailbox%20CAN-SPAM.pdf", "class": "btn btn-primary btn-sm view-agreement", "target": "_blank" }, "has_children": false },
-                                      { "element": "label", "props": { "class": "form-check-label" }, "has_children": true, "children": [
-                                              { "element": "input", "props": { "type": "radio", "class": "form-check-input-md form-check-input", "name": "fd3_newsletter_emails_permission_checkbox", "id": "fd3_newsletter_emails_permission_checkbox", "value": "1", "style": "margin-top:15px" }, "has_children": false },
-                                              { "element": "span", "contents": "Yes, I would like to have emails sent out automatically each month on my behalf.", "props": { "style": "display:inline-block;margin-top: 10px;" }, "has_children": false }
-                                      ]}
-                              ]},
-                
-                              { "element": "label", "props": { "class": "form-check-label" }, "has_children": true, "children": [
-                                      { "element": "input", "props": { "type": "radio", "class": "form-check-input-md form-check-input", "name": "fd3_newsletter_emails_permission_checkbox", "id": "fd3_personal_emails_permission_checkbox", "value": "0", "style": "margin-top:15px" }, "has_children": false },
-                                      { "element": "span", "contents": "No, I do not want emails sent out.", "props": { "style": "display:inline-block;margin-top: 10px;" }, "has_children": false }
-                              ]}
-                  
-                      ] },
-        
-                      { "element": "div", "props": { "class": "form-group" }, "has_children": true, "children": [
-                              { "element": "a", "contents":"Next", "props": { "href": "#", "class": "btn btn-primary btn-block btn-lg form-control", "id": "new-sign-up-fd3-preferences-btn" }, "has_children": false }
-                      ]}
-          
-              ]
-
-            }            
-        }
-
-        var AgreementsInfoData =  {
-
-           'data': {
-
-                'parent_container': jq('.amp-new-sign-up-container'),
-                'container': '#new-sign-up-agreements-info',
-                'title': 'Agreements Info',
-                'items': [
-
-                    { "element": "div", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "div", "props": { "class": "form-check" }, "has_children": true, "children": [
-                            { "element": "h5", "contents":"User Agreement (required)", "props": {}, "has_children": false },
-                            { "element": "label", "props": { "class": "form-check-label" }, "has_children": true, "children": [
-                                { "element": "input", "props": { "type": "checkbox", "class": "form-check-input-md form-check-input", "name": "fd3_user_agreement_checkbox", "id": "fd3_user_agreement_checkbox", "value": "1" }, "has_children": false },
-                                { "element": "span", "contents": "I Agree | ", "has_children": false },
-                                { "element": "a", "contents":"View Agreement", "props": { "href": "https://www.marketingmailbox.net/bankbroker/agentrep/pdf_files/Marketing%20Mailbox%20Terms%20of%20Service%20Agreement.pdf", "class": "btn btn-primary btn-sm view-agreement", "target": "_blank" }, "has_children": false }
-                            ]}
-                        ]}
-                    ] },
-
-                    { "element": "div", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "div", "props": { "class": "form-check" }, "has_children": true, "children": [
-                            { "element": "h5", "contents":"CAN-SPAM Compliance Agreement (required)", "props": {}, "has_children": false },
-                            { "element": "label", "props": { "class": "form-check-label" }, "has_children": true, "children": [
-                                { "element": "input", "props": { "type": "checkbox", "class": "form-check-input-md form-check-input", "name": "fd3_spam_agreement_checkbox", "id": "fd3_spam_agreement_checkbox", "value": "1" }, "has_children": false },
-                                { "element": "span", "contents": "I Agree | ", "has_children": false },
-                                { "element": "a", "contents":"View Agreement", "props": { "href": "https://www.marketingmailbox.net/bankbroker/agentrep/pdf_files/Marketing%20Mailbox%20CAN-SPAM.pdf", "class": "btn btn-primary btn-sm view-agreement", "target": "_blank" }, "has_children": false }
-                            ]}
-                        ]}
-                    ] },
-
-                    { "element": "div", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "div", "props": { "class": "form-check" }, "has_children": true, "children": [
-                            { "element": "h5", "contents":"Cancellation Policy (required)", "props": {}, "has_children": false },
-                            { "element": "label", "props": { "class": "form-check-label" }, "has_children": true, "children": [
-                                { "element": "input", "props": { "type": "checkbox", "class": "form-check-input-md form-check-input", "name": "fd3_cancel_policy_agreement_checkbox", "id": "fd3_cancel_policy_agreement_checkbox", "value": "1" }, "has_children": false },
-                                { "element": "span", "contents": "I Agree | ", "has_children": false },
-                                { "element": "a", "contents":"View Agreement", "props": { "href": "https://www.agentadvisorconnect.com/bankbroker/agentrep/pdf_files/Marketing%20Mailbox%20Cancellation%20Policy.pdf", "class": "btn btn-primary btn-sm view-agreement", "target": "_blank" }, "has_children": false }
-                            ]}
-                        ]}
-                    ] },
-
-                    { "element": "div", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "a", "contents":"Next", "props": { "href": "#", "class": "btn btn-primary btn-block btn-lg form-control", "id": "new-sign-up-fd3-agreements-btn" }, "has_children": false }
-                    ]}
-
-                ]
-            }           
-        }
-
-        var BillingInfoData =  {
-
-            'data': {
-
-                'parent_container': jq('.amp-new-sign-up-container'),
-                'container': '#new-sign-up-billing-info',
-                'title': 'Billing Details',
-                'items': [
-
-                    { "element": "div",  "state": "billing-info",  "props": { "id": "new-sign-up-invoice-container" }, "has_children": false },
-
-                    { "element": "h2",  "contents": "Billing Details", "state": "billing-info",  "props": { "class": "fd3-form-title" }, "has_children": false },
-
-                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "label", "contents":"BILLING ADDRESS", "props": { "class": "", "id": "fd3_form_address1_label", "for": "fd3_form_address1", "data-original": "BILLING ADDRESS" }, "has_children": false },
-                        { "element": "input", "type": "text",  "state": "billing-info",      "validate" : FORMS.Validate.FullName,       "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_address1", "id": "fd3_form_address1", "state": "billing_info", "placeholder": "Address (required)" }, "has_children": false },
-                    ] },
-
-                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "input", "type": "text",  "state": "billing-info",      "validate" : FORMS.Validate.FullName,       "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_address2", "id": "fd3_form_address2", "state": "billing_info", "placeholder": "Address 2 (optional)" }, "has_children": false },
-                    ] },
-
-                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "input", "type": "text",  "state": "billing-info",      "validate" : FORMS.Validate.FullName,       "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_city", "id": "fd3_form_city", "state": "billing_info", "placeholder": "City (required)" }, "has_children": false },
-                    ] },
-
-                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "select", "state": "billing-info",  "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_state", "id": "fd3_form_state", "state": "billing_info", "placeholder": "State (required)" }, "has_children": true, "children": [
-                            { "element": "optgroup", "props": { "label": "United States" }, "has_children": true, "children": [
-                                { "element": "option", "contents":"Select State", "props": { "value": "0", "selected": "selected" }, "has_children": false },
-                                { "element": "option", "contents":"Alabama", "props": { "value": "ALAlabama" }, "has_children": false },
-                                { "element": "option", "contents":"Alaska", "props": { "value": "AKAlaska" }, "has_children": false },
-                                { "element": "option", "contents":"Arizona", "props": { "value": "AZArizona" }, "has_children": false },
-                                { "element": "option", "contents":"Arkansas", "props": { "value": "ARArkansas" }, "has_children": false },
-                                { "element": "option", "contents":"California", "props": { "value": "CACalifornia" }, "has_children": false },
-                                { "element": "option", "contents":"Colorado", "props": { "value": "COColorado" }, "has_children": false },
-                                { "element": "option", "contents":"Connecticut", "props": { "value": "CTConnecticut" }, "has_children": false },
-                                { "element": "option", "contents":"DC", "props": { "value": "DCDC" }, "has_children": false },
-                                { "element": "option", "contents":"Delaware", "props": { "value": "DEDelaware" }, "has_children": false },
-                                { "element": "option", "contents":"Florida", "props": { "value": "FLFlorida" }, "has_children": false },
-                                { "element": "option", "contents":"Georgia", "props": { "value": "GAGeorgia" }, "has_children": false },
-                                { "element": "option", "contents":"Hawaii", "props": { "value": "HIHawaii" }, "has_children": false },
-                                { "element": "option", "contents":"Idaho", "props": { "value": "IDIdaho" }, "has_children": false },
-                                { "element": "option", "contents":"Illinois", "props": { "value": "ILIllinois" }, "has_children": false },
-                                { "element": "option", "contents":"Iowa", "props": { "value": "IAIowa" }, "has_children": false },
-                                { "element": "option", "contents":"Kansas", "props": { "value": "KSKansas" }, "has_children": false },
-                                { "element": "option", "contents":"Kentucky", "props": { "value": "KYKentucky" }, "has_children": false },
-                                { "element": "option", "contents":"Louisiana", "props": { "value": "LALouisiana" }, "has_children": false },
-                                { "element": "option", "contents":"Maryland", "props": { "value": "MDMaryland" }, "has_children": false },
-                                { "element": "option", "contents":"Massachusetts", "props": { "value": "MAMassachusetts" }, "has_children": false },
-                                { "element": "option", "contents":"Michigan", "props": { "value": "MIMichigan" }, "has_children": false },
-                                { "element": "option", "contents":"Minnesota", "props": { "value": "MNMinnesota" }, "has_children": false },
-                                { "element": "option", "contents":"Mississippi", "props": { "value": "MSMississippi" }, "has_children": false },
-                                { "element": "option", "contents":"Missouri", "props": { "value": "MOMissouri" }, "has_children": false },
-                                { "element": "option", "contents":"Montana", "props": { "value": "MTMontana" }, "has_children": false },
-                                { "element": "option", "contents":"Nebraska", "props": { "value": "NENebraska" }, "has_children": false },
-                                { "element": "option", "contents":"Nevada", "props": { "value": "NVNevada" }, "has_children": false },
-                                { "element": "option", "contents":"New Hampshire", "props": { "value": "NHNew Hampshire" }, "has_children": false },
-                                { "element": "option", "contents":"New Jersey", "props": { "value": "NJNew Jersey" }, "has_children": false },
-                                { "element": "option", "contents":"New Mexico", "props": { "value": "NMNew Mexico" }, "has_children": false },
-                                { "element": "option", "contents":"New York", "props": { "value": "NYNew York" }, "has_children": false },
-                                { "element": "option", "contents":"North Carolina", "props": { "value": "NCNorth Carolina" }, "has_children": false },
-                                { "element": "option", "contents":"North Dakota", "props": { "value": "NDNorth Dakota" }, "has_children": false },
-                                { "element": "option", "contents":"Ohio", "props": { "value": "OHOhio" }, "has_children": false },
-                                { "element": "option", "contents":"Oklahoma", "props": { "value": "OKOklahoma" }, "has_children": false },
-                                { "element": "option", "contents":"Oregon", "props": { "value": "OROregon" }, "has_children": false },
-                                { "element": "option", "contents":"Pennsylvania", "props": { "value": "PAPennsylvania" }, "has_children": false },
-                                { "element": "option", "contents":"Rhode Island", "props": { "value": "RIRhode Island" }, "has_children": false },
-                                { "element": "option", "contents":"South Carolina", "props": { "value": "SCSouth Carolina" }, "has_children": false },
-                                { "element": "option", "contents":"South Dakota", "props": { "value": "SDSouth Dakota" }, "has_children": false },
-                                { "element": "option", "contents":"Tennessee", "props": { "value": "TNTennessee" }, "has_children": false },
-                                { "element": "option", "contents":"Texas", "props": { "value": "TXTexas" }, "has_children": false },
-                                { "element": "option", "contents":"Utah", "props": { "value": "UTUtah" }, "has_children": false },
-                                { "element": "option", "contents":"Vermont", "props": { "value": "VTVermont" }, "has_children": false },
-                                { "element": "option", "contents":"Virginia", "props": { "value": "VAVirginia" }, "has_children": false },
-                                { "element": "option", "contents":"Washington", "props": { "value": "WAWashington" }, "has_children": false },
-                                { "element": "option", "contents":"West Virginia", "props": { "value": "WVWest Virginia" }, "has_children": false },
-                                { "element": "option", "contents":"Wisconsin", "props": { "value": "WIWisconsin" }, "has_children": false },
-                                { "element": "option", "contents":"Wyoming", "props": { "value": "WYWyoming" }, "has_children": false }
-
-                            ]}                            
-                        ]},
-                    ] },
-
-                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "input", "type": "text",  "state": "billing-info",      "validate" : FORMS.Validate.FullName,       "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_zipcode", "id": "fd3_form_zipcode", "state": "billing_info", "placeholder": "Zip Code (required)" }, "has_children": false },
-                    ] },
-
-                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "label", "contents":"PAYMENT DETAILS", "props": { "class": "", "id": "fd3_form_cc_cardtype_label", "for": "fd3_form_cc_cardtype", "data-original": "PAYMENT DETAILS" }, "has_children": false },
-
-                        { "element": "select", "validate" : FORMS.Validate.FullName,       "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_cc_cardtype", "id": "fd3_form_cc_cardtype", "state": "billing_info" }, "has_children": true, "children": [
-
-                            { "element": "optgroup", "props": { "label": "Accepted Payments" }, "has_children": true, "children": [
-                                { "element": "option", "contents":"Visa", "props": { "value": "0", "selected": "selected" }, "has_children": false },
-                                { "element": "option", "contents":"MasterCard", "props": { "value": "1", "selected": "selected" }, "has_children": false },
-                                { "element": "option", "contents":"American Express", "props": { "value": "2", "selected": "selected" }, "has_children": false }
-                            ]}
-                            
-                        ]}
-                    ] },
-
-                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "input", "type": "text",  "state": "billing-info",      "validate" : FORMS.Validate.FullName,       "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_cc_cardholdername", "id": "fd3_form_cc_cardholdername", "state": "billing_info", "placeholder": "Card Holder's name  (required)" }, "has_children": false },
-                    ] },
-
-                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "input", "type": "text",  "state": "billing-info",      "validate" : FORMS.Validate.FullName,       "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_cc_cardno", "id": "fd3_form_cc_cardno", "state": "billing_info", "placeholder": "Card Number (required)" }, "has_children": false },
-                    ] },
-
-                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "input", "type": "text",  "state": "billing-info",      "validate" : FORMS.Validate.FullName,       "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_cc_expdate", "id": "fd3_form_cc_expdate", "state": "billing_info", "data-validator": "FORMS.Validate.ExpirationDate", "placeholder": "mm/yyyy (required)" }, "has_children": false },
-                    ] },                    
-
-                    { "element": "div", "state": "billing-info", "props": { "class": "form-group" }, "has_children": true, "children": [
-                        { "element": "input", "type": "text",  "state": "billing-info",      "validate" : FORMS.Validate.FullName,       "props": { "type": "text", "class": "fd3-form-control input-lg", "name": "fd3_form_cc_cvv2", "id": "fd3_form_cc_cvv2", "state": "billing_info", "data-validator": "FORMS.Validate.ExpirationDate", "placeholder": "Security Code (required)" }, "has_children": false },
-                    ] },
-
-                    { "element": "button", "type": "button", "props": { "type": "text", "class": "btn btn-secondary btn-block btn-lg form-control fd3-subscribe-btn", "id": "link-to-subscribe",  "state":"billing_info", "form_group": "microsite_id", "value": "Signup For The Marketing Platform" }, "has_children": true, "children": [
-                        { "element": "i", "props": { "class": "fa fa-cog fa-btn-font", "aria-hidden": "true", "has_children": false } },
-                        { "element": "span", "contents": "Signup For The Marketing Platform", "props": { "class": "btn-caption", "has_children": false } }
-                    ]  }
-
-
-                ]
-            }          
-        }
-
-        var InvoiceInfoData =  {
-
-             'data': {
-
-                'parent_container': jq('.invoice-container'),
-                'container': '#new-sign-up-invoice-container',
-                'title': 'Billing Info'
-
-            }
-        }
-
-        var PromoInfoData =  {
-
-             'data': {
-
-                'container': '#new-sign-up-invoice-container',
-
-            }
-        }        
-
         // ---------------------- Views ----------------------
 
         // View: SignUpChoice 
@@ -2311,6 +2041,8 @@ var fieldSuccesses = {};
             },
         });
 
+        setInstance( "SignUpChoiceView", SignUpChoiceView ); 
+
         // View: ContactInfo 
         var ContactInfoView = FD3View.extend({
             'renderTitle': function() {
@@ -2336,6 +2068,8 @@ var fieldSuccesses = {};
                 this.monitors();
             },
         });  
+
+        setInstance( "ContactInfoView", ContactInfoView ); 
 
         // View: AccountInfo 
         var AccountInfoView = FD3View.extend({
@@ -2371,8 +2105,10 @@ var fieldSuccesses = {};
             },
         });          
 
+        setInstance( "AccountInfoView", AccountInfoView ); 
+
         // View: AccountInfo 
-        var PreferencesInfoView = FD3View.extend({
+        var AccountInfoView = FD3View.extend({
             'renderTitle': function() {
                 var d = this.renderElement( 'div', { 'class': 'form-group' } );
                 var h = this.renderElement( 'h2', { 'class': 'fd3-form-title' } );
@@ -2405,6 +2141,8 @@ var fieldSuccesses = {};
             },
         });  
 
+        setInstance( "AccountInfoView", AccountInfoView ); 
+
         // View: PreferencesInfo
         var PreferencesInfoView = FD3View.extend({
             'renderTitle': function() {
@@ -2430,6 +2168,8 @@ var fieldSuccesses = {};
                 this.monitors();
             },
         }); 
+
+        setInstance( "PreferencesInfoView", PreferencesInfoView ); 
 
         // View: AgreementsInfo
         var AgreementsInfoView = FD3View.extend({
@@ -2457,6 +2197,8 @@ var fieldSuccesses = {};
             },
         });         
 
+        setInstance( "AgreementsInfoView", AgreementsInfoView ); 
+
         // View: BillingInfo
         var BillingInfoView = FD3View.extend({
             'callback': {},
@@ -2483,6 +2225,8 @@ var fieldSuccesses = {};
                 this.monitors();
             },
         });       
+
+        setInstance( "BillingInfoView", BillingInfoView );
 
         // View: InvoiceInfo
         var InvoiceInfoView = FD3View.extend({
@@ -2639,6 +2383,8 @@ var fieldSuccesses = {};
             },
         }); 
 
+        setInstance( "InvoiceInfoView", InvoiceInfoView );
+
         // View: PromoInfo
         var PromoInfoView = FD3View.extend({
 
@@ -2721,6 +2467,8 @@ var fieldSuccesses = {};
                 this.monitors();
             },
         }); 
+
+        setInstance( "PromoInfoView", PromoInfoView );
 
         var signUpChoiceContoller = new SignUpChoiceController();
         signUpChoiceContoller.index();

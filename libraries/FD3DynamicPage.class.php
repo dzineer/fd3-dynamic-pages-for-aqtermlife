@@ -226,6 +226,7 @@ class FD3DynamicPage extends FD3URLPage {
 							'promoAction'         => 'process_promo' ,
 							'formPromo'           => 'process_promo' ,
 							'formType'            => 'post' ,
+							'dataFilesPath'       =>  get_dynamic_pages_template_directory_uri() . '/data/',
 							'affiliateId'         =>  $affiliateId ,
 							'dataType'            => 'json' ,
 							'useCache'            => 'false' ,

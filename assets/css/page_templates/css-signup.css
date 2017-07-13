@@ -791,10 +791,6 @@ a.signup-btn, a.signup-btn:focus, a.signup-btn:hover {
     display: none;
 }
 
-.amp-new-sign-up-container {
-    display: none;
-}
-
 .existing-user-sign-up-container {
     display: none;
 }
@@ -807,11 +803,24 @@ a.signup-btn, a.signup-btn:focus, a.signup-btn:hover {
     opacity:1.0;
 }
 
-.amp-new-sign-up-container.hide {
+.amp-new-sign-up-container {
+    display: none;
+}
+
+.amp-new-sign-up-container.show {
     display: block;
 }
 
-.existing-user-sign-up-container.hide {
+
+#ap-new-sign-up-container {
+    display: none;
+}
+
+#ap-new-sign-up-container.show {
+    display: block;
+}
+
+.existing-user-sign-up-container {
     display: none;
 }
 

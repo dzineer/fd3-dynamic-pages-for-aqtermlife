@@ -12,8 +12,8 @@ namespace FD3DynamicPages;
  * License: Private
  */
 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+// error_reporting(E_ALL);
+// ini_set('display_errors', '1');
 
 define( 'FD3_DYNAMIC_PAGES_PLUGIN_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 
