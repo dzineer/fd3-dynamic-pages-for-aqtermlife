@@ -1841,6 +1841,10 @@ var fieldSuccesses = {};
                 this.total = this.subtotal;
             },
             'getSubtotal': function() {
+                
+                if( typeof this.subtotal == "string" ) {
+                    this.subtotal = parseFloat( this.subtotal );
+                }
 
                 this.subtotal = this.subtotal.toFixed(2).replace(/./g, function(c, i, a) {
                     return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
@@ -1849,6 +1853,9 @@ var fieldSuccesses = {};
                 return this.subtotal;
             },
             'getTotal': function() {
+                if( typeof this.total == "string" ) {
+                    this.total = parseFloat( this.total );
+                }
                 this.total = this.total.toFixed(2).replace(/./g, function(c, i, a) {
                     return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
                 });                             
@@ -2086,6 +2093,10 @@ var fieldSuccesses = {};
             },
             'getSubtotal': function() {
 
+                if( typeof this.subtotal == "string" ) {
+                    this.subtotal = parseFloat( this.subtotal );
+                }
+
                 this.subtotal = this.subtotal.toFixed(2).replace(/./g, function(c, i, a) {
                     return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
                 });                             
@@ -2093,6 +2104,11 @@ var fieldSuccesses = {};
                 return this.subtotal;
             },
             'getTotal': function() {
+
+                if( typeof this.total == "string" ) {
+                    this.total = parseFloat( this.total );
+                }
+
                 this.total = this.total.toFixed(2).replace(/./g, function(c, i, a) {
                     return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
                 });                             
@@ -2362,7 +2378,8 @@ var fieldSuccesses = {};
                     },
                 }); 
 
-                billingInfo.addItem( 'AQ2E Platform', 1, 70.00 );
+                billingInfo.addItem( 'AQ2E Platform', 1, 30.00 );
+                billingInfo.addItem( 'AQ2E Facebook App', 1, 10.00 );
 
                 billingInfo.loadPage( data );
                 invoiceInfo.loadPage( data );
@@ -2747,10 +2764,17 @@ var fieldSuccesses = {};
                 sp2.html( '&dollar;' + this.data.billing.getTotal() );
 
                 sp2.appendTo( d );
-                d.appendTo( this.container );
 
+                if( typeof this.data.container === 'string' ) {
+                    this.container = jq(this.data.container);
+                } else {
+                    this.container = this.data.container;
+                }
+
+                d.appendTo( this.container );
             },
             'moneyFormat': function( m ) {
+
                 m = m.toFixed(2).replace(/./g, function(c, i, a) {
                     return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
                 }); 
@@ -2827,6 +2851,7 @@ var fieldSuccesses = {};
 
                 this.renderTitle();
                 this.renderTable();
+                this.renderTotal();
                 this.monitors();
             },
         }); 

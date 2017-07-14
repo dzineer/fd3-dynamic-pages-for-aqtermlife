@@ -155,9 +155,9 @@
 
                                                 <div class="amp-thankyou-container">
                                                     <div class="main-message">
-                                                        <h1>We are processing your account...</h1>
+                                                        <h1>Your Account Is All Setup!</h1>
                                                         <img src="/wp-content/uploads/2017/03/confirmation-email-icon.png">
-                                                        <p>We are currently in the process of setting up your account. We will send you an email when your setup is complete.</p>
+                                                        <p>Please check your email to confirm your account.</p>
 <!--                                                        <div class="sent-to-container"><strong>support@agentquote.com</strong></div>
                                                         <p>Click the confirmation link in that email to begin using the AQ2E Platform</p>
 -->                                                    </div>
