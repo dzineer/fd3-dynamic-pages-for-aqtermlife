@@ -189,7 +189,7 @@ var fieldSuccesses = {};
 
 (function( options ) {
 
-    myAjax.strictFlag
+    my_AMP_Ajax.strictFlag
 
         var strength = {
         0: "Worst",
@@ -704,7 +704,6 @@ var fieldSuccesses = {};
             return out;
         };
 
-
         (function() {
             var initializing = false,
                 fnTest = /xyz/.test( 
@@ -867,7 +866,7 @@ var fieldSuccesses = {};
                     });
 
                 }( 
-                    myAjax.dataFilesPath + dataName + '.json'
+                    my_AMP_Ajax.dataFilesPath + dataName + '.json'
                 ));
 
             },
@@ -876,7 +875,18 @@ var fieldSuccesses = {};
                 console.log( 'info', 'tab: ' + tab );
                 jq( tab ).addClass('show');
                 cbArray[1].call( cbArray[0], appData );
-            },
+
+                jq("a[data-toggle='tab'").on('click', function(e) {
+                    e.stopImmediatePropagation();
+                });
+
+/*                jq("a[data-toggle='tab'").prop('disabled', true);
+                jq("a[data-toggle='tab'").each(function () {
+                    jq(this).prop('data-href', jq(this).attr('href')); // hold you original href
+                    jq(this).attr('href', ''); // clear href
+                });                
+                jq("a[data-toggle='tab'").addClass('disabled-link');                
+*/            },
 
             'loadPage': function() {
                 var signUp = new SignUpChoiceView();
@@ -914,8 +924,8 @@ var fieldSuccesses = {};
             }
         });
 
-        // Model: PromoInfoModel
-        var PromoInfoModel = FD3Model.extend({
+        // Model: AMPPromoInfoModel
+        var AMPPromoInfoModel = FD3Model.extend({
 
             'data': {},
             'appData': {},
@@ -943,7 +953,7 @@ var fieldSuccesses = {};
                     (function( controller, field ) {
 
                         var promoCode = jq(field).val();
-                        var packagedData = { 'action': myAjax.promoAction, "nonce": myAjax.promoNonce,  "process_promo": myAjax.formPromo, "fd3_form_promocode": options.jq( field ).val() };
+                        var packagedData = { 'action': my_AMP_Ajax.promoAction, "nonce": my_AMP_Ajax.promoNonce,  "process_amp_promo": my_AMP_Ajax.formPromo, "fd3_form_promocode": options.jq( field ).val() };
 
                         currentInstance.find(".fa-btn-font").addClass('show').addClass('fa-spin');
                         currentInstance.find('.btn-caption').html("Applying Promo Code...");
@@ -952,11 +962,140 @@ var fieldSuccesses = {};
 
                             jq.ajax( {
 
-                                url: myAjax.url,
-                                type: myAjax.formType,
-                                dataType : myAjax.dataType,
+                                url: my_AMP_Ajax.url,
+                                type: my_AMP_Ajax.formType,
+                                dataType : my_AMP_Ajax.dataType,
                                 data: packagedData,
-                                cache: myAjax.useCache,
+                                cache: my_AMP_Ajax.useCache,
+
+                                error: function( response ) {
+                                    console.log( response );
+                                },
+
+                                success: function( response ) {
+
+                                    jq(  "#fd3_form_promocode-error" ).remove();
+
+                                    if(response.successful == true) {
+
+                                        jq( "#fd3_form_promocode" ).val( promoCode );
+                                        console.log( response.output );
+
+                                        that.data.views.invoiceInfo.applyPromo( response.promo );
+                                        that.loadPage( that.appData );
+
+                                        jq( "#fd3_form_promocode" ).val( promoCode );
+                                        jq( "#fd3_form_promocode" ).attr( "data-promocode", promoCode );
+
+
+                                    } else if( response.successful == false ) { // we have a form error
+                                        jq( "#fd3_form_promocode" ).parent().prepend('<span class="fd3_forms_form_error" id="' + 'fd3_form_promocode' + '-error" alertrole="alert"><strong>Error, </strong>You Provided An Invalid Promo Code</span>');
+                                        console.log( response.output );
+                                    }
+
+                                    currentInstance.find(".fa-btn-font").removeClass('show').removeClass('fa-spin');
+                                    currentInstance.find('.btn-caption').html("Apply Promo Code");
+
+                                    FD3Message.getServerErrors();
+
+                                }
+
+                            });
+
+                        }, 1000);
+
+                    }( 
+                        this.controller,
+                        options.jq( "#fd3_form_promocode" )
+                    ));
+
+                }
+            },
+            'validateFields': function() {
+                var hasErrors = false;
+                var email;
+
+                var fields = [
+                        { "field_name" : "fd3_form_phone",             "validate" : FORMS.Validate.PhoneStr,        "required": true,  "instance" : options.jq("#fd3_form_phone"), "message": "Invalid Phone Number" }
+                ];  
+                
+                options.jq( '.alert' ).remove();
+
+                fields.forEach(function(field) {
+
+                    var name = field['field_name'];
+                    var validate = field['validate'];
+                    var inst = field['instance'];
+                    var required = field['required'];
+                    var msg = field['message'];
+
+                    if( required && ! validate.call( this, inst.val() ) ) {
+                        options.jq( inst ).parent().prepend('<div class="alert alert-danger" role="alert">' + msg + '</div>');
+                        hasErrors = true;
+                    }
+                }, this);
+
+                if( hasErrors ) {
+                    return false;
+                }
+
+                // okay now we draw the next tab
+                // TODO: Instantiate Account Info Controller
+                //       Instantiate Account Info Model
+
+                console.log( 'info', 'email: ' + email );
+
+                return true;
+
+                // tab.find('#fd3_form_account_id').val( email );
+                // options.jq('#new-sign-up-account-info-tab').tab('show');                
+
+            }
+        });
+
+        // Model: APPromoInfoModel
+        var APPromoInfoModel = FD3Model.extend({
+
+            'data': {},
+            'appData': {},
+
+            'loadPage': function( appData ) {
+                this.appData = appData;
+                this.data.views.promoInfo.registerCallback( this, this.eventsFired );
+                this.data.views.promoInfo.view( this.appData.PromoInfoData.data );
+                this.data.container = this.appData.PromoInfoData.data.container;
+            },
+            'eventsFired': function( e ) {
+                var currentTarget = e.currentTarget;
+                var id = currentTarget.id;
+                var tab = this.data.container;
+                var that = this;
+                var currentInstance = jq( currentTarget );
+
+                console.log( "info", id + ' was clicked' );
+
+                if( id == 'fd3_form_apply_promo_btn' ) {
+                    e.preventDefault();
+
+                    console.log( "info", id + ' was clicked' );
+
+                    (function( controller, field ) {
+
+                        var promoCode = jq(field).val();
+                        var packagedData = { 'action': my_AP_Ajax.promoAction, "nonce": my_AP_Ajax.promoNonce,  "process_ap_promo": my_AP_Ajax.formPromo, "fd3_form_promocode": options.jq( field ).val() };
+
+                        currentInstance.find(".fa-btn-font").addClass('show').addClass('fa-spin');
+                        currentInstance.find('.btn-caption').html("Applying Promo Code...");
+
+                        setTimeout( function() {
+
+                            jq.ajax( {
+
+                                url: my_AP_Ajax.url,
+                                type: my_AP_Ajax.formType,
+                                dataType : my_AP_Ajax.dataType,
+                                data: packagedData,
+                                cache: my_AP_Ajax.useCache,
 
                                 error: function( response ) {
                                     console.log( response );
@@ -1059,6 +1198,7 @@ var fieldSuccesses = {};
                 this.data.container = this.data.container instanceof jq ? this.data.container : jq( this.data.container );
 
                 jq( this.modelData.tab_link ).addClass('active');
+                jq( this.modelData.tab ).addClass('active');
 
                 this.data.parent_container = this.data.parent_container instanceof jq ? this.data.parent_container : jq( this.data.parent_container );
                 this.data.parent_container.addClass('show');
@@ -1163,6 +1303,7 @@ var fieldSuccesses = {};
                 this.data.container = this.data.container instanceof jq ? this.data.container : jq( this.data.container );
 
                 jq( this.modelData.tab_link ).addClass('active');
+                jq( this.modelData.tab ).addClass('active');
 
                 this.data.container.addClass('show');
             },
@@ -1338,6 +1479,10 @@ var fieldSuccesses = {};
                 this.data.container = this.data.container instanceof jq ? this.data.container : jq( this.data.container );
                 this.data.parent_container = this.data.parent_container instanceof jq ? this.data.parent_container : jq( this.data.parent_container );
                 this.data.parent_container.addClass('show');
+
+                jq( this.modelData.tab_link ).addClass('active');
+                jq( this.modelData.tab ).addClass('active');
+
             },
             'eventsFired': function( e ) {
                 var currentTarget = e.currentTarget;
@@ -1424,6 +1569,9 @@ var fieldSuccesses = {};
                 this.data.container = this.data.container instanceof jq ? this.data.container : jq( this.data.container );
                 this.data.parent_container = this.data.parent_container instanceof jq ? this.data.parent_container : jq( this.data.parent_container );
                 this.data.parent_container.addClass('show');
+
+                jq( this.modelData.tab_link ).addClass('active');
+                jq( this.modelData.tab ).addClass('active');
             },
             'eventsFired': function( e ) {
                 var currentTarget = e.currentTarget;
@@ -1507,6 +1655,7 @@ var fieldSuccesses = {};
 
             'loadPage': function( appData ) {
                 this.appData = appData;
+                this.modelData = this.appData.BillingInfoData.data;
                 this.data.views.billingInfo.registerCallback( this, this.eventsFired );
                 this.data.views.billingInfo.view( this.appData.BillingInfoData.data );
                 this.data.parent_container = this.appData.BillingInfoData.data.parent_container;
@@ -1514,14 +1663,15 @@ var fieldSuccesses = {};
                 this.data.container = this.data.container instanceof jq ? this.data.container : jq( this.data.container );
                 this.data.parent_container = this.data.parent_container instanceof jq ? this.data.parent_container : jq( this.data.parent_container );
 
-                jq( this.appData.BillingInfoData.data.tab_link ).addClass('active');
+                jq( this.modelData.tab_link ).addClass('active');
+                jq( this.modelData.tab ).addClass('active');
 
                 this.data.parent_container.addClass('show');
             },
             'eventsFired': function( e ) {
                 var currentTarget = e.currentTarget;
                 var id = currentTarget.id;
-                var billingInfo = new BillingInfoController();
+                var billingInfo = new AMPBillingInfoController();
                 var invoiceInfo = new InvoiceInfoController();
                 var tab = this.data.container;
                 var that = this;
@@ -1539,14 +1689,14 @@ var fieldSuccesses = {};
                         
                             event.preventDefault( this.appData );
                                 
-                            var data = jq( myAjax.formQuery ).serialize();
+                            var data = jq( my_AMP_Ajax.formQuery ).serialize();
                             var promoCode =  jq( "#fd3_form_promocode" ).data("promocode");
                             data = data + '&fd3_form_promocode=' + promoCode;
                             var dataObject = fd3_objectify( data );
 
-                            dataObject[ 'action' ] = myAjax.action;
-                            dataObject[ myAjax.formid ] = myAjax.formid;
-                            dataObject[ 'nonce' ] = myAjax.nonce;
+                            dataObject[ 'action' ] = my_AMP_Ajax.action;
+                            dataObject[ my_AMP_Ajax.formid ] = my_AMP_Ajax.formid;
+                            dataObject[ 'nonce' ] = my_AMP_Ajax.nonce;
                         
                             var hasErrors = false;
                             
@@ -1617,11 +1767,11 @@ var fieldSuccesses = {};
 
                                 jq.ajax( {
 
-                                    url: myAjax.url,
-                                    type: myAjax.formType,
-                                    dataType : myAjax.dataType,
+                                    url: my_AMP_Ajax.url,
+                                    type: my_AMP_Ajax.formType,
+                                    dataType : my_AMP_Ajax.dataType,
                                     data: dataObject,
-                                    cache: myAjax.useCache,
+                                    cache: my_AMP_Ajax.useCache,
 
                                     error: function( response ) {
                                         console.log( response );
@@ -1631,12 +1781,12 @@ var fieldSuccesses = {};
 
                                         if(response.successful == true) {
 
-                                            jq( myAjax.formButtonQuery ).find(".fa-btn-font").removeClass('show').removeClass('fa-spin').find('.btn-caption').html("Sign Up");
+                                            jq( my_AMP_Ajax.formButtonQuery ).find(".fa-btn-font").removeClass('show').removeClass('fa-spin').find('.btn-caption').html("Sign Up");
 
                                             jq( '.fd3-panel' ).find( '.title-text' ).remove();
 
                                             jq('#register_form').remove();
-                                            jq('.thankyou-container').addClass('show');
+                                            jq('.amp-thankyou-container').addClass('show');
 
                                         } 
                                         else if( response.successful == false ) { // we have a form error
@@ -1749,6 +1899,7 @@ var fieldSuccesses = {};
 
             'loadPage': function( appData ) {
                 this.appData = appData;
+                this.modelData = this.appData.BillingInfoData.data;
                 this.data.views.billingInfo.registerCallback( this, this.eventsFired );
                 this.data.views.billingInfo.view( this.appData.BillingInfoData.data );
                 this.data.parent_container = this.appData.BillingInfoData.data.parent_container;
@@ -1756,14 +1907,15 @@ var fieldSuccesses = {};
                 this.data.container = this.data.container instanceof jq ? this.data.container : jq( this.data.container );
                 this.data.parent_container = this.data.parent_container instanceof jq ? this.data.parent_container : jq( this.data.parent_container );
 
-                jq( this.appData.BillingInfoData.data.tab_link ).addClass('active');
+                jq( this.modelData.tab_link ).addClass('active');
+                jq( this.modelData.tab ).addClass('active');
 
                 this.data.parent_container.addClass('show');
             },
             'eventsFired': function( e ) {
                 var currentTarget = e.currentTarget;
                 var id = currentTarget.id;
-                var billingInfo = new BillingInfoController();
+                var billingInfo = new APBillingInfoController();
                 var invoiceInfo = new InvoiceInfoController();
                 var tab = this.data.container;
                 var that = this;
@@ -1781,14 +1933,14 @@ var fieldSuccesses = {};
                         
                             event.preventDefault( this.appData );
                                 
-                            var data = jq( myAjax.formQuery ).serialize();
+                            var data = jq( my_AP_Ajax.formQuery ).serialize();
                             var promoCode =  jq( "#fd3_form_promocode" ).data("promocode");
                             data = data + '&fd3_form_promocode=' + promoCode;
                             var dataObject = fd3_objectify( data );
 
-                            dataObject[ 'action' ] = myAjax.action;
-                            dataObject[ myAjax.formid ] = myAjax.formid;
-                            dataObject[ 'nonce' ] = myAjax.nonce;
+                            dataObject[ 'action' ] = my_AP_Ajax.action;
+                            dataObject[ my_AP_Ajax.formid ] = my_AP_Ajax.formid;
+                            dataObject[ 'nonce' ] = my_AP_Ajax.nonce;
                         
                             var hasErrors = false;
                             
@@ -1859,11 +2011,11 @@ var fieldSuccesses = {};
 
                                 jq.ajax( {
 
-                                    url: myAjax.url,
-                                    type: myAjax.formType,
-                                    dataType : myAjax.dataType,
+                                    url: my_AP_Ajax.url,
+                                    type: my_AP_Ajax.formType,
+                                    dataType : my_AP_Ajax.dataType,
                                     data: dataObject,
-                                    cache: myAjax.useCache,
+                                    cache: my_AP_Ajax.useCache,
 
                                     error: function( response ) {
                                         console.log( response );
@@ -1873,12 +2025,12 @@ var fieldSuccesses = {};
 
                                         if(response.successful == true) {
 
-                                            jq( myAjax.formButtonQuery ).find(".fa-btn-font").removeClass('show').removeClass('fa-spin').find('.btn-caption').html("Sign Up");
+                                            jq( my_AP_Ajax.formButtonQuery ).find(".fa-btn-font").removeClass('show').removeClass('fa-spin').find('.btn-caption').html("Sign Up");
 
                                             jq( '.fd3-panel' ).find( '.title-text' ).remove();
 
                                             jq('#register_form').remove();
-                                            jq('.thankyou-container').addClass('show');
+                                            jq('.ap-thankyou-container').addClass('show');
 
                                         } 
                                         else if( response.successful == false ) { // we have a form error
@@ -1944,9 +2096,6 @@ var fieldSuccesses = {};
                 var email;
 
                 var fields = [
-                    { "field_name" : "fd3_user_agreement_checkbox",      "validate" : FORMS.Validate.isChecked, "required": true,  "use_object": true, "instance" : options.jq("#fd3_user_agreement_checkbox"), "message": "You must check the User Agreement" },
-                    { "field_name" : "fd3_spam_agreement_checkbox",          "validate" : FORMS.Validate.isChecked, "required": true,  "use_object": true, "instance" : options.jq("#fd3_spam_agreement_checkbox"), "message": "You must check the CAN-SPAM Compliance Agreement" },
-                    { "field_name" : "fd3_cancel_policy_agreement_checkbox",          "validate" : FORMS.Validate.isChecked, "required": true,  "use_object": true, "instance" : options.jq("#fd3_cancel_policy_agreement_checkbox"), "message": "You must check the Cancellation Policy " }
                 ];  
                 
                 options.jq( '.alert' ).remove();
@@ -2158,9 +2307,9 @@ var fieldSuccesses = {};
                     'billingData': data.BillingInfoData
                 });                
 
-                var promoInfo = new PromoInfoModel();
+                var promoInfo = new AMPPromoInfoModel();
                 promoInfo.init({
-                    'contents': PromoInfoModel,
+                    'contents': AMPPromoInfoModel,
                     'views': { 
                         'promoInfo': new PromoInfoView(),
                         'invoiceInfo': invoiceInfoView
@@ -2197,9 +2346,9 @@ var fieldSuccesses = {};
                     'billingData': data.BillingInfoData
                 });                
 
-                var promoInfo = new PromoInfoModel();
+                var promoInfo = new APPromoInfoModel();
                 promoInfo.init({
-                    'contents': PromoInfoModel,
+                    'contents': APPromoInfoModel,
                     'views': { 
                         'promoInfo': new PromoInfoView(),
                         'invoiceInfo': invoiceInfoView

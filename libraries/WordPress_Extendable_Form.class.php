@@ -46,31 +46,31 @@ abstract class WordPress_Extendable_Form extends FD3Library {
 
     }
 	
-				public function initForm( $id, $formTitle, $formStates = array(), $nonce, $nonce_action ) {
-								$this->id = $id;
-								$this->formTitle = $formTitle;
-								$this->errors = new \WP_Error();
-								// add_action( 'init', array( $this, 'formSubmitted') );
-								$this->types = array();
-								$this->valid = true;
-								
-								if (session_status() == PHP_SESSION_NONE) {
-									$this->inSession = session_start();
-								}
-								
-								$this->state = '';
-								
-								$this->nonce = $nonce;
-								$this->nonce_action = $nonce_action;
-								
-								if( count($formStates) > 0 ) {
-										$this->formStates = $formStates;
-								} else {
-										$this->formStates = array( 'general' );
-								}
-				}
+	public function initForm( $id, $formTitle, $formStates = array(), $nonce, $nonce_action ) {
+					$this->id = $id;
+					$this->formTitle = $formTitle;
+					$this->errors = new \WP_Error();
+					// add_action( 'init', array( $this, 'formSubmitted') );
+					$this->types = array();
+					$this->valid = true;
+					
+					if (session_status() == PHP_SESSION_NONE) {
+						$this->inSession = session_start();
+					}
+					
+					$this->state = '';
+					
+					$this->nonce = $nonce;
+					$this->nonce_action = $nonce_action;
+					
+					if( count($formStates) > 0 ) {
+							$this->formStates = $formStates;
+					} else {
+							$this->formStates = array( 'general' );
+					}
+	}
 	
-				public function isNonceExpired() {
+	public function isNonceExpired() {
         return $this->nonce->isNonceExpired( $this->nonce_action );
     }
 

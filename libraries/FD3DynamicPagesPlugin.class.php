@@ -14,6 +14,9 @@ namespace AQ2EMarketingPlatform;
 
 if( ! class_exists('AQ2EMarketingPlatform\FD3DynamicPagesPlugin' ) ) {
 	
+	error_reporting(E_ALL);
+	ini_set('display_errors', '1');
+
 	class FD3DynamicPagesPlugin extends FD3Library {
 		
 		var $plugin_version = FD3_DYNAMIC_PAGES_PLUGIN_VERSION;
@@ -71,33 +74,51 @@ if( ! class_exists('AQ2EMarketingPlatform\FD3DynamicPagesPlugin' ) ) {
 			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_process', [ $this->getVar('FD3')->optin_form , 'process' ] );
 			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_nopriv_process', [ $this->getVar('FD3')->optin_form , 'process' ] );
 			
-			$this->getVar('FD3')->load->library( 'FD3_Form_Register', null, 'reg_form' );
-			$this->getVar('FD3')->reg_form->initForm( 'register_form' , "AQ2E Platform Registration Form" , [ 'contact_info' , 'account_info' , 'billing_info' ] , $this->getVar('FD3')->nonce , 'register_form' );
-			$this->getVar('FD3')->reg_form->isNonceExpired( 'register_form' );
+			// initForm( $id, $formTitle, $formStates = array(), $nonce, $nonce_action )
+
+			$this->getVar('FD3')->load->library( 'FD3_AMPForm_Register', null, 'register_amp_form' );
+			$this->getVar('FD3')->register_amp_form->initForm( 'register_amp_form' , "AQ2E Marketing Platform Registration Form" , [ 'contact_info' , 'account_info' , 'billing_info' ] , $this->getVar('FD3')->nonce , 'register_amp_form' );
+			$this->getVar('FD3')->register_amp_form->isNonceExpired( 'register_amp_form' );
+
+			$this->getVar('FD3')->load->library( 'FD3_APForm_Register', null, 'register_ap_form' );
+			$this->getVar('FD3')->register_ap_form->initForm( 'register_ap_form' , "AQ2E Platform Registration Form" , [ 'contact_info' , 'account_info' , 'billing_info' ] , $this->getVar('FD3')->nonce , 'register_ap_form' );
+			$this->getVar('FD3')->register_ap_form->isNonceExpired( 'register_ap_form' );			
 			
 			$this->getVar('FD3')->load->library( 'FD3Nonce' , null , 'validateNonce' );
 			$this->getVar('FD3')->load->library( 'FD3Nonce' , null , 'promoNonce' );
 			
-			$this->getVar('FD3')->load->library( 'FD3_Form_Promo' , null , 'promo' );
-			$this->getVar('FD3')->promo->initForm( 'process_promo' , "AQ2E Promo Code" , [ 'process_promo' ] , $this->getVar('FD3')->promoNonce , 'process_promo' );
-			$this->getVar('FD3')->promo->isNonceExpired( 'process_promo' );
+			$this->getVar('FD3')->load->library( 'FD3_AMPForm_Promo' , null , 'amp_promo' );
+			$this->getVar('FD3')->amp_promo->initForm( 'process_amp_promo' , "AQ2E Promo Code" , [ 'process_amp_promo' ] , $this->getVar('FD3')->promoNonce , 'process_amp_promo' );
+			$this->getVar('FD3')->amp_promo->isNonceExpired( 'process_amp_promo' );
+
+			$this->getVar('FD3')->load->library( 'FD3_APForm_Promo' , null , 'ap_promo' );
+			$this->getVar('FD3')->ap_promo->initForm( 'process_ap_promo' , "AQ2E Promo Code" , [ 'process_ap_promo' ] , $this->getVar('FD3')->promoNonce , 'process_ap_promo' );
+			$this->getVar('FD3')->ap_promo->isNonceExpired( 'process_ap_promo' );			
 			
 			$this->getVar('FD3')->load->library( 'FD3_Form_Validator' , null , 'validator' );
 			$this->getVar('FD3')->validator->initForm( 'validate_form' , "AQ2E Platform Registration Form" , [ 'validate_info' ] , $this->getVar('FD3')->validateNonce , 'validate_form' );
 			$this->getVar('FD3')->validator->isNonceExpired( 'validate_form' );
 			
-			$this->getVar('FD3')->load->library( 'FD3Invoice' , null , 'inv' );
-			$this->getVar('FD3')->inv->initInvoice( $this->getVar('FD3')->nonce , 'register_form' );
+			$this->getVar('FD3')->load->library( 'FD3AMPInvoice' , null , 'inv_amp' );
+			$this->getVar('FD3')->inv_amp->initInvoice( $this->getVar('FD3')->nonce , 'register_amp_form' );
+
+			$this->getVar('FD3')->load->library( 'FD3APInvoice' , null , 'inv_ap' );
+			$this->getVar('FD3')->inv_ap->initInvoice( $this->getVar('FD3')->nonce , 'register_ap_form' );
 			
-			$this->getVar('FD3')->wp_actions->add( 'init', [ $this->getVar('FD3')->reg_form , 'setJS' ] );
-			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_process_registration', [ $this->getVar('FD3')->reg_form , 'process_registration' ] );
-			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_nopriv_process_registration' , [ $this->getVar('FD3')->reg_form , 'process_registration' ] );
+			$this->getVar('FD3')->wp_actions->add( 'init', [ $this->getVar('FD3')->reg_amp_form , 'setJS' ] );
+			$this->getVar('FD3')->wp_actions->add( 'init', [ $this->getVar('FD3')->reg_ap_form , 'setJS' ] );
+
+			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_process_amp_registration', [ $this->getVar('FD3')->register_amp_form , 'process_amp_registration' ] );
+			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_nopriv_process_amp_registration' , [ $this->getVar('FD3')->register_amp_form , 'process_amp_registration' ] );
 			
-			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_process_registration' , [ $this->getVar('FD3')->reg_form , 'process_registration' ] );
-			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_nopriv_process_registration' , [ $this->getVar('FD3')->reg_form , 'process_registration' ] );
+			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_process_ap_registration' , [ $this->getVar('FD3')->register_ap_form , 'process_ap_registration' ] );
+			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_nopriv_process_ap_registration' , [ $this->getVar('FD3')->register_ap_form , 'process_ap_registration' ] );
 			
-			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_process_promo' , [ $this->getVar('FD3')->promo , 'process_promo' ] );
-			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_nopriv_process_promo' , [ $this->getVar('FD3')->promo , 'process_promo' ] );
+			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_process_amp_promo' , [ $this->getVar('FD3')->amp_promo , 'process_amp_promo' ] );
+			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_nopriv_process_amp_promo' , [ $this->getVar('FD3')->amp_promo , 'process_amp_promo' ] );
+
+			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_process_ap_promo' , [ $this->getVar('FD3')->ap_promo , 'process_ap_promo' ] );
+			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_nopriv_process_ap_promo' , [ $this->getVar('FD3')->ap_promo , 'process_ap_promo' ] );
 			
 			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_process_validation' , [ $this->getVar('FD3')->validator , 'process_validation' ] );
 			$this->getVar('FD3')->wp_actions->add( 'wp_ajax_nopriv_process_validation' , [ $this->getVar('FD3')->validator , 'process_validation' ] );

@@ -75,6 +75,8 @@ abstract class FD3ClassLoader {
 		$possible_class_path = $classPath . $this->_fileType . '.class.php';
 		$namespaceClass = __NAMESPACE__ . '\\' . $possible_class;
 		
+
+
 		if( file_exists( $possible_class_path ) ) {
 			
 			include( $possible_class_path );
@@ -97,6 +99,8 @@ abstract class FD3ClassLoader {
 		}
 		else { // else check if base className exists. okay if this exists just load it. we are okay if you don't follow our format :)
 			
+			// echo "<br> classPath: " . $classPath . '.class.php' . "<br>";
+
 			if( file_exists( $classPath . '.class.php' ) ) {
 				
 				include( $classPath . '.class.php' );

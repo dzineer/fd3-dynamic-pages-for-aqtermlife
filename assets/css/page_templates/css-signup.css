@@ -857,7 +857,7 @@ div.invoice-total-container {
     border: none !important;
 }
 
-.thankyou-container {
+.ap-thankyou-container {
     display: none;
     text-align: center;
     background: #fff;
@@ -872,11 +872,11 @@ div.invoice-total-container {
     padding: 26px;
 }
 
-.thankyou-container.show {
+.ap-thankyou-container.show {
     display: block;
 }
 
-.thankyou-container .main-message {
+.ap-thankyou-container .main-message {
     margin: 0 auto;
     font-size: 36px;
     font-weight: 500;
@@ -885,18 +885,18 @@ div.invoice-total-container {
     width: 500px;
 }
 
-.thankyou-container .main-message h1 {
+.ap-thankyou-container .main-message h1 {
     font-size: 36px;
     font-weight: 500;
     line-height: 1.2;
     letter-spacing: -.01em;
 }
 
-.thankyou-container .main-message img {
+.ap-thankyou-container .main-message img {
     width: 140px;
 }
 
-.thankyou-container .main-message p {
+.ap-thankyou-container .main-message p {
     margin: 20px 0 0 0;
     margin-bottom: -14px;
     font-size: 18px;
@@ -904,7 +904,63 @@ div.invoice-total-container {
     color: #777;
 }
 
-.thankyou-container .main-message p {
+.ap-thankyou-container .main-message p {
+    margin: 20px 0 0 0;
+    margin-bottom: -14px;
+    font-size: 18px;
+    line-height: 1.5;
+    color: #777;
+}
+
+
+.amp-thankyou-container {
+    display: none;
+    text-align: center;
+    background: #fff;
+    border-radius: 10px;
+    margin: 2px auto;
+    height: auto;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    padding: 26px;
+}
+
+.amp-thankyou-container.show {
+    display: block;
+}
+
+.amp-thankyou-container .main-message {
+    margin: 0 auto;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -.01em;
+    width: 500px;
+}
+
+.amp-thankyou-container .main-message h1 {
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -.01em;
+}
+
+.amp-thankyou-container .main-message img {
+    width: 140px;
+}
+
+.amp-thankyou-container .main-message p {
+    margin: 20px 0 0 0;
+    margin-bottom: -14px;
+    font-size: 18px;
+    line-height: 1.5;
+    color: #777;
+}
+
+.amp-thankyou-container .main-message p {
     margin: 20px 0 0 0;
     margin-bottom: -14px;
     font-size: 18px;

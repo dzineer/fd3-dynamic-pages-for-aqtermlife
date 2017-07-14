@@ -221,7 +221,7 @@
 
                     { "element": "button", "type": "button", "props": { "type": "text", "class": "btn btn-secondary btn-block btn-lg form-control fd3-subscribe-btn", "id": "link-to-subscribe",  "state":"billing_info", "form_group": "microsite_id", "value": "Signup For The Marketing Platform" }, "has_children": true, "children": [
                         { "element": "i", "props": { "class": "fa fa-cog fa-btn-font", "aria-hidden": "true", "has_children": false } },
-                        { "element": "span", "contents": "Signup For The Marketing Platform", "props": { "class": "btn-caption", "has_children": false } }
+                        { "element": "span", "contents": "Signup For The AQ2E Platform", "props": { "class": "btn-caption", "has_children": false } }
                     ]  }
 
 

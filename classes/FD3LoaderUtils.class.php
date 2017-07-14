@@ -229,6 +229,9 @@ class FD3LoaderUtils {
 			if( $config ) {
 				if( $singleInstance ) { // check if we already have an instance if so just return it.
 					$inst = $this->getProperty( $instName );
+
+					// echo "<br> instName: " . $instName . "<br>";
+
 					if ( ! empty( $inst ) ) {
 						return $inst;
 					}
@@ -238,6 +241,7 @@ class FD3LoaderUtils {
 				}
 				else {
 					$inst = $this->_model->load( $className , $config );
+					// echo "<br> instName: " . print_r($inst,true) . "<br>";
 				}
 			}
 			else {
@@ -352,6 +356,11 @@ class FD3LoaderUtils {
 		
 		// TODO: note by default we are supporting the config variable but for now we are overriding it to provide our FD3 variable in each loaded library
 		
+		// echo "<br> className: " . $className . "<br>";
+		// echo "<br> config: " . $config . "<br>";
+		// echo "<br> instName: " . $instName . "<br>";
+		// echo "<br> singleInstance: " . ($singleInstance == false) ? 'false' : 'true' . "<br>";
+
 		$inst = null;
 		
 		if( empty($instName) ) {
@@ -402,9 +411,13 @@ class FD3LoaderUtils {
 				}
 				else {
 					$inst = $this->_library->load( $className , [ "FD3" => $this->FD3 ] );
+					// echo "<br> inst: " . print_r($inst,true) . "<br>";
 				}
 			}
 			else {
+
+				// echo "<br> we are here. " . "<br>";
+
 				if( $singleInstance ) { // check if we already have an instance if so just return it.
 					$inst = $this->getProperty( $instName );
 					if ( ! empty( $inst ) ) {
@@ -415,7 +428,9 @@ class FD3LoaderUtils {
 					}
 				}
 				else {
+					// echo "<br> Loading class:  " . $className . "<br>";
 					$inst = $this->_library->load( $className, [ "FD3" => $this->FD3 ] );
+					// echo "<br> inst:  " . print_r($inst, true) . "<br>";
 				}
 			}
 			

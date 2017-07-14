@@ -225,7 +225,7 @@
                 "parent_container": ".amp-new-sign-up-container",
                 "container": "#new-sign-up-billing-info",
                 "title": "Billing Info",
-                "controller": "BillingInfoController",
+                "controller": "AMPBillingInfoController",
                 "tab_link": "#new-sign-up-billing-info-tab",
                 "tab": "#new-sign-up-billing-info",
 

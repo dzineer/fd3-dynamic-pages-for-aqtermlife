@@ -207,24 +207,24 @@ class FD3DynamicPage extends FD3URLPage {
 					
 					[
 						
-						'name'    => 'myAjax' ,
+						'name'    => 'my_AMP_Ajax' ,
 						'content' => [
 							'url'                 => admin_url( 'admin-ajax.php' ) ,
-							'formid'              => 'register_form' ,
-							'nonce'               => $this->getVar('FD3')->nonce->getNonce( 'register_form' ) ,
-							'validateNonce'       => $this->getVar('FD3')->validateNonce->getNonce( 'validate_form' ) ,
-							'promoNonce'          => $this->getVar('FD3')->promoNonce->getNonce( 'process_promo' ) ,
+							'formid'              => 'register_amp_form' ,
+							'nonce'               => $this->getVar('FD3')->nonce->getNonce( 'register_amp_form' ) ,
+							'validateNonce'       => $this->getVar('FD3')->validateNonce->getNonce( 'validate_amp_form' ) ,
+							'promoNonce'          => $this->getVar('FD3')->promoNonce->getNonce( 'process_amp_promo' ) ,
 							'strictFlag'          => '"use strict;"' ,
 							'eventType'           => 'click' ,
 							'formButtonQuery'     => '.fd3-subscribe-btn' ,
 							'formContainerQuery'  => '.form-container' ,
-							'action'              => 'process_registration' ,
+							'action'              => 'process_amp_registration' ,
 							'formQuery'           => '#register_form' ,
 							'formValidateId'      => '#validate_form' ,
-							'formValidate'        => 'validate_form' ,
+							'formValidate'        => 'validate_amp_form' ,
 							'validateAction'      => 'process_validation' ,
-							'promoAction'         => 'process_promo' ,
-							'formPromo'           => 'process_promo' ,
+							'promoAction'         => 'process_amp_promo' ,
+							'formPromo'           => 'process_amp_promo' ,
 							'formType'            => 'post' ,
 							'dataFilesPath'       =>  get_dynamic_pages_template_directory_uri() . '/data/',
 							'affiliateId'         =>  $affiliateId ,
@@ -232,7 +232,37 @@ class FD3DynamicPage extends FD3URLPage {
 							'useCache'            => 'false' ,
 							'redirect_on_success' => '/forms/thankyou?v=6'
 						]
-					]
+
+					],
+					[
+						
+						'name'    => 'my_AP_Ajax' ,
+						'content' => [
+							'url'                 => admin_url( 'admin-ajax.php' ) ,
+							'formid'              => 'register_ap_form' ,
+							'nonce'               => $this->getVar('FD3')->nonce->getNonce( 'register_ap_form' ) ,
+							'validateNonce'       => $this->getVar('FD3')->validateNonce->getNonce( 'validate_ap_form' ) ,
+							'promoNonce'          => $this->getVar('FD3')->promoNonce->getNonce( 'process_ap_promo' ) ,
+							'strictFlag'          => '"use strict;"' ,
+							'eventType'           => 'click' ,
+							'formButtonQuery'     => '.fd3-subscribe-btn' ,
+							'formContainerQuery'  => '.form-container' ,
+							'action'              => 'process_ap_registration' ,
+							'formQuery'           => '#register_form' ,
+							'formValidateId'      => '#validate_form' ,
+							'formValidate'        => 'validate_ap_form' ,
+							'validateAction'      => 'process_ap_validation' ,
+							'promoAction'         => 'process_ap_promo' ,
+							'formPromo'           => 'process_ap_promo' ,
+							'formType'            => 'post' ,
+							'dataFilesPath'       =>  get_dynamic_pages_template_directory_uri() . '/data/',
+							'affiliateId'         =>  $affiliateId ,
+							'dataType'            => 'json' ,
+							'useCache'            => 'false' ,
+							'redirect_on_success' => '/forms/thankyou?v=6'
+						]
+
+					]					
 				
 				]
 			],			

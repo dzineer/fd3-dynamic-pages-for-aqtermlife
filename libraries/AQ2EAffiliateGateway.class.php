@@ -33,6 +33,8 @@ class AQ2EAffiliateGateway extends FD3Library {
 
 	public function connect( $data, $method, $contentType ) {
 
+		  // echo json_encode( $this->uri ); exit;
+
           if( $method == 'POST' || $method == 'PUT' ) {
         
             $this->context = stream_context_create(
@@ -54,9 +56,8 @@ class AQ2EAffiliateGateway extends FD3Library {
 
             );
 
-	       //   header("Content-type: application/json");
-	       //   echo json_encode( $post );
-	       //   exit;
+           // echo json_encode( array( "successful"=> "false", "uri" => $this->uri, "method" => $method, "info" => print_r($post,true) ) );
+           // die();
             
             if (!$post) {
                 return false;
