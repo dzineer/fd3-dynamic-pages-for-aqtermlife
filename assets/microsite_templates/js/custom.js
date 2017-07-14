@@ -1060,8 +1060,15 @@ var fieldSuccesses = {};
             'appData': {},
 
             'loadPage': function( appData ) {
+
                 this.appData = appData;
                 this.data.views.promoInfo.registerCallback( this, this.eventsFired );
+
+                this.data.views.invoiceInfo.applyPromos([
+                    {'desc':'AQ2E Facebook App Limited Time Discount', 'cost':-10, 'qty': 1 },
+                    {'desc':'Applied Affiliate Discount - PROMO CODE: AQ2ELIFE', 'cost':-10, 'qty': 1 }
+                ]);
+
                 this.data.views.promoInfo.view( this.appData.PromoInfoData.data );
                 this.data.container = this.appData.PromoInfoData.data.container;
             },
@@ -2311,7 +2318,7 @@ var fieldSuccesses = {};
                 promoInfo.init({
                     'contents': AMPPromoInfoModel,
                     'views': { 
-                        'promoInfo': new PromoInfoView(),
+                        'promoInfo': new AMPPromoInfoView(),
                         'invoiceInfo': invoiceInfoView
                     },
                 }); 
@@ -2350,7 +2357,7 @@ var fieldSuccesses = {};
                 promoInfo.init({
                     'contents': APPromoInfoModel,
                     'views': { 
-                        'promoInfo': new PromoInfoView(),
+                        'promoInfo': new APPromoInfoView(),
                         'invoiceInfo': invoiceInfoView
                     },
                 }); 
@@ -2782,7 +2789,27 @@ var fieldSuccesses = {};
                 }
                 this.container.empty();
                 this.render();
-            },                      
+            }, 
+            'applyPromos': function( dataArr ) {
+
+                for(var i=0; i < dataArr.length; i++) {
+
+                    if( typeof dataArr[i] === 'object' ) {
+                        dataArr[i].total = dataArr[i].qty * dataArr[i].cost;
+                        this.items.push( dataArr[i] );
+                    }
+
+                }
+
+                if( typeof this.data.container === 'string' ) {
+                    this.container = jq(this.data.container);
+                } else {
+                    this.container = this.data.container;
+                }
+
+                this.container.empty();
+                this.render();
+            },                                  
 
             'monitors': function() {
                 /*                
@@ -2807,7 +2834,7 @@ var fieldSuccesses = {};
         setInstance( "InvoiceInfoView", InvoiceInfoView );
 
         // View: PromoInfo
-        var PromoInfoView = FD3View.extend({
+        var AMPPromoInfoView = FD3View.extend({
 
             'renderElement': function( name, o ) {
                 var tag = '<' + name + '/>';
@@ -2858,13 +2885,13 @@ var fieldSuccesses = {};
                 return b;
 
             },
-            'renderPromo': function() {
+            'renderPromo': function( $promocode = '' ) {
 
                 var container = jq(this.data.container);
                 
                 var d = this.renderElement( 'div', { 'class': 'form-group' } );
                 var l = this.renderElement( 'label', { 'for': 'fd3_form_promocode', 'id': 'fd3_form_promocode_label', 'data-original': 'PROMO CODE' } );
-                var i = this.renderInput( { 'type': 'text', 'class': 'fd3-form-control input-lg', 'id': 'fd3_form_promocode', 'class': 'fd3-form-control input-lg', 'name': 'fd3_form_promocode', 'state': 'billing_info', 'form_group': 'promocode_id', 'placeholder': 'Promo Code', 'value': '' } );
+                var i = this.renderInput( { 'type': 'text', 'class': 'fd3-form-control input-lg', 'id': 'fd3_form_promocode', 'class': 'fd3-form-control input-lg', 'name': 'fd3_form_promocode', 'state': 'billing_info', 'form_group': 'promocode_id', 'placeholder': 'Promo Code', 'value': $promocode } );
                 var b = this.renderButton( 'Apply Promocode' );
 
                 l.appendTo( d );
@@ -2889,7 +2916,88 @@ var fieldSuccesses = {};
             },
         }); 
 
-        setInstance( "PromoInfoView", PromoInfoView );
+        // View: PromoInfo
+        var APPromoInfoView = FD3View.extend({
+
+            'renderElement': function( name, o ) {
+                var tag = '<' + name + '/>';
+                if( typeof o != 'undefined' ) {
+                    var el = jq( tag, o );
+                }
+                else {
+                    var el = jq( tag );
+                }
+
+                return el;
+            },
+            'renderInput': function( o ) {
+                var d = this.renderElement( 'input', o );
+                return d;                                
+            },
+            'renderButton': function( txt ) {
+
+                var b = this.renderElement( 
+                    'button', { 
+                        'type': 'button', 
+                        'id': 'fd3_form_apply_promo_btn',
+                        'class': 'fd3-form-control input-lg btn btn-success',
+                        'name': 'fd3_form_apply_promo_btn',
+                        'state': 'billing_info',
+                        'value': txt
+                    } 
+                );
+
+                var i = this.renderElement( 
+                    'i', { 
+                        'class': 'fa fa-cog fa-btn-font',
+                        'aria-hidden': 'true'
+                    } 
+                );
+
+                var s = this.renderElement( 
+                    'span', { 
+                        'class': 'btn-caption',
+                        'aria-hidden': 'true'
+                    } 
+                );  
+
+                s.html( txt );
+                i.appendTo( b );
+                s.appendTo( b );                               
+
+                return b;
+
+            },
+            'renderPromo': function( $promocode = '' ) {
+
+                var container = jq(this.data.container);
+                
+                var d = this.renderElement( 'div', { 'class': 'form-group' } );
+                var l = this.renderElement( 'label', { 'for': 'fd3_form_promocode', 'id': 'fd3_form_promocode_label', 'data-original': 'PROMO CODE' } );
+                var i = this.renderInput( { 'type': 'text', 'class': 'fd3-form-control input-lg', 'id': 'fd3_form_promocode', 'class': 'fd3-form-control input-lg', 'name': 'fd3_form_promocode', 'state': 'billing_info', 'form_group': 'promocode_id', 'placeholder': 'Promo Code', 'value': $promocode } );
+                var b = this.renderButton( 'Apply Promocode' );
+
+                l.appendTo( d );
+                i.appendTo( d );
+                b.appendTo( d );                
+
+                d.appendTo( container );
+
+            },  
+            'monitors': function() {
+                var that = this;
+
+                jq( "body" ).on('click', '#fd3_form_apply_promo_btn', function( e ) {
+                    that.callback.cb.call( that.callback.inst, e );
+                });
+            },
+            'render': function() {
+                // this.data.container.empty();
+                // this.renderTitle();
+                this.renderPromo( 'AQ2ELIFE' );
+                this.monitors();
+            },
+        }); 
 
         var signUpChoiceContoller = new SignUpChoiceController();
         signUpChoiceContoller.index();
