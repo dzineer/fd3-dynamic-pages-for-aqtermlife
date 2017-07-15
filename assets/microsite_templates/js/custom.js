@@ -1064,11 +1064,6 @@ var fieldSuccesses = {};
                 this.appData = appData;
                 this.data.views.promoInfo.registerCallback( this, this.eventsFired );
 
-                this.data.views.invoiceInfo.applyPromos([
-                    {'desc':'AQ2E Facebook App Limited Time Discount', 'cost':-10, 'qty': 1 },
-                    {'desc':'Applied Affiliate Discount - PROMO CODE: AQ2ELIFE', 'cost':-10, 'qty': 1 }
-                ]);
-
                 this.data.views.promoInfo.view( this.appData.PromoInfoData.data );
                 this.data.container = this.appData.PromoInfoData.data.container;
             },
@@ -1840,7 +1835,7 @@ var fieldSuccesses = {};
                 }
                 this.total = this.subtotal;
             },
-            'getSubtotal': function() {
+            'getSubTotal': function() {
                 
                 if( typeof this.subtotal == "string" ) {
                     this.subtotal = parseFloat( this.subtotal );
@@ -1853,13 +1848,7 @@ var fieldSuccesses = {};
                 return this.subtotal;
             },
             'getTotal': function() {
-                if( typeof this.total == "string" ) {
-                    this.total = parseFloat( this.total );
-                }
-                this.total = this.total.toFixed(2).replace(/./g, function(c, i, a) {
-                    return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
-                });                             
-                return this.total;
+                return this.getSubTotal();
             },
             'validateFields': function() {
                 var hasErrors = false;
@@ -2091,7 +2080,7 @@ var fieldSuccesses = {};
                 }
                 this.total = this.subtotal;
             },
-            'getSubtotal': function() {
+            'getSubTotal': function() {
 
                 if( typeof this.subtotal == "string" ) {
                     this.subtotal = parseFloat( this.subtotal );
@@ -2104,15 +2093,7 @@ var fieldSuccesses = {};
                 return this.subtotal;
             },
             'getTotal': function() {
-
-                if( typeof this.total == "string" ) {
-                    this.total = parseFloat( this.total );
-                }
-
-                this.total = this.total.toFixed(2).replace(/./g, function(c, i, a) {
-                    return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
-                });                             
-                return this.total;
+                return this.getSubTotal();
             },
             'validateFields': function() {
                 var hasErrors = false;
@@ -2380,6 +2361,13 @@ var fieldSuccesses = {};
 
                 billingInfo.addItem( 'AQ2E Platform', 1, 30.00 );
                 billingInfo.addItem( 'AQ2E Facebook App', 1, 10.00 );
+                billingInfo.addItem( 'AQ2E Facebook App Limited Time Discount', 1, -10.00 );
+                billingInfo.addItem( 'Applied Affiliate Discount<br/><strong>(Applied Promocode: AQ2ELIFE)</strong>', 1, -10.00 );
+
+/*                this.data.views.invoiceInfo.applyPromos([
+                    {'desc':'AQ2E Facebook App Limited Time Discount', 'cost':-10, 'qty': 1 },
+                    {'desc':'Applied Affiliate Discount - PROMO CODE: AQ2ELIFE', 'cost':-10, 'qty': 1 }
+                ]);   */             
 
                 billingInfo.loadPage( data );
                 invoiceInfo.loadPage( data );
@@ -2741,8 +2729,15 @@ var fieldSuccesses = {};
                 s.appendTo( sp1 );
                 sp1.appendTo( d );
 
-                sp2.html( '&dollar;' + this.data.billing.getSubtotal() );
+                sp2.html( '&dollar;' + this.data.billing.getSubTotal() );
                 sp2.appendTo( d );
+
+                if( typeof this.data.container === 'string' ) {
+                    this.container = jq(this.data.container);
+                } else {
+                    this.container = this.data.container;
+                }
+
                 d.appendTo( this.container );
                 
             },
@@ -2762,7 +2757,6 @@ var fieldSuccesses = {};
                 sp1.appendTo( d );
 
                 sp2.html( '&dollar;' + this.data.billing.getTotal() );
-
                 sp2.appendTo( d );
 
                 if( typeof this.data.container === 'string' ) {
@@ -2803,7 +2797,8 @@ var fieldSuccesses = {};
 
                 if( typeof data === 'object' ) {
                     data.total = data.qty * data.cost;
-                    this.items.push( data );
+                    this.data.billing.addItem( data.desc, data.qty, data.cost );
+                    this.items = this.data.billing.getItems();
                 }
 
                 if( typeof this.data.container === 'string' ) {
@@ -2820,7 +2815,8 @@ var fieldSuccesses = {};
 
                     if( typeof dataArr[i] === 'object' ) {
                         dataArr[i].total = dataArr[i].qty * dataArr[i].cost;
-                        this.items.push( dataArr[i] );
+                        this.data.billing.addItem( data.desc, data.qty, data.cost );
+                        this.items = this.data.billing.getItems();
                     }
 
                 }
@@ -2851,6 +2847,7 @@ var fieldSuccesses = {};
 
                 this.renderTitle();
                 this.renderTable();
+                this.renderSubtotal();
                 this.renderTotal();
                 this.monitors();
             },
