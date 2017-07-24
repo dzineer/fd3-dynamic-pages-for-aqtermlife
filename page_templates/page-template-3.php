@@ -63,10 +63,10 @@
 																																								
 																																								<? endforeach; ?>
 			
-																																							 <div class="form-group">
+																																							 <!-- <div class="form-group">
 																																										<div class="label-container"><label class="f_optin" for="f_optin"></label></div>
 																																										<p class="opt-in-choice"><input type="checkbox" id="f_optin" name="f_optin" data-required="true" data-error="You must check this to continue."> Yes! Please add me to your mailing list today!</p>
-																																							 </div>
+																																							 </div> -->
 																																							
                                         <div class="form-group">
                                             <? if( isset( $page_details['button_text_format'] ) &&
@@ -231,7 +231,7 @@
 											
 									});
 									
-									if( ! $('input[name=f_optin]').is(':checked') ) {
+/*									if( ! $('input[name=f_optin]').is(':checked') ) {
 											
 											var $optin =  $('input[name=f_optin]');
 											$optin.addClass( 'red-error' );
@@ -248,7 +248,7 @@
 													ok = false;
 											}
 											
-									}
+									}*/
 									
 									if( ok ) {
 											$('#currentForm').submit();

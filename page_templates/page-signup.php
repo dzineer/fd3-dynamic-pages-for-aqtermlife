@@ -74,7 +74,7 @@
 
                             <div class="row"> <!-- row -->
 
-                                <div class="offset-md-2 col-md-8"> <!-- offset-md-2 col-md-8 -->
+                                <div class="col-sm-12 col-md-12 offset-lg-2 col-lg-8"> <!-- offset-md-2 col-md-8 -->
 
                                     <div class="fd3-panel"> <!-- fd3-panel -->
 
@@ -132,26 +132,9 @@
                                                                 <h5><i class="fa fa-check check-green fa-btn-font show" aria-hidden="false"></i>Thank you <span id='clientName'></span>. Your account has been verified.</h5>
                                                             </div>
 
-                                                        </div>
-
                                                     </div>
 
-<!--                                                <div class="btn-group-container">
-
-                                                    <div class="btn-group" data-toggle="buttons">
-
-                                                        <label class="btn btn-primary active" id="aq2e-platform-cb">
-                                                            <input type="checkbox" checked autocomplete="off"> Step 1. AQ2E Platform Signup
-                                                        </label>
-
-                                                        <label class="btn btn-secondary" id="aq2e-marketing-platform-cb">
-                                                            <input type="checkbox" autocomplete="off"> Step 2. AQ2E Marketing Platform Signup
-                                                        </label>
-
-                                                    </div>                                        
-
                                                 </div>
--->
 
                                                 <div class="amp-thankyou-container">
                                                     <div class="main-message">
@@ -220,32 +203,33 @@
                                                 <div class="amp-new-sign-up-container">
 
 
-                                                        <ul class="nav nav-tabs" role="tablist" id="amp-new-sign-up-tab">
+                                                        <ul class="nav nav-tabs nav-fill" role="tablist" id="amp-new-sign-up-tab">
 
                                                             <li class="nav-item">
-                                                                <a href="#new-sign-up-contact-info" id="new-sign-up-contact-info-tab" class="nav-link" data-toggle="tab" role="tab">Contact Info</a>
+                                                                <a href="#new-sign-up-contact-info" id="new-sign-up-contact-info-tab" class="nav-link active" data-toggle="tab" role="tab">Contact</a>
                                                             </li>
 
                                                             <li class="nav-item disabled">
-                                                                <a href="#new-sign-up-account-info" id="new-sign-up-account-info-tab" class="nav-link" data-toggle="tag" role="tab">Account Info</a>
+                                                                <a href="#new-sign-up-account-info" id="new-sign-up-account-info-tab" class="nav-link" data-toggle="tag" role="tab">Account</a>
                                                             </li>
-																																																											
-																																																														<a href="#new-sign-up-preferences-info" id="new-sign-up-preferences-info-tab" class="nav-link" data-toggle="tag" role="tab">Preferences</a>
-																																																											 </li>
+
+                                							<li class="nav-item disabled">																																																				
+                    										  <a href="#new-sign-up-preferences-info" id="new-sign-up-preferences-info-tab" class="nav-link" data-toggle="tag" role="tab">Preferences</a>
+                                                            </li>
 																																																											
                                                             <li class="nav-item disabled">
                                                                 <a href="#new-sign-up-agreements-info" id="new-sign-up-agreements-info-tab" class="nav-link"  data-toggle="tag" disabled="disabled" role="tab">Agreements</a>
                                                             </li>                                                            
 
                                                             <li class="nav-item disabled">
-                                                                <a href="#new-sign-up-billing-info" id="new-sign-up-billing-info-tab" class="nav-link" disabled="disabled" data-toggle="tag" role="tab">Billing Info</a>
+                                                                <a href="#new-sign-up-billing-info" id="new-sign-up-billing-info-tab" class="nav-link" disabled="disabled" data-toggle="tag" role="tab">Billing</a>
                                                             </li>
                                      
                                                         </ul>
 
                                                         <div class="tab-content"> <!-- tab-content -->
 
-                                                                <div id="new-sign-up-contact-info" class="tab-pane" role="tabpanel">  <!-- contact info -->
+                                                                <div id="new-sign-up-contact-info" class="tab-pane active" role="tabpanel">  <!-- contact info -->
                                                                 </div>  <!-- ./contact info -->
                                                         </div>        
 
@@ -256,12 +240,6 @@
 
                                                         </div>        
 			
-                                                        <div class="tab-content"> <!-- tab-content -->
-			
-																																																														  <div id="new-sign-up-preferences-info" class="tab-pane" role="tabpanel"> <!-- account info -->
-																																																														  </div> <!-- ./preferences info -->
-                                                        </div>        
-
                                                         <div class="tab-content"> <!-- tab-content -->
 
                                                                 <div id="new-sign-up-agreements-info" class="tab-pane" role="tabpanel"> <!-- account info -->
@@ -283,15 +261,15 @@
 
                                                         <ul class="nav nav-tabs" role="tablist" id="ap-new-sign-up-tab">
 
-                                                            <li class="nav-item">
+                                                            <li role="presentation" class="nav-item active">
                                                                 <a href="#ap-new-sign-up-contact-info" id="ap-new-sign-up-contact-info-tab" class="nav-link" data-toggle="tab" role="tab">Contact Info</a>
                                                             </li>
 
-                                                            <li class="nav-item disabled">
+                                                            <li role="presentation" class="nav-item disabled">
                                                                 <a href="#ap-new-sign-up-account-info" id="ap-new-sign-up-account-info-tab" class="nav-link" data-toggle="tab" role="tab">Account Info</a>
                                                             </li>
                                                            
-                                                            <li class="nav-item disabled">
+                                                            <li role="presentation" class="nav-item disabled">
                                                                 <a href="#ap-new-sign-up-billing-info" id="ap-new-sign-up-billing-info-tab" class="nav-link" data-toggle="tab" role="tab">Billing Info</a>
                                                             </li>
                                      
@@ -371,7 +349,147 @@
 
         </div>
 
+    <style>
 
+    .signup-image {
+        max-width: 100%;
+    }
+
+    @media screen and (max-width: 1197px) {
+        .fd3-product-desc-container {
+            padding: 11px 0 0 4px;
+            width: 90%;
+        }
+    }
+
+    @media screen and (max-width: 1024px) {
+        .nav-tabs .nav-link {
+            font-size: 0.8em;
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+
+        .fd3-capture-input-container {
+            padding: 2px;
+        }
+
+        .fd3-title-container h2.title {
+
+            font-size: 1.8em;
+        }
+
+        .fd3-title-container h3.sub-sub-title {
+            font-size: 1.2em;
+        }
+
+        .fd3-capture-container .fd3-panel {
+           margin-top: 0px !important;
+        }
+
+        h3.popout-header {
+            margin: -40px -18px 0 !important;
+            font-size: 1.0em;
+            padding: 17px;
+        }
+
+        .product-one-container, .product-two-container {
+            padding: 9px 0;
+            width: 91%;
+            display: block;
+            margin: 6px auto;
+        }
+
+        .fd3-capture-input-container .title-text {
+            margin: 27px 0;
+            font-size: 1.4rem !important;
+        }
+
+        h2.fd3-form-title {
+            margin: 18px 0;
+            font-size: 1.4rem !important;
+            line-height: 1em;      
+        }
+
+        .fd3-product-desc-container {
+            padding: 11px 0 0 49px;
+            width: 90%;
+        }
+
+        .form-group label {
+            font-size: 0.8em !important;
+            margin: 0;
+            display: block;
+            margin-bottom: 10px !important;
+            margin-top: 25px;
+        }
+
+        .fd3-form-control, .form-control {
+           font-size: 0.8em;
+        }
+
+        #fd3_form_microsite_id, #fd3_form_promocode {
+            width: 100% !important;
+            display: inline-block !important;
+        }        
+
+        #fd3_form_validate_microsite_btn, #fd3_form_apply_promo_btn, .fd3-subscribe-btn {
+            width: 100% !important;
+            display: inline-block !important;
+            margin-top: 14px;
+            margin-left: 0;
+        }    
+
+        .col {
+            font-size: 0.8em;
+        }   
+
+        .ap-thankyou-container .main-message {
+            margin: 0 auto;
+            font-size: 0.8em;
+            font-weight: 500;
+            line-height: 1.2;
+            width: auto;
+        }      
+        
+        .ap-thankyou-container .main-message h1 {
+            font-size: 1.5em;
+        } 
+
+        .ap-thankyou-container .main-message img {
+            width: 80px;
+        }
+
+        .ap-thankyou-container .main-message p {
+            margin: 12px 0 0 0;
+            margin-bottom: -14px;
+            font-size: 1.3em;
+            line-height: 1em;
+            color: #777;
+        }           
+              
+    }
+
+    @media screen and (max-width: 520px) {
+
+        .nav-tabs .nav-link {
+            font-size: 0.6em;
+        }
+    }
+
+    @media screen and (max-width: 420px) {
+        .nav-tabs .nav-link {
+            font-size: 0.5em;
+        }
+    }
+
+    @media screen and (max-width: 386px) {
+        .fd3-panel {
+            min-width: 386px;
+        }
+    }    
+
+    </style>
 
     </body>
 </html>

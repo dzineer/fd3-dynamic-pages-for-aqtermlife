@@ -200,8 +200,13 @@ p.contents-text {
     color: #699e00;
 }
 
-#new-sign-up-fd3-contact-btn, #new-sign-up-fd3-account-btn, .fd3-contact-btn, .fd3-account-btn, .fd3-subscribe-btn {
+#sign-up-fd3-contact-bt, #new-sign-up-fd3-contact-btn, #new-sign-up-fd3-account-btn, .fd3-contact-btn, .fd3-account-btn, .fd3-subscribe-btn {
     color: #fff !important;
+}
+
+a:not([href]):not([tabindex]),a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
+    color: #fff;
+    text-decoration: none;
 }
 
 .fd3-capture-panel .left-side {
@@ -833,7 +838,7 @@ a.signup-btn, a.signup-btn:focus, a.signup-btn:hover {
 }
 
 .fd3-product-desc-container {
-    padding: 10px 0 0 30px;
+    padding: 10px 0 0 21px;
     width: 90%;
 }
 

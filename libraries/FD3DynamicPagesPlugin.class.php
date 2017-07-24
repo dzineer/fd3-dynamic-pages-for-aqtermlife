@@ -130,12 +130,25 @@ if( ! class_exists('AQ2EMarketingPlatform\FD3DynamicPagesPlugin' ) ) {
 //			$this->getVar('FD3')->load->library( 'AffiliateShortcode' , null , 'affiliate_shortcode' );
 //			add_shortcode( 'aq2e-affiliate-home', array( $this->getVar('FD3')->affiliate_shortcode, 'aq2e_affiliate_home_render')  );
 			
-			$this->getVar('FD3')->load->library( 'FD3RegisterAssets' , null , 'regCSSAssets' );
-			$this->getVar('FD3')->load->library( 'FD3RegisterAssets' , null , 'regJSAssets' );
+			$this->getVar('FD3')->load->library( 'FD3RegisterAssets' , null , 'regAssets', true );
+			// $this->getVar('FD3')->load->library( 'FD3RegisterAssets' , null , 'regJSAssets', true );
 			
-			$this->getVar('FD3')->wp_actions->add( 'init' , [ $this->getVar('FD3')->regCSSAssets , 'registerCSS' ] );
-			$this->getVar('FD3')->wp_actions->add( 'init' , [ $this->getVar('FD3')->regJSAssets , 'registerJS' ] );
+			$this->getVar('FD3')->regAssets->registerCSS();
+
+			// $this->getVar('FD3')->wp_actions->add( 'init' , [ $this->getVar('FD3')->regAssets , 'registerCSS' ] );
+			// $this->getVar('FD3')->wp_actions->add( 'init' , [ $this->getVar('FD3')->regAssets , 'registerJS' ] );
+
+			$this->getVar('FD3')->load->library( 'AQ2EAffiliateWidget' , null , 'aq2e_widget' );
+			$this->getVar('FD3')->aq2e_widget->prepare();
+
+			$this->getVar('FD3')->load->library( 'AQ2EAffiliateMenuWidget' , null , 'aq2e_menu_widget' );
+
+			$this->getVar('FD3')->wp_shortcodes->add( 'aq2e-affiliate-home', [ $this->getVar('FD3')->aq2e_widget , 'render_home' ]);
+			$this->getVar('FD3')->wp_shortcodes->add( 'aq2-affiliate-menu', [ $this->getVar('FD3')->aq2e_menu_widget , 'render' ]);
 			
+			add_shortcode( 'aq2e-affiliate-home', [ $this->getVar('FD3')->aq2e_widget, 'render_home' ] );
+			add_shortcode( 'aq2e-affiliate-pricing', [ $this->getVar('FD3')->aq2e_widget, 'render_price' ] );
+
 			$this->getVar('FD3')->wp_actions->register();
 			$this->getVar('FD3')->wp_shortcodes->register();
 			

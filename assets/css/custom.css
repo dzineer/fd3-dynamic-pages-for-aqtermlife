@@ -620,3 +620,84 @@ span.microsite-url {
         opacity: 0;
     }
 }
+
+.bootstrap-container .panel-default {
+    border-color: #fff;
+}
+
+.bootstrap-container .panel-default > .panel-heading {
+    color: #333333;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.bootstrap-container .aq2e-widget  {
+    font-size: 10px;
+    padding: 4px;
+}
+
+.bootstrap-container .aq2e-widget .agency-offer {
+    /* border-top: 1px solid #cfcfcf; */
+    /*height: 388px;*/
+}
+
+.bootstrap-container .aq2e-widget .agency-offer h2 {
+    font-size: 3.0em;
+    text-align: left;
+    word-spacing: 0.1em;
+    color: #62d32a;
+}
+
+.bootstrap-container .aq2e-widget .agency-offer h3.bga-company-info {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    font-size: 4.0em;
+    padding-bottom: 0;
+    color: #fff !important;
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    vertical-align: baseline;  
+    text-align: left;  
+}
+
+.bootstrap-container .aq2e-widget .agency-offer h3 .bga-company-name {
+    color: #e36521;
+    font-size: 1.3em;
+}
+
+.bootstrap-container .aq2e-widget .agency-offer h3 .asterisk {
+    color: #222;
+    font-size: 1.3em;
+    vertical-align: middle;
+}
+
+
+table.fd3-asterisk-fields {
+ /*   width:80%;*/
+}
+
+
+.bootstrap-container.fd3-asterisk-fields .panel-default > .panel-heading {
+    text-align: center !important;
+    font-size: 1.5em;
+    font-weight: bold;
+    background:#333 !important;
+    color: #fff !important;
+}
+
+table.fd3-asterisk-fields tr h2[class="fd3-asterisk-title"] {
+    /*
+    margin:0 !important;
+    font-weight: 700 !important;
+    */
+/*    font-size: 1.04em !important;
+    padding-left: 20px;*/
+}
+
+table.fd3-asterisk-fields tr p[class="fd3-asterisk-description"] {
+  /*  padding-left: 20px;*/
+}

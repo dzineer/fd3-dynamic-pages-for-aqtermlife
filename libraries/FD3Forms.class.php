@@ -163,7 +163,7 @@ class FD3Forms extends FD3URLPage {
 			$this->set404Status( true , false );
 			return;
 		}
-		
+
 		$this->set404Status( false , true );
 		
 		$uri = $_SERVER[ 'REQUEST_URI' ];
@@ -275,6 +275,90 @@ class FD3Forms extends FD3URLPage {
 		else if ( $method == 'POST' ) {
 			
 			$fieldsArr = [];
+
+			$this->getVar( 'FD3' )->load->library( 'AQ2EMembership', null, 'aq2e_membership' );
+			
+			$this->getVar( 'FD3' )->load->library( 'AQ2EPlatformConfig', null, 'platform_config', true );
+			
+			$gateway = $this->getVar( 'FD3' )->load->library( 'AQ2EAffiliateGateway', null, 'affiliate_gw', true );
+			
+			$this->getVar( 'FD3' )->affiliate_gw->setURL( $this->getVar( 'FD3' )->platform_config->getGlobal( '/services/affiliate/uri_link' ) );
+			
+			$this->getVar( 'FD3' )->load->library( 'AQ2ESubscriberService', null, 'subscriber_service' );
+			
+			$this->getVar( 'FD3' )->subscriber_service->setGateway( $this->getVar( 'FD3' )->affiliate_gw );
+			
+			$domainName = $_SERVER['HTTP_HOST'];
+			$requestedURI = $_SERVER['REQUEST_URI'];
+			
+			$site = new \stdClass();
+			$site->affiliatePosition = 1;
+			
+			$this->getVar( 'FD3' )->load->library( 'AQ2EAffiliateRules', null, 'affiliate_rules' );
+			$this->getVar( 'FD3' )->affiliate_rules->setSetSiteIdPosition( $site->affiliatePosition );
+			
+			$affiliateId = $this->getVar( 'FD3' )->affiliate_rules->getSiteId( $domainName );
+			
+			//$affiliateId = 'bha';
+			
+			//		add_filter( 'wp_nav_menu_items', array( new FD3MenuItems( $affiliateId ), 'renderMenu'), 10, 2 );
+			
+			if( $affiliateId === false ) { // if an affiliate id is not provided quit.
+				exit(0);
+			}
+			
+			if(/* AQ2ESession::getSession('/affiliate/affiliate_id') === false */ true) { // check if we have the affiliate session already
+				
+				$this->getVar( 'FD3' )->session->registerSession( 'affiliate', array( "affiliate_id" => $affiliateId ) );
+				
+			
+				$this->getVar( 'FD3' )->aq2e_membership->addRequest(
+				
+				/* request */ 'websiteData2',
+					/* siteId */  $affiliateId,
+					/* type */    'affiliate',
+					/* mode */    'signup'
+				
+				);
+				
+				$this->getVar( 'FD3' )->subscriber_service->setMembership( $this->getVar( 'FD3' )->aq2e_membership );
+				
+				$siteData = $this->getVar( 'FD3' )->subscriber_service->getBGA( $this->getVar( 'FD3' )->aq2e_membership );
+				/*
+							if( $_SERVER['REMOTE_ADDR'] == '223.204.86.132 ' ) {
+								 $content = ob_get_clean();
+								 ob_end_flush();
+								return $content;
+							}*/
+				
+				
+				if( $siteData === false ) { // if we do not get affiliate info quit
+					exit(0);
+				}
+				
+				$siteObj = json_decode( $siteData,true );
+				
+				if( $_SERVER['REMOTE_ADDR'] == '223.204.86.132 ') {
+					printf("%s", print_r($siteObj,true));
+					$content = ob_get_clean();
+					ob_end_flush();
+					
+					return $content;
+				}
+				
+				if($siteObj['successful'] == false) {
+					/*wp_redirect('/invalid/');*/
+					exit(0);
+				}
+				
+				$this->getVar( 'FD3' )->session->registerSession( 'affiliate_site', $siteObj['content'] );
+				$this->getVar( 'FD3' )->platform_config->registerGlobals( 'affiliate_site', $siteObj['content'] );
+				
+				$siteData = $this->getVar( 'FD3' )->session->getSession('/affiliate_site');
+				
+			} 
+
+			// echo "<pre>" . print_r($siteData['site'],true); exit;			
 			
 			if ( is_array( $segments ) && count( $segments ) != 0 ) { // forms/12345?v=6
 				if ( count( $segments ) == 3 ) {
@@ -347,18 +431,18 @@ class FD3Forms extends FD3URLPage {
 											"fields" => [
 												"phone"                     => $fieldsArr[ 'phone' ] ,
 												"agent_sub_domain"          => $subdomain ,
-												"agent_domain"              => $subdomain . '.aq2emarketing.com' ,
+												"agent_domain"              => $subdomain . '.aqtermlife.com' ,
 												"subscriber_type"           => 'agents_client' ,
 												"source"                    => "marketing mailbox" ,
 												"form_id"                   => $s_form_id ,
 												"subscriber_e_mail_address" => $fieldsArr[ 'email' ] ,
 												"campaign_id"               => $s_campaign_id ,
-												"agent_account_id"          => $agentData[ 'site' ][ 'site_num' ] ,
-												"agent_phone"               => $agentData[ 'site' ][ 'phone_text' ] ,
-												"agent_email"               => $agentData[ 'site' ][ 'email_text' ] ,
-												"agent_full_name"           => $agentData[ 'site' ][ 'AgentName' ] ,
-												"agent_company"             => $agentData[ 'site' ][ 'company_name' ] ,
-												"agent_marketing_website"   => 'https://' . $subdomain . '.aq2emarketing.com'
+												"agent_account_id"          => $siteData[ 'site' ][ 'site_num' ] ,
+												"agent_phone"               => $siteData[ 'site' ][ 'phone_text' ] ,
+												"agent_email"               => $siteData[ 'site' ][ 'GAEmail' ] ,
+												"agent_full_name"           => $siteData[ 'site' ][ 'GAgentName' ] ,
+												"agent_company"             => $siteData[ 'site' ][ 'GACompany_name' ] ,
+												"agent_marketing_website"   => 'https://' . $subdomain . '.aqtermlife.com'
 											]
 											
 											/*			"fields" => array(
@@ -385,7 +469,7 @@ class FD3Forms extends FD3URLPage {
 										
 										$this->save_subscriber(
 											[
-												"account_id"    => $agentData[ 'site' ][ 'site_num' ] ,
+												"account_id"    => $siteData[ 'site' ][ 'site_num' ] ,
 												"subscriber_id" => $subscriber[ 'id' ] ,
 												"first_name"    => $fieldsArr[ 'name' ] ,
 												"email"         => $fieldsArr[ 'email' ] ,

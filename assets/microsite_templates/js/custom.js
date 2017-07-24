@@ -2409,7 +2409,7 @@ var fieldSuccesses = {};
                 'items': [
 
                     { "element": "div", "state": "signup-choice", "props": { "class": "row" }, "has_children": true, "children": [
-                        { "element": "div", "props": { "class": "col-md-6" }, "has_children": true, "children": [
+                        { "element": "div", "props": { "class": "col-sm-12 col-md-6" }, "has_children": true, "children": [
 
                             { "element": "div", "props": { "id":"product-one-container", "class": "signup-product product-one-container" }, "has_children": true, "children": [
 
@@ -2425,7 +2425,7 @@ var fieldSuccesses = {};
 
                         ]},
 
-                        { "element": "div", "props": { "class": "col-md-6" }, "has_children": true, "children": [
+                        { "element": "div", "props": { "class": "col-sm-12 col-md-6" }, "has_children": true, "children": [
 
                             { "element": "div", "props": { "id":"product-two-container", "class": "signup-product product-two-container" }, "has_children": true, "children": [
 
@@ -2674,7 +2674,7 @@ var fieldSuccesses = {};
             },
             'renderTable': function() {
 
-                var t = this.renderElement( 'table', { 'class': 'table table-bordered' } );
+                var t = this.renderElement( 'table', { 'class': 'table table-responsive table-bordered' } );
                 var tb = this.renderElement( 'tbody' );
                 var h = this.renderTableHeader();
                 
@@ -2798,7 +2798,6 @@ var fieldSuccesses = {};
                 if( typeof data === 'object' ) {
                     data.total = data.qty * data.cost;
                     this.data.billing.addItem( data.desc, data.qty, data.cost );
-                    this.items = this.data.billing.getItems();
                 }
 
                 if( typeof this.data.container === 'string' ) {
@@ -2816,7 +2815,6 @@ var fieldSuccesses = {};
                     if( typeof dataArr[i] === 'object' ) {
                         dataArr[i].total = dataArr[i].qty * dataArr[i].cost;
                         this.data.billing.addItem( data.desc, data.qty, data.cost );
-                        this.items = this.data.billing.getItems();
                     }
 
                 }
