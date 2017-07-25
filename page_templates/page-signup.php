@@ -239,7 +239,14 @@
                                                                 </div> <!-- ./account info -->
 
                                                         </div>        
-			
+
+                                                        <div class="tab-content"> <!-- tab-content -->
+
+                                                                <div id="new-sign-up-preferences-info" class="tab-pane" role="tabpanel"> <!-- account info -->
+                                                                </div> <!-- ./agreements info -->
+
+                                                        </div>  
+
                                                         <div class="tab-content"> <!-- tab-content -->
 
                                                                 <div id="new-sign-up-agreements-info" class="tab-pane" role="tabpanel"> <!-- account info -->

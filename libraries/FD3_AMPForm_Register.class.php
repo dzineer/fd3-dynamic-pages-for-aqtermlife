@@ -388,8 +388,8 @@ class FD3_AMPForm_Register extends Wordpress_Extendable_Form {
 //	        include_once FD3_DYNAMIC_PAGES_PLUGIN_AQTERM."FD3_MM_Signup.class.php";
 //	        include_once FD3_DYNAMIC_PAGES_PLUGIN_AQTERM."AQ2EPassGen.class.php";
 	
-	        $this->getVar( 'FD3' )->load->library( 'AQ2EAffiliateGateway', null, 'affiliate_gw' );
-	        $this->getVar( 'FD3' )->load->library( 'AQ2EPlatformConfig', null, 'platform_config' );
+	        $this->getVar( 'FD3' )->load->library( 'AQ2EAffiliateGateway', null, 'affiliate_gw', true );
+	        $this->getVar( 'FD3' )->load->library( 'AQ2EPlatformConfig', null, 'platform_config', true );
 	        $this->getVar( 'FD3' )->load->library( 'AQ2ESubscriberService', null, 'subscriber_service', true );
 
             $result->statuses[] = 'loaded all classes';
@@ -660,10 +660,12 @@ class FD3_AMPForm_Register extends Wordpress_Extendable_Form {
 		
 		        $this->getVar( 'FD3' )->subscriber_service->setMembership( $this->getVar( 'FD3')->membership );
 		        $result = $this->getVar( 'FD3' )->subscriber_service->subscribe();
+
+                // return json_encode( $result ); exit;
 		
 	        }
          
-	        if( $result->successful === true && true ) { // if we have a problem with upgrading or creating new site then don't create MM account.
+	        if( $result ) { // if we have a problem with upgrading or creating new site then don't create MM account.
 		
 		        $this->getVar( 'FD3' )->load->library( 'FD3_MM_Signup', null, 'mm_signup' );
 		        $this->getVar( 'FD3' )->load->library( 'AQ2EMarketingMailboxGateway', null, 'marketing_gw' );
@@ -695,17 +697,7 @@ class FD3_AMPForm_Register extends Wordpress_Extendable_Form {
 	        	
 	        }
 
-
-            if( ! $result ) {
-
-                return $result;
-
-            }
-            else {
-
-                return $result;      
-
-           }
+            return $result; 
 
         } // ./if( isset( $_POST ) && isset( $_POST[ $this->id ] ) && isset( $_POST[ 'nonce' ] ) ) {
         else {

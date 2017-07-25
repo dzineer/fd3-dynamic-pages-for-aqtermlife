@@ -105,11 +105,11 @@ class FD3_APForm_Promo extends Wordpress_Extendable_Form {
 	          $fields = $this->getAllSavedFields();
 
             $fields['auth_remote'] = 'auth_remote';
-            $fields['bga'] = 'aqterm';
+            $fields['bga'] = $this->getVar('FD3')->session->getSession('/affiliate_site/affiliate2/affiliateId');
 
             $promo_items = $this->getVar( 'FD3' )->session->getSession('/promo_items');
 
-            // return json_encode( $fields['promo_info']['fd3_form_promocode'] ); exit;
+            // return json_encode( $promo_items ); exit;
 
             foreach( $promo_items as $promo_item ) {
              // return json_encode( array("promo item" => $promo_items[1]['code'], "promo code" => $fields['promo_info']['fd3_form_promocode'] ) ); exit;

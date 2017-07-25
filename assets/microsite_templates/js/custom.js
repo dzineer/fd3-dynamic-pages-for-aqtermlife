@@ -982,11 +982,12 @@ var fieldSuccesses = {};
                                         console.log( response.output );
 
                                         that.data.views.invoiceInfo.applyPromo( response.promo );
-                                        that.loadPage( that.appData );
+                                        that.data.views.promoInfo.render();
 
                                         jq( "#fd3_form_promocode" ).val( promoCode );
                                         jq( "#fd3_form_promocode" ).attr( "data-promocode", promoCode );
 
+                                        that.loadPage( this.appData );
 
                                     } else if( response.successful == false ) { // we have a form error
                                         jq( "#fd3_form_promocode" ).parent().prepend('<span class="fd3_forms_form_error" id="' + 'fd3_form_promocode' + '-error" alertrole="alert"><strong>Error, </strong>You Provided An Invalid Promo Code</span>');
@@ -1376,12 +1377,24 @@ var fieldSuccesses = {};
 
                     signupInfo.site = {};
                     signupInfo.request = 'availability';
-                    signupInfo.siteId = myAjax.affiliateId;
+
+                    if( typeof my_AP_Ajax.affiliateId == "string" ) {
+                        signupInfo.siteId = my_AP_Ajax.affiliateId;
+                    } else if( typeof my_AMP_Ajax.affiliateId == "string" ) {
+                        signupInfo.siteId = my_AMP_Ajax.affiliateId;
+                    }
+
                     signupInfo.type = 'affiliate';
                     signupInfo.mode = 'affiliate';
 
                     packagedSignUpInfoData = FORMS.PackageData( JSON.stringify( signupInfo ) );
-                    thePackageObject = { "params": { "data": packagedSignUpInfoData }, "nonce": myAjax.nonce };
+
+                    if( typeof my_AP_Ajax.nonce == "string" ) {
+                        thePackageObject = { "params": { "data": packagedSignUpInfoData }, "nonce": my_AP_Ajax.nonce };
+                    } else if( typeof my_AMP_Ajax.nonce == "string" ) {
+                        thePackageObject = { "params": { "data": packagedSignUpInfoData }, "nonce": my_AMP_Ajax.nonce };
+                    }
+
                     packagedData = JSON.stringify( thePackageObject );
 
                     console.log( packagedData );
@@ -1391,13 +1404,28 @@ var fieldSuccesses = {};
                     that.find(".fa-btn-font").addClass('show').addClass('fa-spin');
                     that.find('.btn-caption').html("Checking Availability...");   
                 
+                    var cache = '';
+
+                    if( typeof my_AP_Ajax.useCache == "string" ) {
+                        cache = my_AP_Ajax.useCache;
+                    } else if( typeof my_AMP_Ajax.useCache == "string" ) {
+                        cache = my_AMP_Ajax.useCache;
+                    } 
+
+                    var dataType = '';
+                    if( typeof my_AP_Ajax.dataType == "string" ) {
+                        dataType = my_AP_Ajax.dataType;
+                    } else if( typeof my_AMP_Ajax.dataType == "string" ) {
+                        dataType = my_AMP_Ajax.dataType;
+                    }                                        
+
                     options.jq.ajax( {
 
                         url: "https://aqterm.com/aqterm-engine/index.php/aqmprocess",
                         type: 'put',
                         data: packagedData,
-                        dataType : myAjax.dataType,
-                        cache: myAjax.useCache,
+                        dataType : dataType,
+                        cache: cache,
 
                         error: function( response ) {
                             console.log( response );
@@ -1464,7 +1492,181 @@ var fieldSuccesses = {};
             }
         });        
 
-        setInstance( "AccountInfoModel", AccountInfoModel );
+
+
+        // Model: APAccountInfo
+        var APAccountInfoModel = FD3Model.extend({
+
+            'data': {},
+            'appData': {},
+            'modelData': {},
+
+            'loadPage': function( appData ) {
+                this.appData = appData;
+                this.modelData = this.appData.AccountInfoData.data;
+                this.data.views.accountInfo.registerCallback( this, this.eventsFired );
+                this.data.views.accountInfo.view( this.appData.AccountInfoData.data );
+                this.data.container = this.appData.AccountInfoData.data.container;
+                this.data.container = this.data.container instanceof jq ? this.data.container : jq( this.data.container );
+
+                jq( this.modelData.tab_link ).addClass('active');
+                jq( this.modelData.tab ).addClass('active');
+
+                this.data.container.addClass('show');
+            },
+            'eventsFired': function( e ) {
+                var currentTarget = e.currentTarget;
+                var id = currentTarget.id;
+                var controller = new this.data.next_controller();
+
+                var that = currentTarget;
+
+                e.preventDefault();
+
+                console.log( "info", id + ' was clicked' );
+
+                if( id == 'new-sign-up-fd3-account-btn' ) {
+                    console.log( "info", id + ' was clicked' );
+
+                    if(this.validateFields()) {
+                        console.log( 'info', 'all fields valid.' );
+
+
+                        controller.index( this.appData );
+
+                        this.data.container.removeClass('show');
+                        this.data.container.removeClass('active');
+                        jq( this.modelData.tab_link ).removeClass('active');
+                        jq( this.modelData.next_tab ).tab('show');
+
+                    } else {
+                        console.log( 'info', 'all fields not valid.' );
+                    }
+
+                } 
+                else if( id == 'fd3_form_password' ) {
+                    var complexityContainer =  options.jq('#passwd-complexity-container');
+                    var passwdStrengthText =  options.jq('#password-strength-text');
+                    var passwd = options.jq(that).val();
+
+                    // fd3_check_error( that, FORMS.Validate.Password );
+
+                    var result = zxcvbn( passwd );
+
+                    document.getElementById( 'passwd-complexity-container' ).setAttribute( 'data-background', result.score );
+
+                    if(passwd !== "") {
+                        var output = "Strength: " + "<strong>" + strength[result.score] + "</strong>";
+                        if( result.score < 3 ) {
+                            output = output + "<br/><span class='feedback'>Feedback: " + result.feedback.warning + "&nbsp;" + result.feedback.suggestions + "</span>";
+                        }
+                        options.jq( passwdStrengthText ).html( output );
+                    } else {
+                        options.jq( passwdStrengthText ).html( "" );
+                    }                   
+                }
+                else if( id == 'fd3_form_validate_microsite_btn' ) {
+                    var that = options.jq( '#'+id );
+                    var signupInfo = {};
+                    var packagedSignUpInfoData;
+                    var thePackageObject;
+                    var packagedData;
+
+                    signupInfo.account = {};
+                    signupInfo.account = {};
+                    signupInfo.account.type = 'affiliate';
+                    signupInfo.user = {};
+                    signupInfo.user.userName = options.jq("#fd3_form_microsite_id").val();
+
+                    signupInfo.site = {};
+                    signupInfo.request = 'availability';
+                    signupInfo.siteId = myAjax.affiliateId;
+                    signupInfo.type = 'affiliate';
+                    signupInfo.mode = 'affiliate';
+
+                    packagedSignUpInfoData = FORMS.PackageData( JSON.stringify( signupInfo ) );
+                    thePackageObject = { "params": { "data": packagedSignUpInfoData }, "nonce": myAjax.nonce };
+                    packagedData = JSON.stringify( thePackageObject );
+
+                    console.log( packagedData );
+
+                    options.jq('.alert').remove();
+
+                    that.find(".fa-btn-font").addClass('show').addClass('fa-spin');
+                    that.find('.btn-caption').html("Checking Availability...");   
+                
+                    options.jq.ajax( {
+
+                        url: "https://aqterm.com/aqterm-engine/index.php/aqmprocess",
+                        type: 'put',
+                        data: packagedData,
+                        dataType : 'json',
+                        cache: false,
+
+                        error: function( response ) {
+                            console.log( response );
+                        },
+
+                        success: function( response ) {
+
+                            if(response.successful == true) {
+
+                                options.jq( that ).parent().prepend('<div class="alert alert-success" role="alert"><strong></strong>Great News, That Microsite ID is Available!</div>');
+                                options.jq( that ).find(".fa-btn-font").removeClass('show').removeClass('fa-spin').find('.btn-caption').html("Check Availability");
+
+                                console.log( response );
+                            } else if( response.successful == false ) { // we have a form error
+
+                                options.jq( that ).parent().prepend('<div class="alert alert-danger" role="alert"><strong>Error, </strong>Sorry That Microsite ID is Not Available</div>');
+                                options.jq( that ).find(".fa-btn-font").removeClass('show').removeClass('fa-spin').find('.btn-caption').html("Check Availability");
+
+                                console.log( response );
+                            }
+
+                            options.jq(that).find('.btn-caption').html('Check Availability');
+                         //   options.jq(that).find(".fa-btn-font").removeClass('show').removeClass('fa-spin');
+
+                        }
+
+                    });
+
+                    return false;
+
+                }
+
+            },
+            'validateFields': function() {
+                var hasErrors = false;
+                var email;
+                var tab = this.data.container;
+
+                var fields = [
+                    { "field_name" : "fd3_form_microsite_id",      "validate" : FORMS.Validate.MicrositeId, "required": true,   "instance" : options.jq("#fd3_form_microsite_id"), "message": "Invalid Microsite Id" },
+                    { "field_name" : "fd3_form_password",          "validate" : FORMS.Validate.Password,    "required": true,   "instance" : options.jq("#fd3_form_password"), "message": "Invalid Password" }
+                ];  
+                
+                options.jq( '.alert' ).remove();
+
+                fields.forEach(function(field) {
+                    var name = field['field_name'];
+                    var validate = field['validate'];
+                    var inst = field['instance'];
+                    var required = field['required'];
+                    var msg = field['message'];
+
+                    if( required && ! validate.call( this, inst.val() ) ) {
+                        options.jq( inst ).parent().prepend('<div class="alert alert-danger" role="alert">' + msg + '</div>');
+                        hasErrors = true;
+                    }
+                }, this);
+
+                if( hasErrors ) {
+                    return false;
+                }
+
+                return true;
+            }
+        });  
 
         // Model: PreferencesInfo
         var PreferencesInfoModel = FD3Model.extend({
@@ -1694,6 +1896,9 @@ var fieldSuccesses = {};
                                 
                             var data = jq( my_AMP_Ajax.formQuery ).serialize();
                             var promoCode =  jq( "#fd3_form_promocode" ).data("promocode");
+
+                            promoCode = (typeof promoCode == 'undefined') ? '' : promoCode;
+
                             data = data + '&fd3_form_promocode=' + promoCode;
                             var dataObject = fd3_objectify( data );
 
@@ -1967,6 +2172,9 @@ var fieldSuccesses = {};
                                 
                             var data = jq( my_AP_Ajax.formQuery ).serialize();
                             var promoCode =  jq( "#fd3_form_promocode" ).data("promocode");
+
+                            promoCode = (typeof promoCode == 'undefined') ? '' : promoCode;
+
                             data = data + '&fd3_form_promocode=' + promoCode;
                             var dataObject = fd3_objectify( data );
 
@@ -2060,7 +2268,6 @@ var fieldSuccesses = {};
                                             jq( my_AP_Ajax.formButtonQuery ).find(".fa-btn-font").removeClass('show').removeClass('fa-spin').find('.btn-caption').html("Sign Up");
 
                                             jq( '.fd3-panel' ).find( '.title-text' ).remove();
-
                                             jq('#register_form').remove();
                                             jq('.ap-thankyou-container').addClass('show');
 
@@ -2419,6 +2626,9 @@ var fieldSuccesses = {};
                     billingInfo.clearPromos();
                     billingInfo.addPromoItem( 'Applied Affiliate Discount<br/><strong>(Applied Promocode: AQ2ELIFE)</strong>', 1, -10.00 );
 
+                    jq( "#fd3_form_promocode" ).val( 'AQ2ELIFE' );
+                    jq( "#fd3_form_promocode" ).attr( "data-promocode", 'AQ2ELIFE' );
+
                 }
 
 /*                this.data.views.invoiceInfo.applyPromos([
@@ -2429,6 +2639,10 @@ var fieldSuccesses = {};
                 billingInfo.loadPage( data );
                 invoiceInfo.loadPage( data );
                 promoInfo.loadPage( data );
+
+                if(my_AP_Ajax.standard == true) {
+                    jq( "#fd3_form_promocode" ).attr( "data-promocode", 'AQ2ELIFE' );
+                }
             } 
         });
 
@@ -2739,6 +2953,7 @@ var fieldSuccesses = {};
 
                 for( var i=0; i < this.items.length; i++ ) {
                     var item = this.renderItem( this.items[ i ] );
+                    item
                     item.appendTo( tb );
                 }
 

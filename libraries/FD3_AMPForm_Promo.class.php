@@ -62,7 +62,21 @@ class FD3_AMPForm_Promo extends Wordpress_Extendable_Form {
         return $this->fields;
     }
 
-// auth_remote
+    function getOnlyPromoCode() {
+      $gaPromo = new \stdClass();
+      $gaPromo->exists = true;
+
+      $gaPromo->code = 'TOTALSOLUTION'; 
+      $gaPromo->value = 20.00;
+      $gaPromo->costs = -20.00;
+      $gaPromo->price = '- '.'$'.number_format($gaPromo->value, 2);
+      $gaPromo->value = number_format($gaPromo->value, 2) * -1;
+      $gaPromo->qty = '1';
+      $gaPromo->desc = sprintf("Applied Affiliate Discount<br><strong>PROMO CODE: %s</strong>", $gaPromo->code);    
+      $gaPromo->billing = true;
+
+      return json_decode( json_encode(array($gaPromo) ), true );
+    }
 
     public function processPromo() {
 
@@ -92,36 +106,39 @@ class FD3_AMPForm_Promo extends Wordpress_Extendable_Form {
 
             $result = new \stdClass();
 
-            $this->getVar( 'FD3' )->load->library( 'AQ2EAffiliateGateway', null, 'affiliate_gw' );
-	          $this->getVar( 'FD3' )->load->library( 'AQ2EPlatformConfig', null, 'platform_config' );
-	          $this->getVar( 'FD3' )->load->library( 'AQ2ESubscriberService', null, 'subscriber_service', true );
-			
+            //$this->getVar( 'FD3' )->load->library( 'AQ2EAffiliateGateway', null, 'affiliate_gw', true );
+            //$this->getVar( 'FD3' )->load->library( 'AQ2EPlatformConfig', null, 'platform_config', true );
+            //$this->getVar( 'FD3' )->load->library( 'AQ2ESubscriberService', null, 'subscriber_service', true );
+      
             $result->statuses[] = 'loaded all classes';      
 
-  	        $this->getVar( 'FD3' )->load->library( 'AQ2EMembership', null, 'membership' );
-  	
-  	        $this->getVar( 'FD3' )->affiliate_gw->setURL( $this->getVar('FD3')->platform_config->getGlobal( '/services/affiliate/uri_validate_promo_link' ) );
-  	        $this->getVar( 'FD3' )->subscriber_service->setGateway(  $this->getVar( 'FD3' )->affiliate_gw ) ;
-  		
-	          $fields = $this->getAllSavedFields();
+            //$this->getVar( 'FD3' )->load->library( 'AQ2EMembership', null, 'membership', true );
+            //$this->getVar( 'FD3' )->affiliate_gw->setURL( $this->getVar('FD3')->platform_config->getGlobal( '/services/affiliate/uri_validate_promo_link' ) );
+            //$this->getVar( 'FD3' )->subscriber_service->setGateway(  $this->getVar( 'FD3' )->affiliate_gw ) ;
+    
+            $fields = $this->getAllSavedFields();
 
             $fields['auth_remote'] = 'auth_remote';
-            $fields['bga'] = 'aqterm';
+            $fields['bga'] = $this->getVar('FD3')->session->getSession('/affiliate_site/affiliate2/affiliateId');
 
-           // echo print_r($fields, true); exit;
+            $promo_items = $this->getOnlyPromoCode();
 
-            $result = $this->getVar( 'FD3' )->subscriber_service->validatePromo( $fields );
+            // return print_r($promo_items,true); exit;
 
-            if( ! $result ) {
-
-                return $result;
-
+            foreach( $promo_items as $promo_item ) {
+              // return json_encode( array("promo item" => $promo_items[0]['code'], "promo code" => $fields['promo_info']['fd3_form_promocode'] ) ); exit;
+              if( strtoupper( $promo_item['code'] ) == strtoupper( $fields['promo_info']['fd3_form_promocode'] ) ) {
+                $result->successful = true;
+                $result->promo = $promo_item;
+                $result->output = '';
+                echo json_encode( $result ); exit;
+              }
             }
-            else {
 
-                return $result;      
-
-           }
+            $result->error = 'Invalid Promo Code!';
+            $result->successful = false;
+            $result->output = '';
+            echo json_encode( $result ); exit;
 
         } // ./if( isset( $_POST ) && isset( $_POST[ $this->id ] ) && isset( $_POST[ 'nonce' ] ) ) {
         else {

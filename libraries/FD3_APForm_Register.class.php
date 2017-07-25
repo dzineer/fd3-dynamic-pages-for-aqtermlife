@@ -361,8 +361,8 @@ class FD3_APForm_Register extends Wordpress_Extendable_Form {
 //	        include_once FD3_DYNAMIC_PAGES_PLUGIN_AQTERM."FD3_MM_Signup.class.php";
 //	        include_once FD3_DYNAMIC_PAGES_PLUGIN_AQTERM."AQ2EPassGen.class.php";
 	
-	        $this->getVar( 'FD3' )->load->library( 'AQ2EAffiliateGateway', null, 'affiliate_gw' );
-	        $this->getVar( 'FD3' )->load->library( 'AQ2EPlatformConfig', null, 'platform_config' );
+	        $this->getVar( 'FD3' )->load->library( 'AQ2EAffiliateGateway', null, 'affiliate_gw', true );
+	        $this->getVar( 'FD3' )->load->library( 'AQ2EPlatformConfig', null, 'platform_config', true );
 	        $this->getVar( 'FD3' )->load->library( 'AQ2ESubscriberService', null, 'subscriber_service', true );
 
             $result->statuses[] = 'loaded all classes';

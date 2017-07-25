@@ -84,7 +84,7 @@ class AQ2EAffiliateWidget extends FD3Library {
                             <div class="row row-spacing ">
 
                                 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                                <?  echo '<pre>: ' . print_r( $this->getVar('FD3')->session->getSession('/affiliate_site'), true) . "</pre>"; ?>
+                                <? // echo '<pre>: ' . print_r( $this->getVar('FD3')->session->getSession('/affiliate_site'), true) . "</pre>"; ?>
                                     <h3 class="bga-company-info"><span class="asterisk">*</span><span class="bga-company-name"><?= $this->getVar('FD3')->session->getSession('/affiliate_site/site/GACompany_name'); ?></span> has secured a <?= $this->getVar('FD3')->session->getSession('/affiliate_site/affiliate2/offerPercentage'); ?> discount for its affiliated reps to obtain this unique marketing tool.</h3>
                                     <h2 class="bga-offer">
                                         For only &dollar;<?= $this->getVar('FD3')->session->getSession('/affiliate_site/affiliate2/pricePerPeriod'); ?>, you can have the AQ2E Platform.
