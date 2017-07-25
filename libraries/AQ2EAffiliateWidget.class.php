@@ -19,60 +19,24 @@ if ( ! defined('FD3_DYNAMIC_PAGES_PLUGIN_AQTERM')) exit('No direct script access
 class AQ2EAffiliateWidget extends FD3Library {
 	
 	/* variables */
-	private $affiliate;
-	private $gateway;
 	/* constants */
 	
 	function __construct() {}
 	
 	function prepare() {
 
-        $domainName = $_SERVER['HTTP_HOST'];
+        $this->getVar( 'FD3' )->load->library( 'AffiliateFacade', null, 'affiliate_facade', true );
+        $this->getVar( 'FD3' )->affiliate_facade->loadAffiliateData();
 
-        $site = new \stdClass();
-        $site->affiliatePosition = 1;
+		$siteData = $this->getVar( 'FD3' )->session->getSession('/affiliate_site');
 
-        $this->getVar( 'FD3' )->load->library( 'AQ2EAffiliateRules', null, 'affiliate_rules' );
-        $this->getVar( 'FD3' )->affiliate_rules->setSetSiteIdPosition( $site->affiliatePosition );
-
-        $affiliateId = $this->getVar( 'FD3' )->affiliate_rules->getSiteId( $domainName );
-
-        $this->getVar( 'FD3' )->load->library( 'AQ2EAffiliateGateway', null, 'affiliate_gw' );
-        $this->getVar( 'FD3' )->load->library( 'AQ2EPlatformConfig', null, 'platform_config' );
-        $this->getVar( 'FD3' )->load->library( 'AQ2ESubscriberService', null, 'subscriber_service', true );
-
-		$this->getVar( 'FD3' )->load->library( 'AQ2EMembership', null, 'membership' );
-
-	    $this->getVar( 'FD3' )->affiliate_gw->setURL( $this->getVar('FD3')->platform_config->getGlobal( '/services/affiliate/aqm_uri_link' ) );
-	    
-        $this->getVar( 'FD3' )->membership->addRequest(
-        /* request */ 'websiteData2',
-			/* siteId */  $affiliateId,
-			/* type */    'affiliate',
-			/* mode */    'signup'
-
-		);
-
-		$this->getVar( 'FD3' )->subscriber_service->setGateway(  $this->getVar( 'FD3' )->affiliate_gw ) ;
-		$this->getVar( 'FD3' )->subscriber_service->setMembership(  $this->getVar( 'FD3' )->membership );
-
-		$siteData = $this->getVar( 'FD3' )->subscriber_service->getBGA( $this->getVar( 'FD3' )->membership );
-		
 		if( $siteData === false ) { // if we do not get affiliate info quit
 			exit(0);
 		}
 		
-		$siteObj = json_decode( $siteData,true );
-		
-		$this->getVar( 'FD3' )->session->registerSession( 'affiliate_site', $siteObj['content'] );
-		//$this->getVar( 'FD3' )->session->registerSession( 'promo_content', $siteObj['content']['promoContent'] );
+		$invoice_items = $this->getVar( 'FD3' )->session->getSession('/invoice_items');
 
-		$this->getVar('FD3')->platform_config->registerGlobals( 'affiliate_site', $siteObj['content'] );
-		//$this->getVar('FD3')->platform_config->registerGlobals( 'promo_content', $siteObj['content']['promoContent'] );
-
-		$siteData = $this->getVar( 'FD3' )->session->getSession('/affiliate_site');
-
-		// echo "<pre>".print_r($siteData,true); exit;
+		echo "<pre>".print_r($siteData,true) . '</pre>'; exit;
 	}
 	
 	function render_price() {
@@ -120,7 +84,7 @@ class AQ2EAffiliateWidget extends FD3Library {
                             <div class="row row-spacing ">
 
                                 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                                <?  // echo '<pre>: ' . print_r( $this->getVar('FD3')->session->getSession('/affiliate_site/affiliate2'), true) . "</pre>"; ?>
+                                <?  echo '<pre>: ' . print_r( $this->getVar('FD3')->session->getSession('/affiliate_site'), true) . "</pre>"; ?>
                                     <h3 class="bga-company-info"><span class="asterisk">*</span><span class="bga-company-name"><?= $this->getVar('FD3')->session->getSession('/affiliate_site/site/GACompany_name'); ?></span> has secured a <?= $this->getVar('FD3')->session->getSession('/affiliate_site/affiliate2/offerPercentage'); ?> discount for its affiliated reps to obtain this unique marketing tool.</h3>
                                     <h2 class="bga-offer">
                                         For only &dollar;<?= $this->getVar('FD3')->session->getSession('/affiliate_site/affiliate2/pricePerPeriod'); ?>, you can have the AQ2E Platform.
@@ -145,7 +109,7 @@ class AQ2EAffiliateWidget extends FD3Library {
 
                 <div class="aq2e-widget">
 
-                        <div class="agency-offer">
+                        <div>
 
                             <div class="row row-spacing ">
 
@@ -154,7 +118,8 @@ class AQ2EAffiliateWidget extends FD3Library {
 									<div class="row">
 
 		                                <div class="col-md-12">
-		                                	<h2 style="font-size: 3.9em;text-align: center;color:#ffffff;margin-top: -19px;"><strong>Only <span style="color: #e46622; font-size: 1.3em;">$30</span> per month</strong></h2>
+		                                    <?// echo '<pre>: ' . print_r( $this->getVar('FD3')->session->getSession('/affiliate_site'), true) . "</pre>"; ?>
+		                                	<h2 id="main-aqterm-header" style=""><strong>Only <span style="color: #e46622; font-size: 1.3em;">$30</span> per month</strong></h2>
 		                                </div>
 
 		                                <div class="col-md-12">
@@ -162,7 +127,7 @@ class AQ2EAffiliateWidget extends FD3Library {
 		                                </div>
 
 		                                <div class="col-md-12">
-		                                	<h2 style="font-size: 1.5em;font-style:italic;text-align: center;color:#ffffff;margin-top: -19px;"><span style="font-size: medium"><strong>No Set Up – No Lengthy Contract – Cancel at any time</strong></span></h2>
+		                                	<h2 id="mini-aqterm-header"  style=""><span style="font-size: medium"><strong>No Set Up – No Lengthy Contract – Cancel at any time</strong></span></h2>
 		                                </div>		                                		                                
 
 		                                <div class="col-md-12">
@@ -171,7 +136,7 @@ class AQ2EAffiliateWidget extends FD3Library {
 
 				                                <div class="col-md-4">
 
-				                                	<div class="et_pb_blurb et_pb_module et_pb_bg_layout_dark et_pb_text_align_center et_pb_blurb_0 et_pb_blurb_position_top" style="float:right;">
+				                                	<div class="et_pb_blurb et_pb_module et_pb_bg_layout_dark et_pb_text_align_center et_pb_blurb_0 et_pb_blurb_position_top fd3-left-blurb">
 														<div class="et_pb_blurb_content">
 															<div class="et_pb_main_blurb_image">
 																<span class="et-pb-icon et-waypoint et_pb_animation_top et-pb-icon-circle et-pb-icon-circle-border et-animated" style="color: #ffffff; background-color: #0c71c3; border-color: #ffffff;">l</span>
@@ -201,7 +166,7 @@ class AQ2EAffiliateWidget extends FD3Library {
 
 				                                <div class="col-md-4">
 
-													<div class="et_pb_blurb et_pb_module et_pb_bg_layout_dark et_pb_text_align_center et_pb_blurb_2 et_pb_blurb_position_top" style="float:left;">
+													<div class="et_pb_blurb et_pb_module et_pb_bg_layout_dark et_pb_text_align_center et_pb_blurb_2 et_pb_blurb_position_top fd3-right-blurb">
 														<div class="et_pb_blurb_content">
 															<div class="et_pb_main_blurb_image">
 																<span class="et-pb-icon et-waypoint et_pb_animation_top et-pb-icon-circle et-pb-icon-circle-border et-animated" style="color: #ffffff; background-color: #0c71c3; border-color: #ffffff;">q</span>

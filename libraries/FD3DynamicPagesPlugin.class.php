@@ -138,9 +138,11 @@ if( ! class_exists('AQ2EMarketingPlatform\FD3DynamicPagesPlugin' ) ) {
 			// $this->getVar('FD3')->wp_actions->add( 'init' , [ $this->getVar('FD3')->regAssets , 'registerCSS' ] );
 			// $this->getVar('FD3')->wp_actions->add( 'init' , [ $this->getVar('FD3')->regAssets , 'registerJS' ] );
 
-			$this->getVar('FD3')->load->library( 'AQ2EAffiliateWidget' , null , 'aq2e_widget' );
-			$this->getVar('FD3')->aq2e_widget->prepare();
 
+        	$this->getVar( 'FD3' )->load->library( 'AffiliateFacade', null, 'affiliate_facade', true );
+        	$this->getVar( 'FD3' )->affiliate_facade->loadAffiliateData();
+
+			$this->getVar('FD3')->load->library( 'AQ2EAffiliateWidget' , null , 'aq2e_widget' );
 			$this->getVar('FD3')->load->library( 'AQ2EAffiliateMenuWidget' , null , 'aq2e_menu_widget' );
 
 			$this->getVar('FD3')->wp_shortcodes->add( 'aq2e-affiliate-home', [ $this->getVar('FD3')->aq2e_widget , 'render_home' ]);

@@ -13,12 +13,12 @@ if ( ! defined('FD3_DYNAMIC_PAGES_PLUGIN_AQTERM')) exit('No direct script access
 $aq2e_affiliate = array();
 
 $aq2e_affiliate[ 'affiliate' ]['protocol'] = 'https://';
-$aq2e_affiliate[ 'affiliate' ]['gateway'] = 'aqterm.com';
+$aq2e_affiliate[ 'affiliate' ]['gateway'] = 'aqtermlife.com';
 
 $aq2e_affiliate[ 'affiliate' ]['main_engine_gateway'] = 'banner.aq2e.com';
 
-$aq2e_affiliate[ 'affiliate' ]['uri'] = '/aqterm-engine/index.php/aqmprocess';
-$aq2e_affiliate[ 'affiliate' ]['aqm_uri'] = '/aqterm-engine/index.php/aqmprocess';
+$aq2e_affiliate[ 'affiliate' ]['uri'] = '/aqtermlife-engine/index.php/aqmprocess';
+$aq2e_affiliate[ 'affiliate' ]['aqm_uri'] = '/aqtermlife-engine/index.php/aqmprocess';
 $aq2e_affiliate[ 'affiliate' ]['validate_uri'] = '/login/authremote';
 $aq2e_affiliate[ 'affiliate' ]['validate_promo_uri'] = '/promocode/authremote';
 

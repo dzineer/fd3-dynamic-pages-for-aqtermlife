@@ -701,3 +701,52 @@ table.fd3-asterisk-fields tr h2[class="fd3-asterisk-title"] {
 table.fd3-asterisk-fields tr p[class="fd3-asterisk-description"] {
   /*  padding-left: 20px;*/
 }
+
+h2#main-aqterm-header {
+    font-size: 3.9em;
+    text-align: center;
+    color:#ffffff;
+    margin-top: -19px;
+}
+
+h2#mini-aqterm-header {
+    font-size: 1.5em;
+    font-style:italic;
+    text-align: center;
+    color:#ffffff;
+    margin-top: -19px;
+}
+
+.fd3-left-blurb {
+    float:right;
+}
+
+.fd3-right-blurb {
+    float:left;
+}
+
+@media (max-width: 750px) {
+
+    h2#main-aqterm-header {
+        margin: 26px 0;
+        display: block;
+    }
+
+    h2#mini-aqterm-header {
+        margin: 10px 0;
+        display: block;
+    }
+
+    .et_pb_blurb_0 .et-pb-icon, .et_pb_blurb_1 .et-pb-icon, .et_pb_blurb_2 .et-pb-icon {
+        font-size: 40px;
+    }
+
+    .fd3-left-blurb {
+        float:none;
+    }
+
+    .fd3-right-blurb {
+        float:none;
+    }
+
+}

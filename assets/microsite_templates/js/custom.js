@@ -1113,11 +1113,12 @@ var fieldSuccesses = {};
                                         console.log( response.output );
 
                                         that.data.views.invoiceInfo.applyPromo( response.promo );
-                                        that.loadPage( this.appData );
+                                        that.data.views.promoInfo.render();
 
                                         jq( "#fd3_form_promocode" ).val( promoCode );
                                         jq( "#fd3_form_promocode" ).attr( "data-promocode", promoCode );
 
+                                        that.loadPage( this.appData );
 
                                     } else if( response.successful == false ) { // we have a form error
                                         jq( "#fd3_form_promocode" ).parent().prepend('<span class="fd3_forms_form_error" id="' + 'fd3_form_promocode' + '-error" alertrole="alert"><strong>Error, </strong>You Provided An Invalid Promo Code</span>');
@@ -1651,8 +1652,8 @@ var fieldSuccesses = {};
             'data': {},
             'subtotal': 0.00,
             'total': 0.00,
-            'items': [],            
-
+            'items': [],   
+            'promos': [],            
             'appData': {}, 
 
             'loadPage': function( appData ) {
@@ -1811,6 +1812,19 @@ var fieldSuccesses = {};
 
                 }
             },
+            'clearPromos': function() {
+                this.promos = [];
+            },
+            'addPromoItem': function( desc, qty, cost ) {
+                this.promos.push( { "desc": desc, "qty": qty, "cost": cost, "total": qty * cost } );
+                this.calc();
+            },    
+            'removeLastPromoItem': function() {
+                var index = this.promos.indexOf( this.promos.length );
+                if( index > -1 ) {
+                    this.promos.splice( index, 1 );
+                }
+            },                    
             'addItem': function( desc, qty, cost ) {
                 this.items.push( { "desc": desc, "qty": qty, "cost": cost, "total": qty * cost } );
                 this.calc();
@@ -1818,6 +1832,13 @@ var fieldSuccesses = {};
             'empty': function() {
                 this.items = [];
             },
+            'removeLastItem': function() {
+                var index = this.items.indexOf( this.items.length );
+                if( index > -1 ) {
+                    this.items.splice( index, 1 );
+                }
+                this.calc();
+            },             
             'removeItem': function( pos ) {
                 var index = this.items.indexOf( pos );
                 if( index > -1 ) {
@@ -1825,6 +1846,9 @@ var fieldSuccesses = {};
                 }
                 this.calc();
             },                            
+            'getPromoItems': function() {
+                return this.promos;
+            },
             'getItems': function() {
                 return this.items;
             },
@@ -1833,6 +1857,11 @@ var fieldSuccesses = {};
                 for( var i=0; i < this.items.length; i++ ) {
                     this.subtotal = this.subtotal + this.items[ i ].total;
                 }
+
+                for( var i=0; i < this.promos.length; i++ ) {
+                    this.subtotal = this.subtotal + this.promos[ i ].total;
+                }
+
                 this.total = this.subtotal;
             },
             'getSubTotal': function() {
@@ -1897,7 +1926,7 @@ var fieldSuccesses = {};
             'subtotal': 0.00,
             'total': 0.00,
             'items': [],            
-
+            'promos': [],
             'appData': {}, 
 
             'loadPage': function( appData ) {
@@ -2056,6 +2085,19 @@ var fieldSuccesses = {};
 
                 }
             },
+            'clearPromos': function() {
+                this.promos = [];
+            },            
+            'addPromoItem': function( desc, qty, cost ) {
+                this.promos.push( { "desc": desc, "qty": qty, "cost": cost, "total": qty * cost } );
+                this.calc();
+            }, 
+            'removeLastPromoItem': function() {
+                var index = this.promos.indexOf( this.promos.length );
+                if( index > -1 ) {
+                    this.promos.splice( index, 1 );
+                }
+            },             
             'addItem': function( desc, qty, cost ) {
                 this.items.push( { "desc": desc, "qty": qty, "cost": cost, "total": qty * cost } );
                 this.calc();
@@ -2069,7 +2111,10 @@ var fieldSuccesses = {};
                     this.items.splice( index, 1 );
                 }
                 this.calc();
-            },                            
+            },  
+            'getPromoItems': function() {
+                return this.promos;
+            },                                      
             'getItems': function() {
                 return this.items;
             },
@@ -2078,6 +2123,11 @@ var fieldSuccesses = {};
                 for( var i=0; i < this.items.length; i++ ) {
                     this.subtotal = this.subtotal + this.items[ i ].total;
                 }
+
+                for( var i=0; i < this.promos.length; i++ ) {
+                    this.subtotal = this.subtotal + this.promos[ i ].total;
+                }
+
                 this.total = this.subtotal;
             },
             'getSubTotal': function() {
@@ -2145,6 +2195,7 @@ var fieldSuccesses = {};
                 InvoiceDataAndBillingData.data.billingData = this.data.billingData;
                 InvoiceDataAndBillingData.data.billing = this.data.billing;
                 InvoiceDataAndBillingData.data.items = this.data.billing.getItems();
+                InvoiceDataAndBillingData.data.promoItems = this.data.billing.getPromoItems();
                 this.data.views.invoiceInfo.view( InvoiceDataAndBillingData.data );
                 this.data.parent_container = this.appData.InvoiceInfoData.data.parent_container;
                 this.data.container = this.appData.InvoiceInfoData.data.container;
@@ -2362,7 +2413,13 @@ var fieldSuccesses = {};
                 billingInfo.addItem( 'AQ2E Platform', 1, 30.00 );
                 billingInfo.addItem( 'AQ2E Facebook App', 1, 10.00 );
                 billingInfo.addItem( 'AQ2E Facebook App Limited Time Discount', 1, -10.00 );
-                billingInfo.addItem( 'Applied Affiliate Discount<br/><strong>(Applied Promocode: AQ2ELIFE)</strong>', 1, -10.00 );
+
+                if(my_AP_Ajax.standard == true) {
+
+                    billingInfo.clearPromos();
+                    billingInfo.addPromoItem( 'Applied Affiliate Discount<br/><strong>(Applied Promocode: AQ2ELIFE)</strong>', 1, -10.00 );
+
+                }
 
 /*                this.data.views.invoiceInfo.applyPromos([
                     {'desc':'AQ2E Facebook App Limited Time Discount', 'cost':-10, 'qty': 1 },
@@ -2685,6 +2742,11 @@ var fieldSuccesses = {};
                     item.appendTo( tb );
                 }
 
+                for( var i=0; i < this.promoItems.length; i++ ) {
+                    var item = this.renderItem( this.promoItems[ i ] );
+                    item.appendTo( tb );
+                }                
+
                 tb.appendTo( t );
                 t.appendTo( this.data.container );
 
@@ -2788,7 +2850,7 @@ var fieldSuccesses = {};
                  tmpCol = this.renderColumn( '&dollar;'+ this.moneyFormat( i.cost ), { "class":"col" } );
                  tmpCol.appendTo( tr );
 
-                 tmpCol = this.renderColumn( '&dollar;'+ this.moneyFormat( i.total ), { "class":"col" } );
+                 tmpCol = this.renderColumn( '&dollar;'+ this.moneyFormat( i.cost ), { "class":"col" } );
                  tmpCol.appendTo( tr );
 
                  return tr;
@@ -2796,8 +2858,9 @@ var fieldSuccesses = {};
             'applyPromo': function( data ) {
 
                 if( typeof data === 'object' ) {
-                    data.total = data.qty * data.cost;
-                    this.data.billing.addItem( data.desc, data.qty, data.cost );
+                    data.total = data.qty * data.value;
+                    this.data.billing.clearPromos();
+                    this.data.billing.addPromoItem( data.desc, data.qty, data.value );
                 }
 
                 if( typeof this.data.container === 'string' ) {
@@ -2813,8 +2876,9 @@ var fieldSuccesses = {};
                 for(var i=0; i < dataArr.length; i++) {
 
                     if( typeof dataArr[i] === 'object' ) {
-                        dataArr[i].total = dataArr[i].qty * dataArr[i].cost;
-                        this.data.billing.addItem( data.desc, data.qty, data.cost );
+                        dataArr[i].total = dataArr[i].qty * dataArr[i].value;
+                        this.data.billing.clearPromos();
+                        this.data.billing.addPromoItem( data.desc, data.qty, data.value );
                     }
 
                 }
@@ -2841,6 +2905,7 @@ var fieldSuccesses = {};
 
                 if( typeof this.data.billingData != 'undefined' ) {
                     this.items = this.data.billing.getItems();
+                    this.promoItems = this.data.billing.getPromoItems();
                 }
 
                 this.renderTitle();
@@ -3014,7 +3079,13 @@ var fieldSuccesses = {};
             'render': function() {
                 // this.data.container.empty();
                 // this.renderTitle();
-                this.renderPromo( 'AQ2ELIFE' );
+                if(my_AP_Ajax.standard == true) {
+                    this.renderPromo( 'AQ2ELIFE' );
+                }
+                else {
+                    this.renderPromo();   
+                }
+
                 this.monitors();
             },
         }); 
