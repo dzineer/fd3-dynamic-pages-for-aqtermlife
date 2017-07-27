@@ -144,9 +144,165 @@ if( ! class_exists('AQ2EMarketingPlatform\FD3DynamicPagesPlugin' ) ) {
 
 			$this->getVar('FD3')->load->library( 'AQ2EAffiliateWidget' , null , 'aq2e_widget' );
 			$this->getVar('FD3')->load->library( 'AQ2EAffiliateMenuWidget' , null , 'aq2e_menu_widget' );
+			$this->getVar('FD3')->load->library( 'AQ2EAnnouncementWidget' , null , 'aq2e_ad_widget' );
+			
+			// set which image add we want to display
+			$this->getVar('FD3')->aq2e_ad_widget->setBackground('/wp-content/uploads/2017/07/floating_ad_1.png');
+
+			$this->getVar('FD3')->aq2e_ad_widget->setStyling('
+
+				.slideDown{
+					animation-name: slideDown;
+					-webkit-animation-name: slideDown;	
+
+					animation-duration: 1s;	
+					-webkit-animation-duration: 1s;
+
+					animation-timing-function: ease;	
+					-webkit-animation-timing-function: ease;	
+
+					visibility: visible !important;						
+				}
+
+				/*
+				==============================================
+				bounceOutRight
+				==============================================
+				*/
+
+
+				@keyframes bounceOutRight {
+
+					20% {
+						opacity: 1;
+						transform: translate3d(0px,0,0);
+					}
+					to {
+						opacity: 0;
+				        transform: translate3d(2000px,0,0);
+				        display:none;
+					}	
+				}
+
+				@-webkit-keyframes bounceOutRight {
+					20% {
+						opacity: 1;
+						-webkit-transform: translate3d(0px,0,0);
+					}
+					to {
+						opacity: 0;
+				        -webkit-transform: translate3d(2000px,0,0);
+				        display:none;
+					}				    
+				}
+
+				.bounceOutRight {
+				    animation-name: bounceOutRight;
+					animation-duration: 1s;	
+					-webkit-animation-duration: 1s;
+
+					animation-timing-function: ease-out;	
+					-webkit-animation-timing-function: ease-out;	
+				}
+
+				@keyframes slideDown {
+					0% {
+						transform: translateY(-100%);
+					}
+					50%{
+						transform: translateY(8%);
+					}
+					65%{
+						transform: translateY(-4%);
+					}
+					80%{
+						transform: translateY(4%);
+					}
+					95%{
+						transform: translateY(-2%);
+					}			
+					100% {
+						transform: translateY(0%);
+					}		
+				}
+
+				@-webkit-keyframes slideDown {
+					0% {
+						-webkit-transform: translateY(-100%);
+					}
+					50%{
+						-webkit-transform: translateY(8%);
+					}
+					65%{
+						-webkit-transform: translateY(-4%);
+					}
+					80%{
+						-webkit-transform: translateY(4%);
+					}
+					95%{
+						-webkit-transform: translateY(-2%);
+					}			
+					100% {
+						-webkit-transform: translateY(0%);
+					}	
+				}				
+
+				.slideDown {
+				    animation-name: slideDown;
+				    -webkit-animation-name: slideDown;
+				    animation-duration: 1s;
+				    -webkit-animation-duration: 1s;
+				    animation-timing-function: ease;
+				    -webkit-animation-timing-function: ease;
+				    visibility: visible !important;
+				}				
+
+				#fd3-ads-container {
+				    right: 119px;
+				    top: 160px;
+				    padding: 10px;
+				}
+
+				#fd3-ads-close-btn {
+				    background: #e9e9e9;
+				    height: 20px;
+				    width: 20px;
+				    position: absolute;
+				    right: 6px;
+				    top: 6px;
+				    text-align: center;
+				    border-radius: 50%;
+				    line-height: 20px;
+				    color: #000000;
+				    font-weight: bold;
+			    }
+
+			    #fd3-ads-close-btn:hover {
+					background: #5f5f5f;
+						color: #fff;
+				}
+
+			');
+
+			$this->getVar('FD3')->aq2e_ad_widget->setScript('
+
+				jQuery("#fd3-ads-close-btn").on(\'click\', function() {
+
+					jQuery("#fd3-ads-container").removeClass(\'slideDown\');
+					jQuery("#fd3-ads-container").addClass(\'bounceOutRight\');
+
+					setTimeout( function() {
+						jQuery("#fd3-ads-container").remove();
+					},1000);
+
+					return false;
+				});				
+
+			');	
 
 			$this->getVar('FD3')->wp_shortcodes->add( 'aq2e-affiliate-home', [ $this->getVar('FD3')->aq2e_widget , 'render_home' ]);
 			$this->getVar('FD3')->wp_shortcodes->add( 'aq2-affiliate-menu', [ $this->getVar('FD3')->aq2e_menu_widget , 'render' ]);
+			$this->getVar('FD3')->wp_shortcodes->add( 'fd3-float-ad', [ $this->getVar('FD3')->aq2e_ad_widget , 'render' ]);
 			
 			add_shortcode( 'aq2e-affiliate-home', [ $this->getVar('FD3')->aq2e_widget, 'render_home' ] );
 			add_shortcode( 'aq2e-affiliate-pricing', [ $this->getVar('FD3')->aq2e_widget, 'render_price' ] );
