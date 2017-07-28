@@ -51,19 +51,19 @@ class AQ2EAnnouncementWidget extends FD3Library {
 		<style>
 
 			#fd3-ads-container {
-		    margin: 0;
-		    padding: 0;
-		    position: fixed;
-		    right: 119px;
-		    top: 120px;
-		    border: 1px solid #ccc;
-		    border-left: none;
-		    border-right: none;	
-		    border-bottom: 5px solid #3388cd;	
-		    z-index: 9999999999999;	
-		    background-color: #ffffff;
-		    height:auto;	    
-		    cursor: pointer;
+			    margin: 0;
+			    padding: 0;
+			    position: fixed;
+			    right: 119px;
+			    top: 120px;
+			    border: 1px solid #ccc;
+			    border-left: none;
+			    border-right: none;	
+			    border-bottom: 5px solid #3388cd;	
+			    z-index: 9999999999999;	
+			    background-color: #ffffff;
+			    height:auto;	    
+			    cursor: pointer;
 				-webkit-box-shadow: 0px 0px 12px 0px rgba(50, 50, 50, 0.49);
 				-moz-box-shadow:    0px 0px 12px 0px rgba(50, 50, 50, 0.49);
 				box-shadow:         0px 0px 12px 0px rgba(50, 50, 50, 0.49);			    
@@ -86,7 +86,7 @@ class AQ2EAnnouncementWidget extends FD3Library {
 		<script type="text/javascript">
 
 			jQuery(".fd3-ads").on('click', function() {
-				window.location.href = '/our_platform';
+				window.location.href = '/our-platform/#marketing-platform-video';
 				return false;
 			});
 

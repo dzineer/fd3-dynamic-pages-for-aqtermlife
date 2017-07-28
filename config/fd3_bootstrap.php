@@ -55,8 +55,8 @@ if( ! defined( 'FD3_LOADER_LOADED' ) ) {
 	
 	$aq2e_agent = array();
 	$aq2e_agent[ 'agent' ]['protocol'] = 'https://';
-	$aq2e_agent[ 'agent' ]['gateway'] = 'aqterm.com';
-	$aq2e_agent[ 'agent' ]['uri'] = '/aqterm-engine/index.php/aqmprocess';
+	$aq2e_agent[ 'agent' ]['gateway'] = 'aqtermlife.com';
+	$aq2e_agent[ 'agent' ]['uri'] = '/aqtermlife-engine/index.php/aqmprocess';
 	$aq2e_agent[ 'agent' ]['uri_link'] = $aq2e_agent[ 'agent' ]['protocol'] . $aq2e_agent[ 'agent' ]['gateway'] . $aq2e_agent[ 'agent' ]['uri'];
 	$aq2e_agent[ 'agent' ]['master']['domain'] = unserialize( get_option( 'aq2edp_affiliate_main_domain' ) );
 	

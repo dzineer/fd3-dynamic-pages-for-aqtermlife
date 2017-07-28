@@ -1514,7 +1514,7 @@ var fieldSuccesses = {};
 
                     options.jq.ajax({
 
-                        url: "https://aqterm.com/aqterm-engine/index.php/aqmprocess",
+                        url: "https://aqtermlife.com/aqtermlife-engine/index.php/aqmprocess",
                         type: 'put',
                         data: packagedData,
                         dataType: dataType,
@@ -1705,7 +1705,7 @@ var fieldSuccesses = {};
 
                     options.jq.ajax({
 
-                        url: "https://aqterm.com/aqterm-engine/index.php/aqmprocess",
+                        url: "https://aqtermlife.com/aqtermlife-engine/index.php/aqmprocess",
                         type: 'put',
                         data: packagedData,
                         dataType: 'json',
