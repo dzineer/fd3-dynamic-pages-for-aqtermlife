@@ -212,11 +212,11 @@ class FD3_APForm_Register extends Wordpress_Extendable_Form {
             $membership->addAccount(
 
                 /* type */ 'aqterm',
-                /* price */ '99.00',
+                /* price */ '129.00',
                 /* tax */ '0.00',
                 /* shipAndHandling */ '0.00',
-                /* subtotal */ '99.00',
-                /* total */ '99.00',
+                /* subtotal */ '129.00',
+                /* total */ '129.00',
                 /* promocode */ $fields['account_info']['fd3_form_promocode'],
                 /* promoText */ 'Your Credit card will not be charged for the first 30 days'
 
@@ -227,8 +227,8 @@ class FD3_APForm_Register extends Wordpress_Extendable_Form {
             $membership->addProduct(
 
                 /* name */ 'aqterm',
-                /* version */ '99.00',
-                /* price */ '99.00'
+                /* version */ '129.00',
+                /* price */ '129.00'
 
             );
 
@@ -417,11 +417,11 @@ class FD3_APForm_Register extends Wordpress_Extendable_Form {
 		        $this->getVar( 'FD3')->membership->addAccount(
 		
 		            /* type */ 'affiliate',
-			        /* price */ '99.00',
+			        /* price */ '129.00',
 			        /* tax */ '0.00',
 			        /* shipAndHandling */ '0.00',
-			        /* subtotal */ '99.00',
-			        /* total */ '99.00',
+			        /* subtotal */ '129.00',
+			        /* total */ '129.00',
 			        /* promocode */ $fields['account_info']['fd3_form_promocode'],
 			        /* promoText */ 'Your Credit card will not be charged for the first 30 days'
 		
@@ -432,8 +432,8 @@ class FD3_APForm_Register extends Wordpress_Extendable_Form {
 		        $this->getVar( 'FD3')->membership->addProduct(
 		
 		        /* name */ 'aqterm',
-			        /* version */ '99.00',
-			        /* price */ '99.00'
+			        /* version */ '129.00',
+			        /* price */ '129.00'
 		
 		        );
 		

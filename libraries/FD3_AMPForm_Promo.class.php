@@ -67,8 +67,8 @@ class FD3_AMPForm_Promo extends Wordpress_Extendable_Form {
       $gaPromo->exists = true;
 
       $gaPromo->code = 'TOTALSOLUTION'; 
-      $gaPromo->value = 20.00;
-      $gaPromo->costs = -20.00;
+      $gaPromo->value = 30.00;
+      $gaPromo->costs = -30.00;
       $gaPromo->price = '- '.'$'.number_format($gaPromo->value, 2);
       $gaPromo->value = number_format($gaPromo->value, 2) * -1;
       $gaPromo->qty = '1';

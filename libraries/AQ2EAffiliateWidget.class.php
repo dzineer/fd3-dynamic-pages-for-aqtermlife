@@ -44,11 +44,11 @@ class AQ2EAffiliateWidget extends FD3Library {
 		
         if( $this->getVar('FD3')->session->getSession('/affiliate_site/affiliate2/affiliateId') != 'aqterm' ) {
         ?>
-        	<div style="font-size: 26px; font-family: 'Open Sans'; font-weight: 300;">Your General Agency has secured a $20 discount for you. Don’t miss out on getting this incredible program for only $79/month. The AQ2E Quote Engine Platform is included in the offer. Be sure to get the promo Code from your General Agency.</div>
+        	<div style="font-size: 26px; font-family: 'Open Sans'; font-weight: 300;">Your General Agency has secured a $30 discount for you. Don’t miss out on getting this incredible program for only $99/month. The AQ2E Quote Engine Platform is included in the offer. Be sure to get the promo Code from your General Agency. For existing clients, after signing up, your account will be automatically upgraded to the new platform.</div>
         <?
         }  else { ?>
 
-        	<div style="font-size: 26px; font-family: 'Open Sans'; font-weight: 300;text-align:center;">The AQ2E Quote Engine Platform is included in the offer.</div>
+        	<div style="font-size: 26px; font-family: 'Open Sans'; font-weight: 300;text-align:center;">The AQ2E Quote Engine Platform is included in the offer. For existing clients, after signing up, your account will be automatically upgraded to the new platform.</div>
 
         <? }
 
@@ -87,7 +87,7 @@ class AQ2EAffiliateWidget extends FD3Library {
                                 <? // echo '<pre>: ' . print_r( $this->getVar('FD3')->session->getSession('/affiliate_site'), true) . "</pre>"; ?>
                                     <h3 class="bga-company-info"><span class="asterisk">*</span><span class="bga-company-name"><?= $this->getVar('FD3')->session->getSession('/affiliate_site/site/GACompany_name'); ?></span> has secured a <?= $this->getVar('FD3')->session->getSession('/affiliate_site/affiliate2/offerPercentage'); ?> discount for its affiliated reps to obtain this unique marketing tool.</h3>
                                     <h2 class="bga-offer">
-                                        For only &dollar;<?= $this->getVar('FD3')->session->getSession('/affiliate_site/affiliate2/pricePerPeriod'); ?>, you can have the AQ2E Platform.
+                                        For only &dollar;<?= $this->getVar('FD3')->session->getSession('/affiliate_site/affiliate2/pricePerPeriod'); ?>, you can have the AQ2E Platform. 
                                     </h2>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">

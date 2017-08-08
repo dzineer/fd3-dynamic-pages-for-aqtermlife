@@ -2920,7 +2920,7 @@ var fieldSuccesses = {};
                     },
                 });
 
-                billingInfo.addItem('AQ2E Marketing Platform', 1, 99.00);
+                billingInfo.addItem('AQ2E Marketing Platform', 1, 129.00);
                 billingInfo.addItem('AQ2E Platform (Included)', 1, 0.00);
 
                 billingInfo.loadPage(data);

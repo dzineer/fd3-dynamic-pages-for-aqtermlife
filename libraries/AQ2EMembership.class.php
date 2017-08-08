@@ -44,18 +44,18 @@ if( ! class_exists('AQ2EMarketingPlatform\AQ2EMembership' ) ) {
 			
 			$this->signup->account = new \stdClass();
 			$this->signup->account->type = '';
-			$this->signup->account->price = '99.00';
+			$this->signup->account->price = '129.00';
 			$this->signup->account->tax = '0.00';
 			$this->signup->account->shipAndHandling = '0.00';
-			$this->signup->account->subtotal = '99.00';
-			$this->signup->account->total = '99.00';
+			$this->signup->account->subtotal = '129.00';
+			$this->signup->account->total = '129.00';
 			$this->signup->account->promocode = '';
 			$this->signup->account->promoText = '';
 			
 			$this->signup->product = new \stdClass();
 			$this->signup->product->name = 'AQ2E Marketing Platform';
 			$this->signup->product->version = 'Pro';
-			$this->signup->product->price = '99.00';
+			$this->signup->product->price = '129.00';
 			
 			$this->signup->state = new \stdClass();
 			$this->signup->state->currentState = 0;
